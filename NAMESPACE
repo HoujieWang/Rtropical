@@ -2,4 +2,5 @@
 
 export(read.nexus.to.data.matrix)
 export(vec_fun)
+importFrom(ape,cophenetic.phylo)
 importFrom(ape,read.nexus)

@@ -2,17 +2,17 @@
 % Please edit documentation in R/vec_fun.R
 \name{vec_fun}
 \alias{vec_fun}
-\title{Vectorize a distance matrix}
+\title{Vectorize a tree}
 \usage{
 vec_fun(x)
 }
 \arguments{
-\item{x}{A distance matrix between each pair of leaves.}
+\item{x}{A tree object in R as list}
 }
 \description{
-Vectorize a distance matrix
+Vectorize a tree
 }
 \examples{
-vec_fun(m)
+vec_fun(tree)
 
 }
