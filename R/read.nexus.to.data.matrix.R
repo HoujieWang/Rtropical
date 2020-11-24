@@ -1,5 +1,6 @@
 #' Read trees in two categories into a data matrix
 #'
+#' @importFrom ape read.nexus
 #' @param data.file1 A data set with trees from one category.
 #' @param data.file2 A data set with trees from the other category.
 #' @export

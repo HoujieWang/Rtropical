@@ -2,3 +2,4 @@
 
 export(read.nexus.to.data.matrix)
 export(vec_fun)
+importFrom(ape,read.nexus)
