@@ -7,7 +7,7 @@
 vec_fun(x)
 }
 \arguments{
-\item{x}{A tree object in R as list}
+\item{x}{A object of class "phylo" in R}
 }
 \description{
 Vectorize a tree

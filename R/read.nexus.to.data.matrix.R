@@ -8,8 +8,6 @@
 #' read.nexus.to.data.matrix(data.file1, data.file2)
 #'
 read.nexus.to.data.matrix <- function(data.file1, data.file2){
-  # data.file1 = "genetree_S1_r025.dat"
-  # data.file2 = "genetree_S2_r025.dat"
   G1 <- read.nexus(data.file1)
   G2 <- read.nexus(data.file2)
 
