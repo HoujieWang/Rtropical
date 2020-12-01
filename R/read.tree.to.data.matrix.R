@@ -20,8 +20,8 @@ read.tree.to.data.matrix <- function(data.file1, data.file2){
   distVec_all2 <- multiPhylo.to.data.matrix(G2, to)
   rownames(distVec_all1) <- NULL
   rownames(distVec_all2) <- NULL
-  class1 <- rep(1, N1)
-  class2 <- rep(2, N2)
+  class1 <- as.factor(rep(1, N1))
+  class2 <- as.factor(rep(2, N2))
   D_all1 <- cbind(class1, distVec_all1)
   D_all2 <- cbind(class2, distVec_all2)
 

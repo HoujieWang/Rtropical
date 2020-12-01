@@ -4,7 +4,7 @@
 \alias{multiPhylo.to.data.matrix}
 \title{Convert an object in class "multiPhylo" into a data matrix}
 \usage{
-multiPhylo.to.data.matrix(trees)
+multiPhylo.to.data.matrix(trees, tipOrder)
 }
 \arguments{
 \item{trees}{An object in class "multiPhylo" containing trees}

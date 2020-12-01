@@ -6,7 +6,7 @@
 #' @examples
 #' multiPhylo.to.data.matrix(trees)
 #'
-multiPhylo.to.data.matrix <- function(trees){
+multiPhylo.to.data.matrix <- function(trees, tipOrder){
   if(class(trees) == "phylo"){
     trees = list(trees)
     class(trees) = "multiPhylo"
