@@ -1,6 +1,6 @@
 #' Convert an object in class "multiPhylo" into a data matrix
 #'
-#' @importFrom ape read.nexus
+#' @importFrom parallel mclapply
 #' @param trees An object in class "multiPhylo" containing trees
 #' @export
 #' @examples
