@@ -14,6 +14,6 @@ multiPhylo.to.data.matrix <- function(trees){
   tipOrder = trees[[1]]$tip.label
   trees_root <- root(trees, outgroup = tipOrder[1],resolve.root=TRUE)
   chronotrees <- mclapply(trees_root, chronos)
-  distVec_all <- mclapply(chronotrees, vec_fun)
+  distVec_all <- mclapply(chronotrees, vec.fun)
   return(do.call("rbind", distVec_all))
 }
