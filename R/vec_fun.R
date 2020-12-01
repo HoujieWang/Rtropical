@@ -6,7 +6,7 @@
 #' @examples
 #' vec_fun(tree)
 #'
-vec_fun<-function(x){
+vec.fun<-function(x){
   x = cophenetic.phylo(x)
   x[lower.tri(x)]
 }

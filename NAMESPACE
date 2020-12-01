@@ -2,7 +2,7 @@
 
 export(multiPhylo.to.data.matrix)
 export(read.nexus.to.data.matrix)
-export(vec_fun)
+export(vec.fun)
 importFrom(ape,cophenetic.phylo)
 importFrom(ape,read.nexus)
 importFrom(parallel,mclapply)
