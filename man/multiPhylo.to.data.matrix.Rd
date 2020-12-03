@@ -4,17 +4,16 @@
 \alias{multiPhylo.to.data.matrix}
 \title{Convert an object in class "multiPhylo" into a data matrix}
 \usage{
-multiPhylo.to.data.matrix(trees, tipOrder)
+multiPhylo.to.data.matrix(phy, tipOrder)
 }
 \arguments{
-\item{trees}{An object in class "multiPhylo" containing trees}
+\item{phy}{An object in class "multiPhylo"}
 
 \item{tipOrder}{Order of leaf names}
 }
+\value{
+A data matrix with the first column of the categories
+}
 \description{
 Convert an object in class "multiPhylo" into a data matrix
-}
-\examples{
-multiPhylo.to.data.matrix(trees, tipOrder)
-
 }

@@ -8,22 +8,16 @@
 #' @importFrom parallel stopCluster
 #' @importFrom ape root
 #' @importFrom ape chronos
-#' @param trees An object in class "multiPhylo" containing trees
+#' @param phy An object in class "multiPhylo"
 #' @param tipOrder Order of leaf names
+#' @return A data matrix with the first column of the categories
 #' @export
-#' @examples
-#' multiPhylo.to.data.matrix(trees, tipOrder)
 #'
-multiPhylo.to.data.matrix <- function(trees, tipOrder){
+multiPhylo.to.data.matrix <- function(phy, tipOrder){
   cl <- makeCluster(2)
   setDefaultCluster(cl)
-  clusterExport(cl, c("chronos", "vec.fun"))
-  if(class(trees) == "phylo"){
-    trees = list(trees)
-    class(trees) = "multiPhylo"
-  }
-  tipOrder = trees[[1]]$tip.label
-  trees_root <- root(trees, outgroup = tipOrder[1],resolve.root=TRUE)
+  clusterExport(cl, c("chronos", "vec.fun"), envir = environment())
+  trees_root <- root(phy, outgroup = tipOrder[1],resolve.root=TRUE)
   chronotrees <- parLapply(cl, trees_root, chronos)
   distVec_all <- parLapply(cl, chronotrees, vec.fun)
   stopCluster(cl)

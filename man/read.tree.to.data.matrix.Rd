@@ -14,7 +14,3 @@ read.tree.to.data.matrix(data.file1, data.file2)
 \description{
 Read trees in two categories into a data matrix
 }
-\examples{
-read.tree.to.data.matrix(data.file1, data.file2)
-
-}

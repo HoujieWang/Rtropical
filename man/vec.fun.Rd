@@ -4,15 +4,11 @@
 \alias{vec.fun}
 \title{Vectorize a tree}
 \usage{
-vec.fun(x)
+vec.fun(phy)
 }
 \arguments{
-\item{x}{A object of class "phylo" in R}
+\item{phy}{A object of class "phylo" in R}
 }
 \description{
 Vectorize a tree
-}
-\examples{
-vec_fun(tree)
-
 }
