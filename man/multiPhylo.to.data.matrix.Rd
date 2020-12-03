@@ -8,11 +8,13 @@ multiPhylo.to.data.matrix(trees, tipOrder)
 }
 \arguments{
 \item{trees}{An object in class "multiPhylo" containing trees}
+
+\item{tipOrder}{Order of leaf names}
 }
 \description{
 Convert an object in class "multiPhylo" into a data matrix
 }
 \examples{
-multiPhylo.to.data.matrix(trees)
+multiPhylo.to.data.matrix(trees, tipOrder)
 
 }
