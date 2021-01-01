@@ -20,6 +20,6 @@ read.nexus.to.data.matrix <- function(data.file1, data.file2){
   rownames(distVec_all2) <- NULL
 
   class <- as.factor(c(rep(1, N1), rep(2, N2)))
-  D <- cbind(class, rbind(distVec_all1, distVec_all2))
+  D <- data.frame(class, rbind(distVec_all1, distVec_all2))
   return(D)
 }
