@@ -1,2 +1,1 @@
-# Rtropical
-Data analysis based on tropical tree spaces in R
+SVM and PCA in Tropical Projective Spaces
