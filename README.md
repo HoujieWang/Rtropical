@@ -1,4 +1,4 @@
-# Tropical Data Analysis Tools in \code{R}
+# Tropical Data Analysis Tools
 Algorithms of tropical support vector machine and principles component analysis defined in tropical projective spaces.
 
 # Reference 
