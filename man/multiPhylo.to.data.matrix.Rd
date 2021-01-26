@@ -4,15 +4,18 @@
 \alias{multiPhylo.to.data.matrix}
 \title{Convert an object in class "multiPhylo" into a data matrix}
 \usage{
-multiPhylo.to.data.matrix(phy, tipOrder)
+multiPhylo.to.data.matrix(phy, tipOrder, ncores = 2)
 }
 \arguments{
-\item{phy}{An object in class "multiPhylo"}
+\item{phy}{an object in class "multiPhylo"}
 
-\item{tipOrder}{Order of leaf names}
+\item{tipOrder}{a numeric vector of order of leaf names}
+
+\item{ncores}{a numeric value indicating the number of threads
+utilized for multi-cored CPUs. (default: 2)}
 }
 \value{
-A data matrix with the first column of the categories
+a data matrix with the first column of the categories
 }
 \description{
 Convert an object in class "multiPhylo" into a data matrix

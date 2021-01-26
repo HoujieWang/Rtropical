@@ -1,12 +1,9 @@
 Package: Rtropical
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+Authors@R: c(
+    person("Houjie", "Wang", role = c("aut", "cre"), email = "whj666@uw.edu")
+    person("Kaizhang", "Wang", role = c("ctb"), email = ))
 Description: What the package does (one paragraph).
 License: GPL-3
 Encoding: UTF-8
@@ -15,4 +12,7 @@ RoxygenNote: 7.1.1
 Imports: 
     ape,
     lpSolve,
-    parallel
+    parallel,
+    Rfast,
+    RcppAlgos,
+    caret
