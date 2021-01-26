@@ -65,7 +65,7 @@ Tang, X., Wang, H. and Yoshida, R. (2020)
 \url{https://arxiv.org/pdf/2003.00677.pdf}
 }
 \seealso{
-\code{predummary}, \code{predict}, \code{coef} and the \code{tropsvm} function.
+\code{summary}, \code{predict}, \code{coef} and the \code{tropsvm} function.
 }
 \author{
 Houjie Wang and Kaizhang Wang

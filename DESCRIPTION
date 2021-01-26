@@ -1,10 +1,12 @@
 Package: Rtropical
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
-Authors@R: c(
-    person("Houjie", "Wang", role = c("aut", "cre"), email = "whj666@uw.edu")
-    person("Kaizhang", "Wang", role = c("ctb"), email = ))
-Description: What the package does (one paragraph).
+Authors@R: c(person("Houjie", "Wang", role = c("aut", "cre"), email = "whj666@uw.edu"),
+    	     person("Kaizhang", "Wang", role = c("ctb"), email = "wangkz@buaa.edu.cn"))
+Maintainer: Houjie Wang <whj666@uw.edu>
+Author: Houjie Wang [aut, cre],
+  	Kaizhang Wang [ctb]
+Description: Produce tropical support vector machine and principles component analysis defined in tropical projective spaces.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

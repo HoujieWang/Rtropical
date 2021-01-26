@@ -35,7 +35,7 @@
 #' \emph{Tropical Support Vector Machine and its Applications to Phylogenomics}
 #' \url{https://arxiv.org/pdf/2003.00677.pdf}
 #'
-#' @seealso \code{predummary}, \code{predict}, \code{coef} and the \code{tropsvm} function.
+#' @seealso \code{summary}, \code{predict}, \code{coef} and the \code{tropsvm} function.
 #'
 #' @examples
 #'
