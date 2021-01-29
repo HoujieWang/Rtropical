@@ -56,13 +56,13 @@
 #' coef(cv_tropsvm_fit)
 #'
 #' # test with new data
-#' pred <- predict(cv_tropsvm_fit , newx, newy)
+#' pred <- predict(cv_tropsvm_fit, newx)
 #'
 #' # check with accuracy
 #' table(pred, newy)
 #'
 #' # compute testing accuracy
-#' sum(predict(cv_tropsvm_fit , newx, newy) == newy)/length(newy)
+#' sum(pred == newy)/length(newy)
 #'
 #' @export
 #' @export cv.tropsvm
@@ -152,7 +152,7 @@ cv.tropsvm <- function(x, y, parallel = TRUE, nfold = 10, nassignment = 10, ncor
   cv.tropsvm.out <- list("coef" = tropsvm.out$coef,
                          "assignment" = best_assignment,
                          "method index" = best_method_ind,
-                         "levels" = as.character(classes),
+                         "levels" = as.factor(classes),
                          "accuracy" = best_accuracy,
                          "nfold" = nfold)
   class(cv.tropsvm.out) <- "cv.tropsvm"

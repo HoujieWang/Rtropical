@@ -24,7 +24,7 @@ tropsvm(
 If \code{FALSE}, an input is needed from the user, otherwise the function automatically
 finds a good assignment.(default: FALSE)}
 
-\item{accuracy}{a logival value indicating if return accuracy on test data and test label
+\item{accuracy}{a logical value indicating if return accuracy on test data and test label
 \code{newx} and \code{newy} only. Note that if \code{TRUE}, the test data and test label
 \code{newx} and \code{newy} should be provided. Users are more recommended to use its
 default value as testing by prediction can be done via \code{predict.tropsvm}
@@ -77,13 +77,13 @@ tropsvm_fit <- tropsvm(x, y, auto.assignment = TRUE, ind = 1)
 coef(tropsvm_fit)
 
 # test with new data
-pred <- predict(tropsvm_fit , newx, newy)
+pred <- predict(tropsvm_fit, newx)
 
 # check with accuracy
 table(pred, newy)
 
 # compute testing accuracy
-sum(predict(tropsvm_fit , newx, newy) == newy)/length(newy)
+sum(pred == newy)/length(newy)
 
 }
 \references{

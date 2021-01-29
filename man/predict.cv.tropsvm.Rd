@@ -4,14 +4,14 @@
 \alias{predict.cv.tropsvm}
 \title{Predict Method for Tropical Support Vector Machines based on Cross-Validation}
 \usage{
-\method{predict}{cv.tropsvm}(object, newx, newy, ...)
+\method{predict}{cv.tropsvm}(object, newx, ...)
 }
 \arguments{
 \item{object}{a fitted \code{"cv.tropsvm"} object.}
 
 \item{newx}{a data matrix, of dimension nobs x nvars used as testing data.}
 
-\item{newy}{a response vector with one label for each row/component of x used as testing data.}
+\item{\dots}{Not used. Other arguments to predict.}
 }
 \value{
 A vector of predicted values of a vector of labels.
@@ -35,13 +35,13 @@ newy <- as.factor(rep(c(1, 2), each = N))
 cv_tropsvm_fit <- cv.tropsvm(x, y)
 
 # test with new data
-pred <- predict(cv_tropsvm_fit , newx, newy)
+pred <- predict(cv_tropsvm_fit , newx)
 
 # check with accuracy
 table(pred, newy)
 
 # compute testing accuracy
-sum(predict(cv_tropsvm_fit , newx, newy) == newy)/length(newy)
+sum(pred == newy)/length(newy)
 }
 \references{
 Tang, X., Wang, H. and Yoshida, R. (2020)

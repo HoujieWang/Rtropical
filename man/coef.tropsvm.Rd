@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{object}{a fitted \code{"tropsvm"} object.}
+
+\item{\dots}{Not used. Other arguments.}
 }
 \value{
 An output of the apex of the fitted optimal tropical hyperplane.

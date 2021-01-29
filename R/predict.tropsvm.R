@@ -6,7 +6,7 @@
 #'
 #' @param object a fitted \code{"cv.tropsvm"} object.
 #' @param newx a data matrix, of dimension nobs x nvars used as testing data.
-#' @param newy a response vector with one label for each row/component of x used as testing data.
+#' @param \dots Not used. Other arguments to predict.
 #'
 #' @return A vector of predicted values of a vector of labels.
 #'
@@ -35,17 +35,18 @@
 #' tropsvm_fit <- tropsvm(x, y, auto.assignment = TRUE, ind = 1)
 #'
 #' # test with new data
-#' pred <- predict(tropsvm_fit , newx, newy)
+#' pred <- predict(tropsvm_fit , newx)
 #'
 #' # check with accuracy
 #' table(pred, newy)
 #'
 #' # compute testing accuracy
-#' sum(predict(tropsvm_fit , newx, newy) == newy)/length(newy)
+#' sum(pred == newy)/length(newy)
 #' @method predict tropsvm
 #' @export
 #' @export predict.tropsvm
-predict.tropsvm <- function(object, newx, newy, ...){
+predict.tropsvm <- function(object, newx, ...){
+  # object = tropsvm_fit;
   P_base <- matrix(c(1, 0, 0, 0,
                      0, 1, 0, 0,
                      1, 1, 0, 0,
@@ -64,13 +65,10 @@ predict.tropsvm <- function(object, newx, newy, ...){
                      0, 1, 1, 1), ncol = 4, byrow = T)
   colnames(PQ_com) <- c("ip", "jp", "iq", "jq")
   all_method_ind <- RcppAlgos::comboGeneral(8, 4)
-  if (length(unique(newy)) != 2){
-    stop("Only two classes are allowded.")
-  }
   if (is.data.frame(x)){
     x <- data.matrix(x)
   }
-  classes <- unique(newy)
+  classes <- object$`levels`
   best_method <- object$`method index`
   omega <- object$coef
   best_assignment <- object$assignment[c(1, 3, 2, 4)]

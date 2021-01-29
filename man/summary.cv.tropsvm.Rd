@@ -7,7 +7,9 @@
 \method{summary}{cv.tropsvm}(object, ...)
 }
 \arguments{
-\item{object}{a fitted \code{"cv.tropsvm"} object}
+\item{object}{a fitted \code{"cv.tropsvm"} object.}
+
+\item{\dots}{Not used. Other arguements to summary.}
 }
 \value{
 A summary of the crucial information of a tropical support vector machine is printed, incluiding

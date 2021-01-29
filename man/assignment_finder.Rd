@@ -7,11 +7,11 @@
 assignment_finder(P, Q, t = 25)
 }
 \arguments{
-\item{P}{a data matrix of the first category}
+\item{P}{a data matrix of the first category.}
 
-\item{Q}{a data matrix of the second category}
+\item{Q}{a data matrix of the second category.}
 
-\item{t}{a numeric value controling the number of selected best assignments}
+\item{t}{a numeric value controling the number of selected best assignments.}
 }
 \value{
 A matrix with each row a unique assignment, starting from the best assignment

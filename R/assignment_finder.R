@@ -1,8 +1,10 @@
 #' Efficient Finder of Best Assignment
 #'
-#' @param P a data matrix of the first category
-#' @param Q a data matrix of the second category
-#' @param t a numeric value controling the number of selected best assignments
+#' @importFrom Rfast colsums
+#'
+#' @param P a data matrix of the first category.
+#' @param Q a data matrix of the second category.
+#' @param t a numeric value controling the number of selected best assignments.
 #'
 #' @return A matrix with each row a unique assignment, starting from the best assignment
 #' and ending with the worst.

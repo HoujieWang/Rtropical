@@ -4,7 +4,8 @@
 #'
 #' @importFrom RcppAlgos comboGeneral
 #'
-#' @param object a fitted \code{"cv.tropsvm"} object
+#' @param object a fitted \code{"cv.tropsvm"} object.
+#' @param \dots Not used. Other arguements to summary.
 #'
 #' @return A summary of the crucial information of a tropical support vector machine is printed, incluiding
 #' the selected best assignment and classification methods and the validation accuracy of each data fold. The

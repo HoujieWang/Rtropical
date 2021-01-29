@@ -21,7 +21,7 @@
 #' @param auto.assignment a logical value indicating if to provide an \code{assignment} by user.
 #' If \code{FALSE}, an input is needed from the user, otherwise the function automatically
 #' finds a good assignment.(default: FALSE)
-#' @param accuracy a logival value indicating if return accuracy on test data and test label
+#' @param accuracy a logical value indicating if return accuracy on test data and test label
 #' \code{newx} and \code{newy} only. Note that if \code{TRUE}, the test data and test label
 #' \code{newx} and \code{newy} should be provided. Users are more recommended to use its
 #' default value as testing by prediction can be done via \code{predict.tropsvm}
@@ -74,13 +74,13 @@
 #' coef(tropsvm_fit)
 #'
 #' # test with new data
-#' pred <- predict(tropsvm_fit , newx, newy)
+#' pred <- predict(tropsvm_fit, newx)
 #'
 #' # check with accuracy
 #' table(pred, newy)
 #'
 #' # compute testing accuracy
-#' sum(predict(tropsvm_fit , newx, newy) == newy)/length(newy)
+#' sum(pred == newy)/length(newy)
 #'
 #' @export
 #' @export tropsvm
@@ -164,7 +164,7 @@ tropsvm <- function(x, y, auto.assignment = FALSE, accuracy = FALSE, assignment 
     tropsvm.out <- list("coef" = omega,
                         "assignment" = assignment,
                         "method index" = ind,
-                        "levels" = as.character(classes))
+                        "levels" = as.factor(classes))
     class(tropsvm.out) <- "tropsvm"
     tropsvm.out
   }

@@ -50,13 +50,13 @@ summary(cv_tropsvm_fit)
 coef(cv_tropsvm_fit)
 
 # test with new data
-pred <- predict(cv_tropsvm_fit , newx, newy)
+pred <- predict(cv_tropsvm_fit, newx)
 
 # check with accuracy
 table(pred, newy)
 
 # compute testing accuracy
-sum(predict(cv_tropsvm_fit , newx, newy) == newy)/length(newy)
+sum(pred == newy)/length(newy)
 
 }
 \references{
