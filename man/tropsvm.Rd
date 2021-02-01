@@ -10,7 +10,7 @@ tropsvm(
   auto.assignment = FALSE,
   accuracy = FALSE,
   assignment = NULL,
-  ind = NULL,
+  ind = 1,
   newx = NULL,
   newy = NULL
 )
@@ -20,17 +20,16 @@ tropsvm(
 
 \item{y}{a response vector with one label for each row/component of x.}
 
-\item{auto.assignment}{a logical value indicating if to provide an \code{assignment} by user.
-If \code{FALSE}, an input is needed from the user, otherwise the function automatically
+\item{auto.assignment}{a logical value indicating if to provide an \code{assignment} manually.
+If \code{FALSE}, an input is required, otherwise the function automatically
 finds a good assignment.(default: FALSE)}
 
-\item{accuracy}{a logical value indicating if return accuracy on test data and test label
-\code{newx} and \code{newy} only. Note that if \code{TRUE}, the test data and test label
-\code{newx} and \code{newy} should be provided. Users are more recommended to use its
-default value as testing by prediction can be done via \code{predict.tropsvm}
-more formally. (default: FALSE)}
+\item{accuracy}{a logical value indicating if to return accuracy on test data and test label
+\code{newx} and \code{newy} only. If \code{TRUE}, the test data and test label
+\code{newx} and \code{newy} should be provided. It's strongly recommended to keep \code{FALSE}
+and test the prediction via \code{predict} as convention. (default: FALSE)}
 
-\item{assignment}{a numeric vector indicating the sectors of tropical hyperplane that the
+\item{assignment}{a numeric vector of length 4 indicating the sectors of tropical hyperplane that the
 data will be assigned to. The first and third elements in the \code{assignment} are the coordinates of
 an observed point in data matrix \code{x} believed from the first category where the maximum and second maximum
 of the vector addition between the fitted optimal tropical hyperplane and the point itelf are achieved.
@@ -39,19 +38,20 @@ but for the points in the second category. Namely, the first and second values i
 are the indices of sectors where the two point cloud will be assigned. Not needed when \code{auto.assignment = TRUE}. (default: NULL)}
 
 \item{ind}{a numeric value or a numeric vector ranging from 1 to 70 indicating which classification method
-will be used. There are 70 different classification methods. The different classification methods are proposed to resolve
-the issue when points fall on the intersections of sectors. Users can have personal choices if better knowledge is assumed. (default: 1)}
+to be used. There are 70 different classification methods. Details of a given method can be retrieved by \code{summary}.
+ The different classification methods are proposed to resolve the issue when points fall on the intersections of sectors.
+ Users can have personal choices if better knowledge is assumed. (default: 1)}
 
 \item{newx}{the same as "x" but only needed in \code{cv.tropsvm}, which is used as validation data. (default: \code{NULL})}
 
 \item{newy}{the same as "y" but only needed in \code{cv.tropsvm}, which is used as validation labels (default: \code{NULL})}
 }
 \value{
-An object with S3 class \code{"tropsvm"}.
-\item{coef}{The vector of the fitted optimal tropical hyperplane}
-\item{assignment}{The user-input \code{assignment}}
-\item{method index}{The user-input \code{ind}}
-\item{levels}{The name of each category, consistent with categories in \code{y}}
+An object with S3 class \code{"tropsvm"} containing the fitted model, including:
+\item{coef}{The apex of the fitted optimal tropical hyperplane.}
+\item{assignment}{The user-input or auto-found \code{assignment}.}
+\item{method index}{The user-input classification method.}
+\item{levels}{The name of each category, consistent with categories in \code{y}.}
 }
 \description{
 Fit a discriminative two-class classifier via linear programming defined by the tropical
@@ -63,7 +63,7 @@ in the tropical projective torus.
 
 # data generation
 library(Rfast)
-e <- 100; n = 100; N = 100; s = 10
+e <- 100; n = 10; N = 100; s = 10
 x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
           rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
 y <- as.factor(c(rep(1, n), rep(2, n)))
@@ -96,7 +96,8 @@ Tang, X., Wang, H. and Yoshida, R. (2020)
 }
 \author{
 Houjie Wang and Kaizhang Wang
-Maintainer: Houjie Wang \email{whj666@uw.edu}
+
+Maintainer: Houjie Wang \email{wanghoujie6688@gmail.com}
 }
 \keyword{Data}
 \keyword{Geometry,}

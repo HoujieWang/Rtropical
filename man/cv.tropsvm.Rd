@@ -4,29 +4,20 @@
 \alias{cv.tropsvm}
 \title{Cross-Validation for Tropical Support Vector Machines}
 \usage{
-cv.tropsvm(x, y, parallel = TRUE, nfold = 10, nassignment = 10, ncores = 2)
+cv.tropsvm(x, y, parallel = FALSE, nfold = 10, nassignment = 10, ncores = 2)
 }
 \arguments{
 \item{x}{a data matrix, of dimension nobs x nvars; each row is an observation vector.}
 
 \item{y}{a response vector with one label for each row/component of x.}
 
-\item{parallel}{a logical value indicating if parallel computing should be used. (default: TRUE)}
+\item{parallel}{a logical value indicating if parallel computing should be used. (default: FALSE)}
 
 \item{nfold}{a numeric value of the number of data folds for cross-validation. (default: 10)}
 
 \item{nassignment}{a numeric value indicating the size of the parameter grid of assignments. (default: 10)}
 
 \item{ncores}{a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)}
-}
-\value{
-An object with S3 class \code{"cv.tropsvm"}.
-\item{coef}{The vector of the fitted optimal tropical hyperplane.}
-\item{assignment}{The best \code{assignment} tuned by cross-validation.}
-\item{method index}{The best classification method indices \code{ind} tuned by cross-validation.}
-\item{levels}{The name of each category, consistent with categories in \code{y}.}
-\item{accuracy}{The validation accuracy for each validation set.}
-\item{nfold}{The number of folds used in cross-validation}
 }
 \description{
 Conduct k-fold cross validation for tropsvm and return an object \code{"cv.tropsvm"}.
@@ -35,7 +26,7 @@ Conduct k-fold cross validation for tropsvm and return an object \code{"cv.trops
 
 # data generation
 library(Rfast)
-e <- 100; n = 100; N = 100; s = 10
+e <- 100; n <- 10; N <- 10; s <- 5
 x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
           rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
 y <- as.factor(c(rep(1, n), rep(2, n)))
@@ -44,7 +35,7 @@ newx <- rbind(rmvnorm(N, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
 newy <- as.factor(rep(c(1, 2), each = N))
 
 # train the tropical svm
-cv_tropsvm_fit <- cv.tropsvm(x, y)
+cv_tropsvm_fit <- cv.tropsvm(x, y, parallel = FALSE)
 
 summary(cv_tropsvm_fit)
 coef(cv_tropsvm_fit)
@@ -69,5 +60,6 @@ Tang, X., Wang, H. and Yoshida, R. (2020)
 }
 \author{
 Houjie Wang and Kaizhang Wang
-Maintainer: Houjie Wang \email{whj666@uw.edu}
+
+Maintainer: Houjie Wang \email{wanghoujie6688@gmail.com}
 }

@@ -15,21 +15,22 @@
 #'
 #' @param x a data matrix, of dimension nobs x nvars; each row is an observation vector.
 #' @param y a response vector with one label for each row/component of x.
-#' @param parallel a logical value indicating if parallel computing should be used. (default: TRUE)
+#' @param parallel a logical value indicating if parallel computing should be used. (default: FALSE)
 #' @param nfold a numeric value of the number of data folds for cross-validation. (default: 10)
 #' @param nassignment a numeric value indicating the size of the parameter grid of assignments. (default: 10)
 #' @param ncores a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)
 #'
-#' @return An object with S3 class \code{"cv.tropsvm"}.
-#' \item{coef}{The vector of the fitted optimal tropical hyperplane.}
+#' @returnAn object with S3 class \code{"cv.tropsvm"} containing the fitted model, including:
+#' \item{coef}{The apex of the fitted optimal tropical hyperplane.}
 #' \item{assignment}{The best \code{assignment} tuned by cross-validation.}
-#' \item{method index}{The best classification method indices \code{ind} tuned by cross-validation.}
+#' \item{method index}{The best classification method tuned by cross-validation.}
 #' \item{levels}{The name of each category, consistent with categories in \code{y}.}
-#' \item{accuracy}{The validation accuracy for each validation set.}
-#' \item{nfold}{The number of folds used in cross-validation}
+#' \item{accuracy}{The validation accuracy for each fold.}
+#' \item{nfold}{The number of folds used in cross-validation.}
 #'
 #' @author Houjie Wang and Kaizhang Wang
-#' Maintainer: Houjie Wang \email{whj666@@uw.edu}
+#'
+#' Maintainer: Houjie Wang \email{wanghoujie6688@@gmail.com}
 #'
 #' @references Tang, X., Wang, H. and Yoshida, R. (2020)
 #' \emph{Tropical Support Vector Machine and its Applications to Phylogenomics}
@@ -41,7 +42,7 @@
 #'
 #' # data generation
 #' library(Rfast)
-#' e <- 100; n = 100; N = 100; s = 10
+#' e <- 100; n <- 10; N <- 10; s <- 5
 #' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
 #'           rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
 #' y <- as.factor(c(rep(1, n), rep(2, n)))
@@ -50,7 +51,7 @@
 #' newy <- as.factor(rep(c(1, 2), each = N))
 #'
 #' # train the tropical svm
-#' cv_tropsvm_fit <- cv.tropsvm(x, y)
+#' cv_tropsvm_fit <- cv.tropsvm(x, y, parallel = FALSE)
 #'
 #' summary(cv_tropsvm_fit)
 #' coef(cv_tropsvm_fit)
@@ -67,13 +68,19 @@
 #' @export
 #' @export cv.tropsvm
 
-cv.tropsvm <- function(x, y, parallel = TRUE, nfold = 10, nassignment = 10, ncores = 2){
+cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, ncores = 2){
+  if (nrow(x) != length(y)){
+    stop("numbers of data and label don't match")
+  }
   if (length(unique(y)) != 2){
-    stop("Only two classes are allowded.")
+    stop("only two classes allowded")
   }
   if (is.data.frame(x)){
+    warning("input data not 'matrix'; set to 'Matrix'")
     x <- data.matrix(x)
-    warning("Input data has to be of class 'Matrix'.")
+  }
+  if (nassignment < 10){
+    warning("too few possible assignments to validate, please choose at least 10")
   }
 
   classes <- unique(y)
@@ -124,10 +131,10 @@ cv.tropsvm <- function(x, y, parallel = TRUE, nfold = 10, nassignment = 10, ncor
       cl <- makeCluster(ncores)
       clusterExport(cl, list("data", "label", "val_data", "val_label", "tropsvm", "lp", "eachrow", "rowMaxs", "colMins"), envir = environment())
       all_accuracy <- parLapply(cl, all_assignment_list, function(assignment){
-        tropsvm(x = data, y = label, accuracy = T, assignment = 1: 4, ind = 1: 70, newx = val_data, newy = val_label)})
+        tropsvm(x = data, y = label, accuracy = T, assignment = assignment, ind = 1: 70, newx = val_data, newy = val_label)})
       stopCluster(cl)
     } else{
-      all_accuracy <- lapply(all_assignment_list, function(assignment){tropsvm(data, label, accuracy = T, assignment, ind = 1: 70, newx = val_data, newy = val_label)})
+      all_accuracy <- lapply(all_assignment_list, function(assignment){tropsvm(data, label, accuracy = T, assignment = assignment, ind = 1: 70, newx = val_data, newy = val_label)})
     }
     accuracy_mat <- do.call("rbind", all_accuracy)
     all_accuracy_list[[i]] <- accuracy_mat

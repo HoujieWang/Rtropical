@@ -22,7 +22,7 @@
 #'
 #' # data generation
 #' library(Rfast)
-#' e <- 100; n = 100; N = 100; s = 10
+#' e <- 100; n <- 10; N <- 10; s <- 5
 #' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
 #'           rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
 #' y <- as.factor(c(rep(1, n), rep(2, n)))
@@ -31,7 +31,7 @@
 #' newy <- as.factor(rep(c(1, 2), each = N))
 #'
 #' # train the tropical svm
-#' cv_tropsvm_fit <- cv.tropsvm(x, y)
+#' cv_tropsvm_fit <- cv.tropsvm(x, y, parallel = FALSE)
 #'
 #' # test with new data
 #' pred <- predict(cv_tropsvm_fit , newx)
@@ -46,39 +46,5 @@
 #' @export
 #' @export predict.cv.tropsvm
 predict.cv.tropsvm <- function(object, newx, ...){
-  P_base <- matrix(c(1, 0, 0, 0,
-                     0, 1, 0, 0,
-                     1, 1, 0, 0,
-                     1, 1, 1, 1), ncol = 4, byrow = T);
-  Q_base <- matrix(c(0, 0, 1, 0,
-                     0, 0, 0, 1,
-                     0, 0, 1, 1,
-                     0, 0, 0, 0), ncol = 4, byrow = T);
-  PQ_com <- matrix(c(1, 0, 1, 0,
-                     1, 0, 0, 1,
-                     0, 1, 1, 0,
-                     0, 1, 0, 1,
-                     1, 1, 1, 0,
-                     1, 1, 0, 1,
-                     1, 0, 1, 1,
-                     0, 1, 1, 1), ncol = 4, byrow = T)
-  colnames(PQ_com) <- c("ip", "jp", "iq", "jq")
-  all_method_ind <- RcppAlgos::comboGeneral(8, 4)
-  if (is.data.frame(x)){
-    x <- data.matrix(x)
-  }
-  classes <- object$`levels`
-  best_method <- object$`method index`
-  omega <- object$coef
-  best_assignment <- object$assignment[c(1, 3, 2, 4)]
-
-  classification_method <- rbind(rbind(P_base, PQ_com[all_method_ind[best_method, ], ]),
-                                 rbind(Q_base, PQ_com[-all_method_ind[best_method, ], ]))
-  shifted_tst_data <- eachrow(newx, omega, "+")
-  diff <- eachrow(t(shifted_tst_data), rowMaxs(shifted_tst_data, T), oper = "-")
-  classification <- lapply(lapply(seq_len(ncol(diff)), function(i) diff[, i]), function(x){which(abs(x) < 1e-10)})
-  classification <- sapply(classification, function(x){which(colSums(abs(t(classification_method) - best_assignment %in% x)) == 0)})
-  classification[classification <= 8] <- classes[1]
-  classification[classification > 8] <- classes[2]
-  as.factor(classification)
+  predict.tropsvm(object, newx)
 }
