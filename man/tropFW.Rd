@@ -2,7 +2,7 @@
 % Please edit documentation in R/tropFW.R
 \name{tropFW}
 \alias{tropFW}
-\title{Find the Tropical Fermat-Weber Point}
+\title{Tropical Fermat-Weber Point}
 \usage{
 tropFW(x)
 }
@@ -10,15 +10,14 @@ tropFW(x)
 \item{x}{a data matrix, of dimension nobs x nvars; each row is an observation vector.}
 }
 \value{
-A list containing the optimal fermat-weber point and the minimized sum of distance:
-\item{fw}{The optimal fermat-weber point.}
-\item{distsum}{The sum of distance from each observation to the optimal fermat-weber point.}
+A list containing:
+\item{fw}{The fermat-weber point.}
+\item{distsum}{The sum of distance from each observation to the fermat-weber point.}
 }
 \description{
-Funcition to compute a tropical fermar-weber point such that the sum of tropical distances is minimized.
+Compute the tropical fermat-weber point for a given data set such that the sum of tropical distance to each point is minimized.
 }
 \examples{
-
 x = matrix(rnorm(100), ncol = 10)
 tropFW(x)
 
@@ -34,5 +33,5 @@ Maintainer: Houjie Wang \email{wanghoujie6688@gmail.com}
 }
 \keyword{Fermat-Weber}
 \keyword{Geometry,}
-\keyword{Points}
+\keyword{Point}
 \keyword{Tropical}

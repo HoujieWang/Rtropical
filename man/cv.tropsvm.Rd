@@ -19,6 +19,15 @@ cv.tropsvm(x, y, parallel = FALSE, nfold = 10, nassignment = 10, ncores = 2)
 
 \item{ncores}{a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)}
 }
+\value{
+object with S3 class \code{"cv.tropsvm"} containing the fitted model, including:
+\item{coef}{The apex of the fitted optimal tropical hyperplane.}
+\item{assignment}{The best \code{assignment} tuned by cross-validation.}
+\item{method index}{The best classification method tuned by cross-validation.}
+\item{levels}{The name of each category, consistent with categories in \code{y}.}
+\item{accuracy}{The validation accuracy for each fold.}
+\item{nfold}{The number of folds used in cross-validation.}
+}
 \description{
 Conduct k-fold cross validation for tropsvm and return an object \code{"cv.tropsvm"}.
 }

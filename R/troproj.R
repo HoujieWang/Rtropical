@@ -1,12 +1,12 @@
 #' Projection on Tropical Polytope
 #'
-#' \code{troproj} computes a projection onto a given tropical polytope.
+#' \code{troproj} computes a vector projection on a given tropical polytope.
 #'
-#' @param x x a data matrix, of dimension nobs x nvars; each row is an observation vector.
-#' @param tconv a data matrix, of dimension nvars x s; each column is a basis of tropical polytope;
-#' s is the dimension of the polytope.
+#' @param x a data vector.
+#' @param tconv a data matrix, of dimension e x s; e is the dimension of the tropical space;
+#' s is the dimension of the polytope. each column is a basis of tropical polytope.
 #'
-#' @return The projected vector on the given tropical polytope.
+#' @return A projected vector on the given tropical polytope.
 #'
 #' @author Qiwen Kang and Houjie Wang
 #'
@@ -29,13 +29,13 @@
 #' @export
 #' @export troproj
 #'
-troproj <- function(x,tconv){
-  if(is.null(dim(x))){
-    lambda <- min(tconv - x)
-    pi_D <- c(t(lambda + t(x)))
+troproj <- function(x, tconv){
+  if(is.null(dim(tconv))){
+    lambda <- min(x - tconv)
+    pi_D <- c(t(lambda + t(tconv)))
   }else{
-    lambda <- apply(tconv - x, 2, min)
-    pi_D <- apply(t(lambda + t(x)),1,max)
+    lambda <- apply(x - tconv, 2, min)#D_s by row
+    pi_D <- apply(t(lambda + t(tconv)),1,max)
   }
   return(pi_D)
 }

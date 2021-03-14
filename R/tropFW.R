@@ -1,15 +1,15 @@
-#' Find the Tropical Fermat-Weber Point
+#' Tropical Fermat-Weber Point
 #'
-#' Funcition to compute a tropical fermar-weber point such that the sum of tropical distances is minimized.
+#' Compute the tropical fermat-weber point for a given data set such that the sum of tropical distance to each point is minimized.
 #'
 #' @importFrom RcppAlgos comboGeneral
 #' @importFrom lpSolve lp
 #'
 #' @param x a data matrix, of dimension nobs x nvars; each row is an observation vector.
 #'
-#' @return A list containing the optimal fermat-weber point and the minimized sum of distance:
-#' \item{fw}{The optimal fermat-weber point.}
-#' \item{distsum}{The sum of distance from each observation to the optimal fermat-weber point.}
+#' @return A list containing:
+#' \item{fw}{The fermat-weber point.}
+#' \item{distsum}{The sum of distance from each observation to the fermat-weber point.}
 #'
 #' @author Houjie Wang
 #'
@@ -18,10 +18,9 @@
 #' @references Lin, B.,Sturmfels, B., Tang, X. and Yoshida, R. (2015)
 #' \emph{Convexity in Tree Spaces, SIAM Journal on Discrete Mathematics, Vol. 31(3) 2015–2038}
 #'
-#' @keywords Tropical Geometry, Fermat-Weber Points
+#' @keywords Tropical Geometry, Fermat-Weber Point
 #'
 #' @examples
-#'
 #' x = matrix(rnorm(100), ncol = 10)
 #' tropFW(x)
 #'

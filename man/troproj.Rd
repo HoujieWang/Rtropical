@@ -7,16 +7,16 @@
 troproj(x, tconv)
 }
 \arguments{
-\item{x}{x a data matrix, of dimension nobs x nvars; each row is an observation vector.}
+\item{x}{a data vector.}
 
-\item{tconv}{a data matrix, of dimension nvars x s; each column is a basis of tropical polytope;
-s is the dimension of the polytope.}
+\item{tconv}{a data matrix, of dimension e x s; e is the dimension of the tropical space;
+s is the dimension of the polytope. each column is a basis of tropical polytope.}
 }
 \value{
-The projected vector on the given tropical polytope.
+A projected vector on the given tropical polytope.
 }
 \description{
-\code{troproj} computes a projection onto a given tropical polytope.
+\code{troproj} computes a vector projection on a given tropical polytope.
 }
 \examples{
 

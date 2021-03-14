@@ -4,7 +4,7 @@
 #'
 #' @importFrom RcppAlgos comboGeneral
 #'
-#' @param object a fitted \code{"cv.tropsvm"} object.
+#' @param object a fitted \code{tropsvm} object.
 #' @param newx a data matrix, of dimension nobs x nvars used as testing data.
 #' @param \dots Not used. Other arguments to predict.
 #'

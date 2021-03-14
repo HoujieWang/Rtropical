@@ -7,7 +7,7 @@
 \method{predict}{tropsvm}(object, newx, ...)
 }
 \arguments{
-\item{object}{a fitted \code{"cv.tropsvm"} object.}
+\item{object}{a fitted \code{tropsvm} object.}
 
 \item{newx}{a data matrix, of dimension nobs x nvars used as testing data.}
 
