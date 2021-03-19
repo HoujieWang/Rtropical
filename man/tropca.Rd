@@ -14,14 +14,14 @@ tropca(x, pcs = 3, rep = 2)
 \item{rep}{a numeric value indicating the number of repetitions of MCMC. (default: 2)}
 }
 \value{
-An object with S3 class \code{"tropca"} containing the fitted model, including:
+A list of S3 class \code{"tropca"} containing the fitted model, including:
 \item{pc}{The principle components.}
 \item{obj}{The sum of tropical distances from each point to its projection on the principle components.}
 \item{projection}{The projections of given data set.}
 }
 \description{
 Approximate the principle components as a polytope for a given data matrix in the settings of
-tropical geometry via MCMC and returns the results as an object of class tropca.
+tropical geometry via MCMC and return the results as an object of class tropca.
 }
 \examples{
 library(Rfast)
@@ -38,7 +38,7 @@ J. Bioinform., Volume 36, Issue 17, 4590–4598 (2020).}
 \url{https://doi.org/10.1093/bioinformatics/btaa564}
 }
 \author{
-Qiwen Kang and Houjie Wang
+Houjie Wang
 
 Maintainer: Houjie Wang \email{wanghoujie6688@gmail.com}
 }

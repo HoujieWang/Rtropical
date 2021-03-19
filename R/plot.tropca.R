@@ -1,7 +1,7 @@
-#' Plot Tropical Principle Component with Projections
+#' Plot the Tropical Principle Components with Data Projections
 #'
-#' Visialize second order tropical prinrciple components in \code{tropca}
-#' as tropical triangle with projections of a given data matrix.
+#' Visialize the second order tropical prinrciple components in \code{tropca}
+#' as a tropical triangle with projections on a two-dimensional plot via tropical isometry.
 #'
 #' @importFrom graphics plot
 #' @importFrom graphics points
@@ -15,7 +15,6 @@
 #' @param \dots Not used. Other arguments to plot
 #'
 #' @author Qiwen Kang, Robert Page and Houjie Wang
-#' Maintainer: Houjie Wang \email{wanghoujie6688@@gmail.com}
 #'
 #' @references Page, R., Yoshida, R. & Zhang L.
 #' \emph{Tropical principal component analysis on the space of phylogenetic trees.

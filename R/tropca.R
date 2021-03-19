@@ -1,7 +1,7 @@
 #' Tropical Principle Components Analysis
 #'
 #' Approximate the principle components as a polytope for a given data matrix in the settings of
-#' tropical geometry via MCMC and returns the results as an object of class tropca.
+#' tropical geometry via MCMC and return the results as an object of class tropca.
 #'
 #' @importFrom parallel parLapply
 #' @importFrom parallel makeCluster
@@ -13,12 +13,12 @@
 #' @param pcs a numeric value indicating the number of principle components. (default: 3)
 #' @param rep a numeric value indicating the number of repetitions of MCMC. (default: 2)
 #'
-#' @return An object with S3 class \code{"tropca"} containing the fitted model, including:
+#' @return A list of S3 class \code{"tropca"} containing the fitted model, including:
 #' \item{pc}{The principle components.}
 #' \item{obj}{The sum of tropical distances from each point to its projection on the principle components.}
 #' \item{projection}{The projections of given data set.}
 #'
-#' @author Qiwen Kang and Houjie Wang
+#' @author Houjie Wang
 #'
 #' Maintainer: Houjie Wang \email{wanghoujie6688@@gmail.com}
 #' @references Page, R., Yoshida, R. & Zhang L.
@@ -48,7 +48,7 @@ tropca <- function(x, pcs = 3, rep = 2){
     best <- 100000
     out <- c(1:N)[-sample_init]
     pc_base_init <- x[sample_init, ]
-    init_value <- tropca.obj(t(pc_base_init), x_list, cl)
+    init_obj <- tropca.obj(t(pc_base_init), x_list, cl)
     t = 0
     while(length(out)!=0){
       t = t+ 1
@@ -58,16 +58,16 @@ tropca <- function(x, pcs = 3, rep = 2){
 
       new_base <- x[comb_set, ]
 
-      update_value <- tropca.obj(t(new_base), x_list, cl)
-      r <- init_value/update_value
+      update_obj <- tropca.obj(t(new_base), x_list, cl)
+      r <- init_obj/update_obj
 
       if(runif(1) < min(r, 1)){
         sample_init <- comb_set
 
-        best <- ifelse(update_value < best, update_value, best)
+        best <- ifelse(update_obj < best, update_obj, best)
       }
       out <- out[-which(out==out_change)]
-      init_value <- update_value
+      init_obj <- update_obj
     }
     tropca_objs[j] <- best
     comb_list[[j]] <- sample_init

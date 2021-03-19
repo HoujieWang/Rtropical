@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.tropca.R
 \name{plot.tropca}
 \alias{plot.tropca}
-\title{Plot Tropical Principle Component with Projections}
+\title{Plot the Tropical Principle Components with Data Projections}
 \usage{
 \method{plot}{tropca}(x, plab = NULL, ...)
 }
@@ -15,8 +15,8 @@ Not needed for unlabeled data. (default: NULL)}
 \item{\dots}{Not used. Other arguments to plot}
 }
 \description{
-Visialize second order tropical prinrciple components in \code{tropca}
-as tropical triangle with projections of a given data matrix.
+Visialize the second order tropical prinrciple components in \code{tropca}
+as a tropical triangle with projections on a two-dimensional plot via tropical isometry.
 }
 \examples{
 library(Rfast)
@@ -34,7 +34,6 @@ J. Bioinform., Volume 36, Issue 17, 4590–4598 (2020).}
 }
 \author{
 Qiwen Kang, Robert Page and Houjie Wang
-Maintainer: Houjie Wang \email{wanghoujie6688@gmail.com}
 }
 \keyword{Data}
 \keyword{Geometry,}
