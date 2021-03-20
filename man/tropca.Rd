@@ -4,7 +4,7 @@
 \alias{tropca}
 \title{Tropical Principle Components Analysis}
 \usage{
-tropca(x, pcs = 3, rep = 2)
+tropca(x, pcs = 3, rep = 2, ncores = 2)
 }
 \arguments{
 \item{x}{a data matrix, of dimension nobs x nvars; each row is an observation vector.}
@@ -12,6 +12,8 @@ tropca(x, pcs = 3, rep = 2)
 \item{pcs}{a numeric value indicating the number of principle components. (default: 3)}
 
 \item{rep}{a numeric value indicating the number of repetitions of MCMC. (default: 2)}
+
+\item{ncores}{a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)}
 }
 \value{
 A list of S3 class \code{"tropca"} containing the fitted model, including:

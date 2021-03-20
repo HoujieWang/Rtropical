@@ -12,6 +12,7 @@
 #' @param x a data matrix, of dimension nobs x nvars; each row is an observation vector.
 #' @param pcs a numeric value indicating the number of principle components. (default: 3)
 #' @param rep a numeric value indicating the number of repetitions of MCMC. (default: 2)
+#' @param ncores a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)
 #'
 #' @return A list of S3 class \code{"tropca"} containing the fitted model, including:
 #' \item{pc}{The principle components.}
@@ -37,10 +38,10 @@
 #' @export
 #' @export tropca
 
-tropca <- function(x, pcs = 3, rep = 2){
+tropca <- function(x, pcs = 3, rep = 2, ncores = 2){
   tropca_objs <- rep(NA, rep)
   comb_list <- list()
-  cl <- makeCluster(2)
+  cl <- makeCluster(ncores)
   N <- nrow(x)
   x_list <- lapply(seq_len(nrow(x)), function(i) x[i, ])
   for(j in 1:rep){
@@ -51,7 +52,7 @@ tropca <- function(x, pcs = 3, rep = 2){
     init_obj <- tropca.obj(t(pc_base_init), x_list, cl)
     t = 0
     while(length(out)!=0){
-      t = t+ 1
+      t = t + 1
       change_ind <- sample(pcs,1)
       out_change <- sample(out, 1)
       comb_set <- c(sample_init[-change_ind], out_change)

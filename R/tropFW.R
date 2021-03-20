@@ -3,7 +3,12 @@
 #' Compute the tropical fermat-weber point for a given data set such that the sum of tropical distance to each point is minimized.
 #'
 #' @importFrom RcppAlgos comboGeneral
-#' @importFrom lpSolve lp
+#' @importFrom lpSolveAPI make.lp
+#' @importFrom lpSolveAPI add.constraint
+#' @importFrom lpSolveAPI solve.lpExtPtr
+#' @importFrom lpSolveAPI get.variables
+#' @importFrom lpSolveAPI get.objective
+#' @importFrom lpSolveAPI set.objfn
 #'
 #' @param x a data matrix, of dimension nobs x nvars; each row is an observation vector.
 #'
@@ -27,20 +32,26 @@
 #' @export
 #' @export tropFW
 tropFW <- function(x){
-  nn <- nrow(x)
-  e <- ncol(x)
-  jk <- comboGeneral(1: e, 2)
-  combn_size <- nrow(jk)
-  conY <- matrix(0, nrow = nn*combn_size, ncol = e)
-  all_v <- x[, jk[, 2]] - x[, jk[, 1]]
-  conY[cbind(1: (nn*combn_size), rep(jk[, 1], each = nrow(x)))] <- -1
-  conY[cbind(1: (nn*combn_size), rep(jk[, 2], each = nrow(x)))] <- 1
-  conD <- matrix(0, nrow = 2*nn*combn_size, ncol = nn)
-  conD[cbind(1: (2*nn*combn_size), 1: nn)] <- -1
-  con <- cbind(conD, rbind(conY, -conY))
-  rhs <- c(matrix(all_v), -matrix(all_v))
-  obj <- c(rep(1, nn), rep(0, e))
-  dir <- rep("<=", (2*nn*combn_size))
-  sol <- lp("min", obj, con, dir, rhs)
-  list("fw" = sol$solution[-c(1: nn)], "distsum" = sol$objval)
+  n <- dim(x)[1]
+  m <- dim(x)[2]
+  lprec <- make.lp(0, n+m)
+  objective <- mat.or.vec(n+m,1)
+  for (i in seq(n)) {
+    objective[i] <- 1
+  }
+  set.objfn(lprec, objective)
+  for (i in seq(n)) {
+    for (j in seq(m)) {
+      for (k in seq(m)) {
+        v <- mat.or.vec(n+m,1)
+        v[i] <- 1
+        v[n+k] <- 1
+        v[n+j] <- -1
+        add.constraint(lprec, v, ">=", x[i,k] - x[i,j])
+      }
+    }
+  }
+  solve.lpExtPtr(lprec)
+  sols <- get.variables(lprec)
+  list("fw" = sols[-c(1: n)], "distsum" = get.objective(lprec))
 }
