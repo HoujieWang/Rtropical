@@ -21,9 +21,9 @@
 #' @param ncores a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)
 #'
 #' @return object with S3 class \code{"cv.tropsvm"} containing the fitted model, including:
-#' \item{coef}{The apex of the fitted optimal tropical hyperplane.}
+#' \item{apex}{The negative apex of the fitted optimal tropical hyperplane.}
 #' \item{assignment}{The best \code{assignment} tuned by cross-validation.}
-#' \item{method index}{The best classification method tuned by cross-validation.}
+#' \item{index}{The best classification method tuned by cross-validation.}
 #' \item{levels}{The name of each category, consistent with categories in \code{y}.}
 #' \item{accuracy}{The validation accuracy for each fold.}
 #' \item{nfold}{The number of folds used in cross-validation.}
@@ -156,9 +156,9 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
   val_n2 <- sum(val_label == classes[2])
   val_n <- val_n1 + val_n2
   tropsvm.out <- tropsvm(data, label, assignment = best_assignment, ind = best_method_ind)
-  cv.tropsvm.out <- list("coef" = tropsvm.out$coef,
+  cv.tropsvm.out <- list("apex" = tropsvm.out$apex,
                          "assignment" = best_assignment,
-                         "method index" = best_method_ind,
+                         "index" = best_method_ind,
                          "levels" = as.factor(classes),
                          "accuracy" = best_accuracy,
                          "nfold" = nfold)

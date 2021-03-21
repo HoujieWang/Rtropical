@@ -28,12 +28,15 @@ Approximate the principle components as a polytope for a given data matrix in th
 tropical geometry via MCMC and return the results as an object of class tropca.
 }
 \examples{
+\dontrun{
 library(Rfast)
-n <- 20; e <- 50; s <- 5
+n <- 50; e <- 50; s <- 5
 x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
            rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
 tropca_fit <- tropca(x)
 plot(tropca_fit)
+}
+
 }
 \references{
 Page, R., Yoshida, R. & Zhang L.

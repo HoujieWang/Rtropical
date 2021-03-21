@@ -18,14 +18,6 @@ Not needed for unlabeled data. (default: NULL)}
 Visialize the second order tropical prinrciple components in \code{tropca}
 as a tropical triangle with projections on a two-dimensional plot via tropical isometry.
 }
-\examples{
-library(Rfast)
-n <- 20; e <- 50; s <- 5
-x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-           rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
-tropca_fit <- tropca(x)
-plot(tropca_fit)
-}
 \references{
 Page, R., Yoshida, R. & Zhang L.
 \emph{Tropical principal component analysis on the space of phylogenetic trees.

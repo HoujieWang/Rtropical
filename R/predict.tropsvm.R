@@ -69,8 +69,8 @@ predict.tropsvm <- function(object, newx, ...){
     x <- data.matrix(x)
   }
   classes <- object$`levels`
-  best_method <- object$`method index`
-  omega <- object$coef
+  best_method <- object$`index`
+  omega <- object$apex
   best_assignment <- object$assignment[c(1, 3, 2, 4)]
 
   classification_method <- rbind(rbind(P_base, PQ_com[all_method_ind[best_method, ], ]),

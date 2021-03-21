@@ -30,12 +30,15 @@
 #'
 #' @keywords Tropical Geometry, Supervised Learning, Non-Euclidean Data
 #' @examples
+#' \dontrun{
 #' library(Rfast)
-#' n <- 20; e <- 50; s <- 5
+#' n <- 50; e <- 50; s <- 5
 #' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
 #'            rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
 #' tropca_fit <- tropca(x)
 #' plot(tropca_fit)
+#' }
+#'
 #' @export
 #' @export tropca
 

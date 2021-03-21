@@ -22,13 +22,7 @@
 #' \url{https://doi.org/10.1093/bioinformatics/btaa564}
 #'
 #' @keywords Tropical Geometry, Supervised Learning, Non-Euclidean Data
-#' @examples
-#' library(Rfast)
-#' n <- 20; e <- 50; s <- 5
-#' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-#'            rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
-#' tropca_fit <- tropca(x)
-#' plot(tropca_fit)
+#'
 #' @method plot tropca
 #' @export
 #' @export plot.tropca

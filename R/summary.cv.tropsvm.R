@@ -60,7 +60,7 @@ summary.cv.tropsvm <- function(object, ...){
                      0, 1, 1, 1), ncol = 4, byrow = T)
   colnames(PQ_com) <- c("ip", "jp", "iq", "jq")
   all_method_ind <- RcppAlgos::comboGeneral(8, 4)
-  best_method <- object$`method index`
+  best_method <- object$`index`
   best_assignment <- object$`assignment`
   classification_method <- list("P method" = rbind(P_base, PQ_com[all_method_ind[best_method, ], ]), "Q method" = rbind(Q_base, PQ_com[-all_method_ind[best_method, ], ]))
   cat("Tropical SVM under ", object$nfold, "-fold cross validation: \n\n\n", sep = "")

@@ -48,9 +48,9 @@ to be used. There are 70 different classification methods. Details of a given me
 }
 \value{
 An object with S3 class \code{"tropsvm"} containing the fitted model, including:
-\item{coef}{The apex of the fitted optimal tropical hyperplane.}
+\item{apex}{The negative apex of the fitted optimal tropical hyperplane.}
 \item{assignment}{The user-input or auto-found \code{assignment}.}
-\item{method index}{The user-input classification method.}
+\item{index}{The user-input classification method.}
 \item{levels}{The name of each category, consistent with categories in \code{y}.}
 }
 \description{

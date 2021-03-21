@@ -40,9 +40,9 @@
 #' @param newy the same as "y" but only needed in \code{cv.tropsvm}, which is used as validation labels (default: \code{NULL})
 #'
 #' @return An object with S3 class \code{"tropsvm"} containing the fitted model, including:
-#' \item{coef}{The apex of the fitted optimal tropical hyperplane.}
+#' \item{apex}{The negative apex of the fitted optimal tropical hyperplane.}
 #' \item{assignment}{The user-input or auto-found \code{assignment}.}
-#' \item{method index}{The user-input classification method.}
+#' \item{index}{The user-input classification method.}
 #' \item{levels}{The name of each category, consistent with categories in \code{y}.}
 #'
 #' @author Houjie Wang and Kaizhang Wang
@@ -162,9 +162,9 @@ tropsvm <- function(x, y, auto.assignment = FALSE, accuracy = FALSE, assignment 
     sol <- lp("max", f.obj, f.con, f.dir, f.rhs)
     omega[c(ip, jp, iq, jq)] <- sol$solution[2: 5]
     omega[-c(ip, jp, iq, jq)] <- colMins(-data[, -c(ip, jp, iq, jq)] + c(data[1: n1, jp] + omega[jp], data[-c(1: n1), jq] + omega[jq]), T)
-    tropsvm.out <- list("coef" = omega,
+    tropsvm.out <- list("apex" = omega,
                         "assignment" = assignment,
-                        "method index" = ind,
+                        "index" = ind,
                         "levels" = as.factor(classes))
     class(tropsvm.out) <- "tropsvm"
     tropsvm.out
