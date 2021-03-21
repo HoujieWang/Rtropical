@@ -4,22 +4,24 @@
 \alias{tropca}
 \title{Tropical Principle Components Analysis}
 \usage{
-tropca(x, pcs = 3, rep = 2, ncores = 2)
+tropca(x, pcs = 3, nsample = 1000, ncores = 2)
 }
 \arguments{
 \item{x}{a data matrix, of dimension nobs x nvars; each row is an observation vector.}
 
 \item{pcs}{a numeric value indicating the number of principle components. (default: 3)}
 
-\item{rep}{a numeric value indicating the number of repetitions of MCMC. (default: 2)}
+\item{nsample}{a numeric value indicating the number of samples of MCMC. (default: 1000)}
 
 \item{ncores}{a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)}
 }
 \value{
 A list of S3 class \code{"tropca"} containing the fitted model, including:
-\item{pc}{The principle components.}
-\item{obj}{The sum of tropical distances from each point to its projection on the principle components.}
-\item{projection}{The projections of given data set.}
+\item{pc}{The approximated principle components as a tropical polytope.}
+\item{obj}{The tropical PCA objective, the sum of tropical distances from points to their projections on the principle components.}
+\item{projection}{The projections of points.}
+\item{samples}{All sampled tropical polytopes.}
+\item{objs}{All tropical PCA objectives for all sampled tropical polytopes.}
 }
 \description{
 Approximate the principle components as a polytope for a given data matrix in the settings of
@@ -41,8 +43,6 @@ J. Bioinform., Volume 36, Issue 17, 4590–4598 (2020).}
 }
 \author{
 Houjie Wang
-
-Maintainer: Houjie Wang \email{wanghoujie6688@gmail.com}
 }
 \keyword{Data}
 \keyword{Geometry,}

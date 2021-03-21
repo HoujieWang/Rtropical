@@ -4,9 +4,11 @@
 #'
 #' @importFrom RcppAlgos comboGeneral
 #' @importFrom lpSolveAPI make.lp
-#' @importFrom lpSolveAPI add.constraint
+#' @importFrom lpSolveAPI set.constr.type
+#' @importFrom lpSolveAPI set.rhs
 #' @importFrom lpSolveAPI solve.lpExtPtr
 #' @importFrom lpSolveAPI get.variables
+#' @importFrom lpSolveAPI set.column
 #' @importFrom lpSolveAPI get.objective
 #' @importFrom lpSolveAPI set.objfn
 #'
@@ -32,26 +34,33 @@
 #' @export
 #' @export tropFW
 tropFW <- function(x){
-  n <- dim(x)[1]
-  m <- dim(x)[2]
-  lprec <- make.lp(0, n+m)
-  objective <- mat.or.vec(n+m,1)
-  for (i in seq(n)) {
-    objective[i] <- 1
-  }
-  set.objfn(lprec, objective)
-  for (i in seq(n)) {
-    for (j in seq(m)) {
-      for (k in seq(m)) {
-        v <- mat.or.vec(n+m,1)
-        v[i] <- 1
-        v[n+k] <- 1
-        v[n+j] <- -1
-        add.constraint(lprec, v, ">=", x[i,k] - x[i,j])
-      }
-    }
-  }
+  nn <- nrow(x)
+  e <- ncol(x)
+  jk <- comboGeneral(1: e, 2)
+  combn_size <- nrow(jk)
+  obj <- c(rep(1, nn), rep(0, e))
+  conY <- matrix(0, nrow = nn*combn_size, ncol = e)
+  all_v <- x[, jk[, 2]] - x[, jk[, 1]]
+  conY[cbind(1: (nn*combn_size), rep(jk[, 1], each = nrow(x)))] <- -1
+  conY[cbind(1: (nn*combn_size), rep(jk[, 2], each = nrow(x)))] <- 1
+  conD <- matrix(0, nrow = 2*nn*combn_size, ncol = nn)
+  conD[cbind(1: (2*nn*combn_size), 1: nn)] <- -1
+  con <- cbind(conD, rbind(conY, -conY))
+  conD_2 <- matrix(0, nrow = nn*e, ncol = nn)
+  conD_2[cbind(1: (nn*e), 1: nn)] <- -1
+  conY_2 <- matrix(0, nrow = nn*e, ncol = e)
+  conY_2[cbind(1: (nn*e), rep(1: e, each = nn))] <- 1
+  con_2 <- cbind(conD_2, conY_2)
+  con_new <- rbind(con, con_2)
+  rhs_new <- c(matrix(all_v), -matrix(all_v), rep(0, (nn*e)))
+  dir_new <- rep("<=", (2*nn*combn_size + (nn*e)))
+
+  lprec <- make.lp(nrow(con_new), nn+e)
+  for (i in 1: ncol(con_new)){set.column(lprec, i, -con_new[, i])}
+  set.constr.type(lprec, rep(">=", (2*nn*combn_size + (nn*e))))
+  set.rhs(lprec, -rhs_new)
+  set.objfn(lprec, c(rep(1, nn), rep(0, e)))
   solve.lpExtPtr(lprec)
-  sols <- get.variables(lprec)
-  list("fw" = sols[-c(1: n)], "distsum" = get.objective(lprec))
+  sols = get.variables(lprec)
+  list("fw" = sols[-c(1: nn)], "distsum" = sum(sols[1: nn]))
 }
