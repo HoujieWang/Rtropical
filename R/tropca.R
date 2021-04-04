@@ -78,9 +78,7 @@ tropca <- function(x, pcs = 3, nsample = 1000, ncores = 2){
   rownames(pc) <- paste("pc", 1: pcs, sep = "")
   tropca.out <- list("pc" = pc,
                      "obj" = tropca_objs[min_index],
-                     "projection" = proj_points,
-                     "samples" = samples,
-                     "objs" = tropca_objs)
+                     "projection" = proj_points)
   class(tropca.out) <- "tropca"
   tropca.out
 }

@@ -5,11 +5,6 @@
 #' to itself in order to separate the data points into sectors (half-spaces)
 #' in the tropical projective torus.
 #'
-#' @importFrom parallel parLapply
-#' @importFrom parallel makeCluster
-#' @importFrom parallel setDefaultCluster
-#' @importFrom parallel clusterExport
-#' @importFrom parallel stopCluster
 #' @importFrom RcppAlgos comboGeneral
 #' @importFrom Rfast eachrow
 #' @importFrom Rfast rowMaxs
