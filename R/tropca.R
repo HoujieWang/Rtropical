@@ -46,7 +46,7 @@ tropca <- function(x, pcs = 3, nsample = 1000, ncores = 2){
   n = nrow(x)
   cl <- makeCluster(ncores)
   x_list <- lapply(seq_len(n), function(i) x[i, ])
-  tropca_objs = vector(mode = "numeric", 10)
+  tropca_objs = vector(mode = "numeric", nsample)
   samples = matrix(NA, nrow = nsample, ncol = pcs)
   samples[1, ] = sample(1: n, pcs)
   tropca_objs[1] = tropca.obj(t(x[samples[1, ], ]), x_list, cl)
