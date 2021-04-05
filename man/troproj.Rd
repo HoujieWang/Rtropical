@@ -36,7 +36,5 @@ J. Bioinform., Volume 36, Issue 17, 4590–4598 (2020).}
 \url{https://doi.org/10.1093/bioinformatics/btaa564}
 }
 \author{
-Qiwen Kang and Houjie Wang
-
-Maintainer: Houjie Wang \email{wanghoujie6688@gmail.com}
+Houjie Wang
 }

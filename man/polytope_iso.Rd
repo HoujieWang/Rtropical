@@ -17,3 +17,4 @@ A vector of a point corresponding to \code{P} in column span of \code{D}.
 \description{
 Map points in row space of a tropical polytope to its column space.
 }
+\keyword{Internal}

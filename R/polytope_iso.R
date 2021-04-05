@@ -7,8 +7,8 @@
 #'
 #' @return A vector of a point corresponding to \code{P} in column span of \code{D}.
 #'
+#' @keywords Internal
 #' @export
-#' @export polytope_iso
 polytope_iso<-function(D, P){
   e = length(P)
   s = dim(D)[[1]]

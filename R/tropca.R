@@ -5,6 +5,7 @@
 #'
 #' @importFrom parallel parLapply
 #' @importFrom parallel makeCluster
+#' @importFrom parallel stopCluster
 #' @importFrom Rfast rowMaxs
 #' @importFrom Rfast colMins
 #' @importFrom stats runif
@@ -18,8 +19,6 @@
 #' \item{pc}{The approximated principle components as a tropical polytope.}
 #' \item{obj}{The tropical PCA objective, the sum of tropical distances from points to their projections on the principle components.}
 #' \item{projection}{The projections of points.}
-#' \item{samples}{All sampled tropical polytopes.}
-#' \item{objs}{All tropical PCA objectives for all sampled tropical polytopes.}
 #'
 #' @author Houjie Wang
 #'

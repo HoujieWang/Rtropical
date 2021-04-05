@@ -8,9 +8,8 @@
 #'
 #' @return A projected vector on the given tropical polytope.
 #'
-#' @author Qiwen Kang and Houjie Wang
+#' @author Houjie Wang
 #'
-#' Maintainer: Houjie Wang \email{wanghoujie6688@@gmail.com}
 #' @references Page, R., Yoshida, R. & Zhang L.
 #' \emph{Tropical principal component analysis on the space of phylogenetic trees.
 #' J. Bioinform., Volume 36, Issue 17, 4590–4598 (2020).}

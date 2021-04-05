@@ -9,8 +9,8 @@
 #' @return A matrix with each row a unique assignment, starting from the best assignment
 #' and ending with the worst.
 #'
+#' @keywords Internal
 #' @export
-#' @export assignment_finder
 assignment_finder = function(P, Q, t = 25){
   e <- ncol(P)
   n1 <- nrow(P)
