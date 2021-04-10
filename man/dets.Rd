@@ -22,4 +22,4 @@ trop_det5d(X)
 \description{
 Tropical Determinants for Small Matrices
 }
-\keyword{Internal}
+\keyword{internal}

@@ -1,5 +1,5 @@
 #' Compute Tropical PCA Objective
-#'
+#' @keywords internal
 #' @importFrom parallel parLapply
 #' @importFrom Rfast rowMaxs
 #' @importFrom Rfast rowMins
@@ -7,8 +7,6 @@
 #' @param pc a matrix of principle components
 #' @param x_list a list of vectors
 #' @param cl cluster for parallel computing
-#' @export
-#' @export tropca.obj
 #'
 tropca.obj <- function(pc, x_list, cl){
   proj <- parLapply(cl, x_list, troproj , tconv = pc)

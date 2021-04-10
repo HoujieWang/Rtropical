@@ -1,14 +1,12 @@
 #' Dimension Reduction by Isometry
-#'
+#' @keywords internal
 #' Map points in row space of a tropical polytope to its column space.
 #'
 #' @param D a data matrix of size s x e whose rows are vertices of a tropical polytope.
 #' @param P a vector of a point in row spaces of \code{D}.
 #'
 #' @return A vector of a point corresponding to \code{P} in column span of \code{D}.
-#'
-#' @keywords Internal
-#' @export
+#
 polytope_iso<-function(D, P){
   e = length(P)
   s = dim(D)[[1]]

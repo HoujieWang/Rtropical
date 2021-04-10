@@ -1,5 +1,5 @@
 #' Compute Tropical Line Segment
-#'
+#' @keywords internal
 #' @param D1 a vector of length 2.
 #' @param D2 a vector of length 2.
 #' @param flag a logical value indicating if to swap \code{D1} and \code{D2}. (default: FALSE)
@@ -19,8 +19,6 @@
 #' seg <- tropseg(1: 2, 3: 4)
 #' plot(x = seg[[1]][1, ], y = seg[[1]][2, ], "l")
 #' points(x = seg[[1]][1, ], y = seg[[1]][2, ])
-#' @export
-#' @export tropseg
 tropseg <- function(D1, D2, flag = FALSE){
   k <- length(D1)
   if(k != 2) warning("dimension has to be 2!")

@@ -16,3 +16,4 @@ tropca.obj(pc, x_list, cl)
 \description{
 Compute Tropical PCA Objective
 }
+\keyword{internal}

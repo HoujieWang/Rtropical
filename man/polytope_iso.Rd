@@ -15,6 +15,19 @@ polytope_iso(D, P)
 A vector of a point corresponding to \code{P} in column span of \code{D}.
 }
 \description{
-Map points in row space of a tropical polytope to its column space.
+Dimension Reduction by Isometry
 }
-\keyword{Internal}
+\keyword{Map}
+\keyword{a}
+\keyword{column}
+\keyword{in}
+\keyword{internal}
+\keyword{its}
+\keyword{of}
+\keyword{points}
+\keyword{polytope}
+\keyword{row}
+\keyword{space}
+\keyword{space.}
+\keyword{to}
+\keyword{tropical}

@@ -7,7 +7,6 @@
 #' @param x a square matrix
 #' @return The determinant of the given matrix,
 #' @examples
-#'
 #' R = matrix(sample(1: 9, 9), nrow = 3)
 #' tropdet(R)
 #' @export
