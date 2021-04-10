@@ -18,14 +18,8 @@ Not needed for unlabeled data. (default: NULL)}
 Visialize the second order tropical prinrciple components in \code{tropca}
 as a tropical triangle with projections on a two-dimensional plot via tropical isometry.
 }
-\references{
-Page, R., Yoshida, R. & Zhang L.
-\emph{Tropical principal component analysis on the space of phylogenetic trees.
-J. Bioinform., Volume 36, Issue 17, 4590–4598 (2020).}
-\url{https://doi.org/10.1093/bioinformatics/btaa564}
-}
 \author{
-Qiwen Kang, Robert Page and Houjie Wang
+Robert Page and Houjie Wang
 }
 \keyword{Data}
 \keyword{Geometry,}

@@ -5,8 +5,8 @@
 #' @importFrom Rfast rowSort
 #'
 #' @param x a data vector or a data matrix with each row an observation.
-#' @param V a data matrix, of dimension s x e; e is the dimension of the tropical space;
-#' s is the dimension of the linear space.
+#' @param V a data matrix, of dimension s x e, with each row a basis of tropical linear space.
+#' e is the dimension of the tropical space and s is the dimension of the linear space.
 #'
 #' @export
 #' @export troproj.linsp
@@ -25,7 +25,7 @@ troproj.linsp = function(x, V){
     all_tau = lapply(1: nrow(all_tau), function(i){all_tau[i, ]})
     temp2 = lapply(all_tau, function(tau){
       all_j = c(1: e)[-tau]
-      temp_block = eachrow(x[, all_j], all_dets[rowSort(cbind(all_j, matrix(tau, ncol = 2, nrow = (e-pcs+1), byrow = T)))], "-")
+      temp_block = eachrow(matrix(x[, all_j], ncol = e-pcs+1), all_dets[rowSort(cbind(all_j, matrix(tau, ncol = 2, nrow = (e-pcs+1), byrow = T)))], "-")
       return(rowMins(temp_block, T) + tropdet(V[, c(tau, i)]))
     })
     temp2 = do.call(cbind, temp2)

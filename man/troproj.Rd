@@ -9,8 +9,8 @@ troproj(x, tconv)
 \arguments{
 \item{x}{a data vector.}
 
-\item{tconv}{a data matrix, of dimension e x s; e is the dimension of the tropical space;
-s is the dimension of the polytope. each column is a basis of tropical polytope.}
+\item{tconv}{a data matrix, of dimension e x s, with each column a vertex of tropical polytope.
+e is the dimension of the tropical space and s is the dimension of the polytope.}
 }
 \value{
 A projected vector on the given tropical polytope.
@@ -29,12 +29,6 @@ tree_vec <- vec.fun(tree)
 troproj(tree_vec, pltp)
 
 }
-\references{
-Page, R., Yoshida, R. & Zhang L.
-\emph{Tropical principal component analysis on the space of phylogenetic trees.
-J. Bioinform., Volume 36, Issue 17, 4590–4598 (2020).}
-\url{https://doi.org/10.1093/bioinformatics/btaa564}
-}
 \author{
-Houjie Wang
+Robert Page and Houjie Wang
 }

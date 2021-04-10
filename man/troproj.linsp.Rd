@@ -9,8 +9,8 @@ troproj.linsp(x, V)
 \arguments{
 \item{x}{a data vector or a data matrix with each row an observation.}
 
-\item{V}{a data matrix, of dimension s x e; e is the dimension of the tropical space;
-s is the dimension of the linear space.}
+\item{V}{a data matrix, of dimension s x e, with each row a basis of tropical linear space.
+e is the dimension of the tropical space and s is the dimension of the linear space.}
 }
 \description{
 troproj.linsp computes a vector projection on a given tropical linear space

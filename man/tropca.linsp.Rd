@@ -19,9 +19,10 @@ tropca.linsp(x, pcs = 3, size = 100, ncores = 2, exhaust = FALSE)
 }
 \value{
 A list of S3 class \code{"tropca"} containing the fitted model, including:
-\item{pc}{The approximated principle components as a tropical polytope.}
+\item{pc}{The approximated principle components as a tropical linear space}
 \item{obj}{The tropical PCA objective, the sum of tropical distances from points to their projections on the principle components.}
 \item{projection}{The projections of points.}
+\item{type}{The geometry of principle components.}
 }
 \description{
 Approximate the principle components as a tropical linear space for a given data matrix in the settings of
@@ -35,12 +36,6 @@ x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(sig2, e)))
 tropca_fit <- tropca.linsp(x)
 }
 
-}
-\references{
-Page, R., Yoshida, R. & Zhang L.
-\emph{Tropical principal component analysis on the space of phylogenetic trees.
-J. Bioinform., Volume 36, Issue 17, 4590–4598 (2020).}
-\url{https://doi.org/10.1093/bioinformatics/btaa564}
 }
 \author{
 Houjie Wang

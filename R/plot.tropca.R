@@ -14,12 +14,7 @@
 #' Not needed for unlabeled data. (default: NULL)
 #' @param \dots Not used. Other arguments to plot
 #'
-#' @author Qiwen Kang, Robert Page and Houjie Wang
-#'
-#' @references Page, R., Yoshida, R. & Zhang L.
-#' \emph{Tropical principal component analysis on the space of phylogenetic trees.
-#' J. Bioinform., Volume 36, Issue 17, 4590–4598 (2020).}
-#' \url{https://doi.org/10.1093/bioinformatics/btaa564}
+#' @author Robert Page and Houjie Wang
 #'
 #' @keywords Tropical Geometry, Supervised Learning, Non-Euclidean Data
 #'
@@ -27,6 +22,9 @@
 #' @export
 #' @export plot.tropca
 plot.tropca <- function(x, plab = NULL, ...){
+  if (x$type == "linear space"){
+    stop("Only principle components by tropical polytopes are plottable.")
+  }
   object <- x
   if(is.null(plab)) plab <- as.factor(rep(1, nrow(object$projection)))
   D <- eachrow(object$pc, object$pc[1, ], "-")[-1, ]

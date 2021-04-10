@@ -16,16 +16,12 @@
 #' @param exhaust a logical variable indicating if to search
 #'
 #' @return A list of S3 class \code{"tropca"} containing the fitted model, including:
-#' \item{pc}{The approximated principle components as a tropical polytope.}
+#' \item{pc}{The approximated principle components as a tropical linear space}
 #' \item{obj}{The tropical PCA objective, the sum of tropical distances from points to their projections on the principle components.}
 #' \item{projection}{The projections of points.}
+#' \item{type}{The geometry of principle components.}
 #'
 #' @author Houjie Wang
-#'
-#' @references Page, R., Yoshida, R. & Zhang L.
-#' \emph{Tropical principal component analysis on the space of phylogenetic trees.
-#' J. Bioinform., Volume 36, Issue 17, 4590–4598 (2020).}
-#' \url{https://doi.org/10.1093/bioinformatics/btaa564}
 #'
 #' @keywords Tropical Geometry, Supervised Learning, Non-Euclidean Data
 #' @examples
@@ -58,7 +54,8 @@ tropca.linsp = function(x, pcs = 3, size = 100, ncores = 2, exhaust = FALSE){
   proj_points <- troproj.linsp(x, pc)
   tropca.out <- list("pc" = pc,
                      "obj" = min(all_objs),
-                     "projection" = proj_points)
+                     "projection" = proj_points,
+                     "type" = "linear space")
   class(tropca.out) <- "tropca"
   tropca.out
 }
