@@ -13,7 +13,7 @@
 #' @param pcs a numeric value indicating the number of principle components. (default: 3)
 #' @param size a numeric value indicating the number of tropical linear spaces for where the principle components are searched. (default: 100)
 #' @param ncores a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)
-#' @param exhaust a logical variable indicating if to search
+#' @param exhaust a logical variable indicating if to search for all possible combinations of the data matrix.(default: FALSE)
 #'
 #' @return A list of S3 class \code{"tropca"} containing the fitted model, including:
 #' \item{pc}{The approximated principle components as a tropical linear space}

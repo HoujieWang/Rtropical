@@ -1,6 +1,6 @@
 #' Projection on Tropical Linear Space
 #'
-#' troproj.linsp computes a vector projection on a given tropical linear space
+#' troproj.linsp computes projections on a given tropical linear space.
 #'
 #' @importFrom Rfast rowSort
 #'

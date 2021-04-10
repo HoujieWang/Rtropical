@@ -15,7 +15,7 @@ tropca.linsp(x, pcs = 3, size = 100, ncores = 2, exhaust = FALSE)
 
 \item{ncores}{a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)}
 
-\item{exhaust}{a logical variable indicating if to search}
+\item{exhaust}{a logical variable indicating if to search for all possible combinations of the data matrix.(default: FALSE)}
 }
 \value{
 A list of S3 class \code{"tropca"} containing the fitted model, including:

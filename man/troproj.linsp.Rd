@@ -13,5 +13,5 @@ troproj.linsp(x, V)
 e is the dimension of the tropical space and s is the dimension of the linear space.}
 }
 \description{
-troproj.linsp computes a vector projection on a given tropical linear space
+troproj.linsp computes projections on a given tropical linear space.
 }
