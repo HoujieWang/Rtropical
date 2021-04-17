@@ -2,40 +2,52 @@
 % Please edit documentation in R/tropca.linsp.R
 \name{tropca.linsp}
 \alias{tropca.linsp}
-\title{Tropical Principle Components Analysis by Tropical Linear Space}
+\title{Tropical Principle Component Analysis by Tropical Linear Space}
 \usage{
-tropca.linsp(x, pcs = 3, size = 100, ncores = 2, exhaust = FALSE)
+tropca.linsp(x, pcs = 2, iteration = list(), ncores = 2)
 }
 \arguments{
-\item{x}{a data matrix, of dimension nobs x nvars; each row is an observation vector.}
+\item{x}{a data matrix, of size n x e, with each row an observation vector.
+e is the dimension of the tropical space}
 
-\item{pcs}{a numeric value indicating the number of principle components. (default: 3)}
+\item{pcs}{a numeric value indicating the order of principle component. (default: 2)}
 
-\item{size}{a numeric value indicating the number of tropical linear spaces for where the principle components are searched. (default: 100)}
+\item{iteration}{a list with arguements controling the iteration of the algorithm.
+\describe{
+\item{exhaust}{a logical variable indicating if to iterate over all possible combinations of the linear space
+based on the given data matrix \code{x}. If FALSE, please input a number of iteration for \code{niter}.
+If TRUE, please enter 0 for \code{niter} and this function will iterate over all possible combinations of linear space.
+This could be time consuming when \code{x} is large. (default: FALSE)}
+\item{niter}{a numeric variable indicating the number of iterations. (default: 100)}
+}}
 
 \item{ncores}{a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)}
-
-\item{exhaust}{a logical variable indicating if to search for all possible combinations of the data matrix.(default: FALSE)}
 }
 \value{
-A list of S3 class \code{"tropca"} containing the fitted model, including:
-\item{pc}{The approximated principle components as a tropical linear space}
-\item{obj}{The tropical PCA objective, the sum of tropical distances from points to their projections on the principle components.}
-\item{projection}{The projections of points.}
-\item{type}{The geometry of principle components.}
+A list of S3 class \code{"tropca"}, including:
+\item{pc}{The principle component as a tropical linear space}
+\item{obj}{The tropical PCA objective, the sum of tropical distance from each point to the projection.}
+\item{projection}{The projections of all data points.}
+\item{type}{The geometry of principle component.}
 }
 \description{
-Approximate the principle components as a tropical linear space for a given data matrix in the settings of
-tropical geometry and return the results as an object of class tropca.
+Approximate the principle component as a tropical linear space
+for a given data matrix and returns the results as an object of class \code{tropca}.
 }
 \examples{
 \dontrun{
 library(Rfast)
-n <- 100; e <- 10; sig2 <- 1; pcs <- 3
+n <- 100; e <- 10; sig2 <- 1
 x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(sig2, e)))
 tropca_fit <- tropca.linsp(x)
 }
 
+}
+\references{
+Yoshida, R.,Zhang, L. and Zhang, X. (2019)
+\emph{Tropical Principal Component Analysis and Its Application to Phylogenetics,
+ Bulletin of Mathematical Biology, 81, 568–597.}
+\url{https://arxiv.org/pdf/2010.06158.pdf}.
 }
 \author{
 Houjie Wang

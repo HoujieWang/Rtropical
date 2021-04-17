@@ -46,40 +46,68 @@
 #' @export
 #' @export predict.tropsvm
 predict.tropsvm <- function(object, newx, ...){
-  # object = tropsvm_fit;
-  P_base <- matrix(c(1, 0, 0, 0,
-                     0, 1, 0, 0,
-                     1, 1, 0, 0,
-                     1, 1, 1, 1), ncol = 4, byrow = T);
-  Q_base <- matrix(c(0, 0, 1, 0,
-                     0, 0, 0, 1,
-                     0, 0, 1, 1,
-                     0, 0, 0, 0), ncol = 4, byrow = T);
-  PQ_com <- matrix(c(1, 0, 1, 0,
-                     1, 0, 0, 1,
-                     0, 1, 1, 0,
-                     0, 1, 0, 1,
-                     1, 1, 1, 0,
-                     1, 1, 0, 1,
-                     1, 0, 1, 1,
-                     0, 1, 1, 1), ncol = 4, byrow = T)
-  colnames(PQ_com) <- c("ip", "jp", "iq", "jq")
-  all_method_ind <- RcppAlgos::comboGeneral(8, 4)
-  if (is.data.frame(x)){
-    x <- data.matrix(x)
-  }
+  # object = svmmodel;
   classes <- object$`levels`
   best_method <- object$`index`
   omega <- object$apex
   best_assignment <- object$assignment[c(1, 3, 2, 4)]
+  ip <- best_assignment[1]; jp <- best_assignment[2]; iq <- best_assignment[3]; jq <- best_assignment[4]
 
-  classification_method <- rbind(rbind(P_base, PQ_com[all_method_ind[best_method, ], ]),
-                                 rbind(Q_base, PQ_com[-all_method_ind[best_method, ], ]))
-  shifted_tst_data <- eachrow(newx, omega, "+")
-  diff <- eachrow(t(shifted_tst_data), rowMaxs(shifted_tst_data, T), oper = "-")
-  classification <- lapply(lapply(seq_len(ncol(diff)), function(i) diff[, i]), function(x){which(abs(x) < 1e-10)})
-  classification <- sapply(classification, function(x){which(colSums(abs(t(classification_method) - best_assignment %in% x)) == 0)})
-  classification[classification <= 8] <- classes[1]
-  classification[classification > 8] <- classes[2]
-  as.factor(classification)
+  if (length(unique(best_assignment)) == 2){
+    shifted_tst_data <- eachrow(newx, omega, "+")
+    classification <- rowMaxs(shifted_tst_data)
+    classification[classification == ip] <- classes[1]
+    classification[classification == iq] <- classes[2]
+    as.factor(classification)
+  } else{
+    all_method_ind <- comboGeneral(8, 4)
+    if (length(unique(best_assignment)) == 4){
+      P_base <- matrix(c(1, 0, 0, 0,
+                         0, 1, 0, 0,
+                         1, 1, 0, 0,
+                         1, 1, 1, 1), ncol = 4, byrow = T);
+      Q_base <- matrix(c(0, 0, 1, 0,
+                         0, 0, 0, 1,
+                         0, 0, 1, 1,
+                         0, 0, 0, 0), ncol = 4, byrow = T);
+      PQ_com <- matrix(c(1, 0, 1, 0,
+                         1, 0, 0, 1,
+                         0, 1, 1, 0,
+                         0, 1, 0, 1,
+                         1, 1, 1, 0,
+                         1, 1, 0, 1,
+                         1, 0, 1, 1,
+                         0, 1, 1, 1), ncol = 4, byrow = T)
+    }
+    if (length(unique(best_assignment)) == 3){
+      P_base <- c(); Q_base <- c()
+      PQ_com <- matrix(c(1, 0, 0,
+                         0, 1, 0,
+                         0, 0, 1,
+                         1, 1, 0,
+                         1, 0, 1,
+                         0, 1, 1,
+                         1, 1, 1,
+                         0, 0, 0), ncol = 3, byrow = T)
+      if (ip == jq){
+        PQ_com <- PQ_com[, c(1, 2, 3, 1)]
+      }
+      if (iq == jp){
+        PQ_com <- PQ_com[, c(1, 2, 2, 3)]
+      }
+      if (jp == jq){
+        PQ_com <- PQ_com[, c(1, 2, 3, 2)]
+      }
+    }
+    colnames(PQ_com) <- c("ip", "jp", "iq", "jq")
+    classification_method <- rbind(rbind(P_base, PQ_com[all_method_ind[best_method, ], ]),
+                                   rbind(Q_base, PQ_com[-all_method_ind[best_method, ], ]))
+    shifted_tst_data <- eachrow(newx, omega, "+")
+    diff <- eachrow(t(shifted_tst_data), rowMaxs(shifted_tst_data, T), oper = "-")
+    classification <- lapply(lapply(seq_len(ncol(diff)), function(i) diff[, i]), function(x){which(abs(x) < 1e-10)})
+    classification <- sapply(classification, function(x){which(colSums(abs(t(classification_method) - best_assignment %in% x)) == 0)})
+    classification[classification <= nrow(classification_method)/2] <- classes[1]
+    classification[classification > nrow(classification_method)/2] <- classes[2]
+    as.factor(classification)
+  }
 }

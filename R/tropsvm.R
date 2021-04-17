@@ -42,6 +42,10 @@
 #'
 #' @author Houjie Wang and Kaizhang Wang
 #'
+#' @references Tang, X., Wang, H. and Yoshida, R. (2020)
+#' \emph{Tropical Support Vector Machine and its Applications to Phylogenomics}
+#' \url{https://arxiv.org/pdf/2003.00677.pdf}
+#'
 #' @seealso \code{predict}, \code{coef} and the \code{cv.tropsvm} function.
 #'
 #' @keywords Tropical Geometry, Supervised Learning, Non-Euclidean Data
@@ -75,6 +79,7 @@
 #' @export
 #' @export tropsvm
 tropsvm <- function(x, y, auto.assignment = FALSE, accuracy = FALSE, assignment = NULL, ind = 1, newx = NULL, newy = NULL){
+  # x = data; y = label; newx = val_data; newy = val_label
   classes <- unique(y)
   reorder_ind <- c(which(y == classes[1]), which(y == classes[2]))
   label <- y[reorder_ind]
@@ -84,7 +89,7 @@ tropsvm <- function(x, y, auto.assignment = FALSE, accuracy = FALSE, assignment 
   n <- n1 + n2
 
   if (auto.assignment){
-    assignment <- assignment_finder(x[1: n1, ], x[-c(1: n1), ])[1, ]
+    assignment <- assignment_finder(data[1: n1, ], data[-c(1: n1), ])[1, ]
   }
   names(assignment) = c("ip", "iq", "jp", "jq")
   ip <- assignment[1]; jp <- assignment[3]; iq <- assignment[2]; jq <- assignment[4]
@@ -107,24 +112,7 @@ tropsvm <- function(x, y, auto.assignment = FALSE, accuracy = FALSE, assignment 
             data[-c(1: n1), jq] - data[-c(1: n1), ip],
             data[-c(1: n1), jq] - data[-c(1: n1), jp])
   if (accuracy){
-    P_base <- matrix(c(1, 0, 0, 0,
-                       0, 1, 0, 0,
-                       1, 1, 0, 0,
-                       1, 1, 1, 1), ncol = 4, byrow = T);
-    Q_base <- matrix(c(0, 0, 1, 0,
-                       0, 0, 0, 1,
-                       0, 0, 1, 1,
-                       0, 0, 0, 0), ncol = 4, byrow = T);
-    PQ_com <- matrix(c(1, 0, 1, 0,
-                       1, 0, 0, 1,
-                       0, 1, 1, 0,
-                       0, 1, 0, 1,
-                       1, 1, 1, 0,
-                       1, 1, 0, 1,
-                       1, 0, 1, 1,
-                       0, 1, 1, 1), ncol = 4, byrow = T)
-    colnames(PQ_com) <- c("ip", "jp", "iq", "jq")
-    all_method_ind <- comboGeneral(8, 4)
+
     reorder_ind <- c(which(newy == classes[1]), which(newy == classes[2]))
     val_label <- newy[reorder_ind]
     val_data <- newx[reorder_ind, ]
@@ -135,16 +123,63 @@ tropsvm <- function(x, y, auto.assignment = FALSE, accuracy = FALSE, assignment 
     shifted_val_data <- eachrow(val_data, omega, "+")
     diff <- eachrow(t(shifted_val_data), rowMaxs(shifted_val_data, T), oper = "-")
     raw_classification <- lapply(lapply(seq_len(ncol(diff)), function(i) diff[, i]), function(x){which(abs(x) < 1e-10)})
-    accuracy <- sapply(ind, function(l){
-      P = rbind(P_base, PQ_com[all_method_ind[l, ], ]); Q = rbind(Q_base, PQ_com[-all_method_ind[l, ], ])
-      sum(c(sapply(raw_classification[1: val_n1], function(x){
-        v = c(ip, jp, iq, jq) %in% x;
-        return(sum(colSums(t(P) == v) == ncol(P)))
-      }), sapply(raw_classification[-c(1: val_n1)], function(x){
-        v = c(ip, jp, iq, jq) %in% x;
-        return(sum(colSums(t(Q) == v) == ncol(Q)))
-      })))/length(raw_classification)
-    })
+
+    if (length(unique(assignment)) == 2){
+      accuracy <- (sum(raw_classification[1: val_n1] == ip)+sum(raw_classification[-c(1: val_n1)] == iq))/length(raw_classification)
+    } else{
+      all_method_ind <- comboGeneral(8, 4)
+      # Algorithm 1
+      if (length(unique(assignment)) == 4){
+        P_base <- matrix(c(1, 0, 0, 0,
+                           0, 1, 0, 0,
+                           1, 1, 0, 0,
+                           1, 1, 1, 1), ncol = 4, byrow = T);
+        Q_base <- matrix(c(0, 0, 1, 0,
+                           0, 0, 0, 1,
+                           0, 0, 1, 1,
+                           0, 0, 0, 0), ncol = 4, byrow = T);
+        PQ_com <- matrix(c(1, 0, 1, 0,
+                           1, 0, 0, 1,
+                           0, 1, 1, 0,
+                           0, 1, 0, 1,
+                           1, 1, 1, 0,
+                           1, 1, 0, 1,
+                           1, 0, 1, 1,
+                           0, 1, 1, 1), ncol = 4, byrow = T)
+      }
+      if (length(unique(assignment)) == 3){
+        P_base <- c(); Q_base <- c()
+        PQ_com <- matrix(c(1, 0, 0,
+                           0, 1, 0,
+                           0, 0, 1,
+                           1, 1, 0,
+                           1, 0, 1,
+                           0, 1, 1,
+                           1, 1, 1,
+                           0, 0, 0), ncol = 3, byrow = T)
+        if (ip == jq){
+          PQ_com <- PQ_com[, c(1, 2, 3, 1)]
+        }
+        if (iq == jp){
+          PQ_com <- PQ_com[, c(1, 2, 2, 3)]
+        }
+        if (jp == jq){
+          PQ_com <- PQ_com[, c(1, 2, 3, 2)]
+        }
+      }
+      colnames(PQ_com) <- c("ip", "jp", "iq", "jq")
+
+      accuracy <- sapply(ind, function(l){
+        P = rbind(P_base, PQ_com[all_method_ind[l, ], ]); Q = rbind(Q_base, PQ_com[-all_method_ind[l, ], ])
+        sum(c(sapply(raw_classification[1: val_n1], function(x){
+          v = c(ip, jp, iq, jq) %in% x;
+          return(sum(colSums(t(P) == v) == ncol(P)))
+        }), sapply(raw_classification[-c(1: val_n1)], function(x){
+          v = c(ip, jp, iq, jq) %in% x;
+          return(sum(colSums(t(Q) == v) == ncol(Q)))
+        })))/length(raw_classification)
+      })
+    }
     accuracy
   } else{
     omega <- rep(0, ncol(data))

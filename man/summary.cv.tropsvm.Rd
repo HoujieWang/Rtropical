@@ -47,5 +47,4 @@ Tang, X., Wang, H. and Yoshida, R. (2020)
 }
 \author{
 Houjie Wang
-Maintainer: Houjie Wang \email{wanghoujie6688@gmail.com}
 }

@@ -1,14 +1,14 @@
 #' Projection on Tropical Polytope
 #'
-#' \code{troproj} computes a vector projection on a given tropical polytope.
+#' Project a point onto a given tropical polytope.
 #'
-#' @param x a data vector.
-#' @param tconv a data matrix, of dimension e x s, with each column a vertex of tropical polytope.
-#' e is the dimension of the tropical space and s is the dimension of the polytope.
+#' @param x a data vector, of length e.
+#' @param tconv a data matrix, of size e x s, with each column a vertex of the tropical polytope.
+#' e is the dimension of the tropical space and s is the number of vertices of the polytope
 #'
 #' @return A projected vector on the given tropical polytope.
 #'
-#' @author Robert Page and Houjie Wang
+#' @author Houjie Wang
 #'
 #' @examples
 #'
@@ -18,12 +18,12 @@
 #' # Generate an observation and vectorize it
 #' tree <- rcoal(5)
 #' tree_vec <- vec.fun(tree)
-#' troproj(tree_vec, pltp)
+#' troproj.poly(tree_vec, pltp)
 #'
 #' @export
-#' @export troproj
+#' @export troproj.poly
 #'
-troproj <- function(x, tconv){
+troproj.poly <- function(x, tconv){
   if(is.null(dim(tconv))){
     lambda <- min(x - tconv)
     pi_D <- c(t(lambda + t(tconv)))

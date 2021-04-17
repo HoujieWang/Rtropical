@@ -7,11 +7,23 @@
 troproj.linsp(x, V)
 }
 \arguments{
-\item{x}{a data vector or a data matrix with each row an observation.}
+\item{x}{a data matrix, of size n x e, with each row an observation.}
 
 \item{V}{a data matrix, of dimension s x e, with each row a basis of tropical linear space.
 e is the dimension of the tropical space and s is the dimension of the linear space.}
 }
+\value{
+A matrix of projections of all data points.
+}
 \description{
-troproj.linsp computes projections on a given tropical linear space.
+Compute projection of data points on a given tropical linear space.
+}
+\examples{
+library(Rfast)
+n <- 100; e <- 10; sig2 <- 1; s <- 3
+x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(sig2, e)))
+V <- matrix(runif(s*e, -10, 10), nrow = s, ncol = e)
+x_proj <- troproj.linsp(x, V)
+head(x_proj)
+
 }

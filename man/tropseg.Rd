@@ -21,18 +21,13 @@ A list containing the following:
 \description{
 Compute Tropical Line Segment
 }
-\examples{
-seg <- tropseg(1: 2, 3: 4)
-plot(x = seg[[1]][1, ], y = seg[[1]][2, ], "l")
-points(x = seg[[1]][1, ], y = seg[[1]][2, ])
-}
 \references{
 Lin, B., Monod, A. and Yoshida, R. (2020)
 \emph{Tropical Geometric Variation of Phylogenetic Tree Shapes}
 \url{https://arxiv.org/pdf/2010.06158.pdf}
 }
 \author{
-Qiwen Kang and Houjie Wang
+Houjie Wang
 Maintainer: Houjie Wang \email{wanghoujie6688@gmail.com}
 }
 \keyword{internal}

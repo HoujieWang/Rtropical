@@ -1,7 +1,7 @@
-#' Tropical Principle Components Analysis
+#' Tropical Principle Component Analysis
 #'
-#' Approximate the principle components as a polytope for a given data matrix in the settings of
-#' tropical geometry via MCMC and return the results as an object of class tropca.
+#' Approximates the principle component as a tropical polytope for a given data matrix
+#' via MCMC and return the results as an object of class \code{tropca}.
 #'
 #' @importFrom parallel parLapply
 #' @importFrom parallel makeCluster
@@ -10,18 +10,24 @@
 #' @importFrom Rfast colMins
 #' @importFrom stats runif
 #'
-#' @param x a data matrix, of dimension nobs x nvars; each row is an observation vector.
-#' @param pcs a numeric value indicating the number of principle components. (default: 3)
+#' @param x a data matrix, of size n x e, with each row an observation vector.
+#' e is the dimension of the tropical space#'
+#' @param pcs a numeric value indicating the order of principle component. (default: 2)
 #' @param nsample a numeric value indicating the number of samples of MCMC. (default: 1000)
 #' @param ncores a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)
 #'
-#' @return A list of S3 class \code{"tropca"} containing the fitted model, including:
-#' \item{pc}{The approximated principle components as a tropical polytope.}
-#' \item{obj}{The tropical PCA objective, the sum of tropical distances from points to their projections on the principle components.}
-#' \item{projection}{The projections of points.}
-#' \item{type}{The geometry of principle components.}
+#' @return A list of S3 class \code{"tropca"}, including:
+#' \item{pc}{The principle component as a tropical linear space}
+#' \item{obj}{The tropical PCA objective, the sum of tropical distance from each point to the projection.}
+#' \item{projection}{The projections of all data points.}
+#' \item{type}{The geometry of principle component.}
 #'
 #' @author Houjie Wang
+#'
+#' @references Page, R., Yoshida, R. and Zhang L. (2020)
+#' \emph{Tropical Principal Component Analysis on the Space of Phylogenetic Trees,
+#'  Bioinformatics, Volume 36, Issue 17, 4590–4598.}
+#' \url{https://doi.org/10.1093/bioinformatics/btaa564}.
 #'
 #' @keywords Tropical Geometry, Supervised Learning, Non-Euclidean Data
 #' @examples
@@ -30,23 +36,24 @@
 #' n <- 50; e <- 50; s <- 5
 #' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
 #'            rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
-#' tropca_fit <- tropca(x)
+#' tropca_fit <- tropca.poly(x)
 #' plot(tropca_fit)
 #' }
 #'
 #' @export
-#' @export tropca
+#' @export tropca.poly
 
-tropca <- function(x, pcs = 3, nsample = 1000, ncores = 2){
-  n = nrow(x)
+tropca.poly <- function(x, pcs = 2, nsample = 1000, ncores = 2){
+  pcs <- pcs + 1
+  n <- nrow(x)
   cl <- makeCluster(ncores)
   x_list <- lapply(seq_len(n), function(i) x[i, ])
-  tropca_objs = vector(mode = "numeric", nsample)
-  samples = matrix(NA, nrow = nsample, ncol = pcs)
-  samples[1, ] = sample(1: n, pcs)
-  tropca_objs[1] = tropca.obj(t(x[samples[1, ], ]), x_list, cl)
+  tropca_objs <- vector(mode = "numeric", nsample)
+  samples <- matrix(NA, nrow = nsample, ncol = pcs)
+  samples[1, ] <- sample(1: n, pcs)
+  tropca_objs[1] <- tropca.obj(t(x[samples[1, ], ]), x_list, cl)
 
-  t = 1
+  t <- 1
   while (t < nsample){
     # Find a new proposal by changing a randomly selected vertex of the current polytope
     current_choice = samples[t, ]
@@ -67,9 +74,10 @@ tropca <- function(x, pcs = 3, nsample = 1000, ncores = 2){
     }
   }
   min_index <- which(tropca_objs == min(tropca_objs))[1]
-  best_obj = tropca_objs[min_index]
+  best_obj <- tropca_objs[min_index]
   pc = x[samples[min_index, ], ]
-  proj_points <- do.call("rbind", parLapply(cl, x_list, troproj , tconv = t(pc)))
+  proj_points <- do.call("rbind", parLapply(cl, x_list, troproj.poly , tconv = t(pc)))
+  stopCluster(cl)
   rownames(pc) <- paste("pc", 1: pcs, sep = "")
   tropca.out <- list("pc" = pc,
                      "obj" = tropca_objs[min_index],

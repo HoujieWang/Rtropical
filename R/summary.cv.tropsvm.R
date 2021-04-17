@@ -13,7 +13,6 @@
 #' points of two different categories.
 #'
 #' @author Houjie Wang
-#' Maintainer: Houjie Wang \email{wanghoujie6688@@gmail.com}
 #'
 #' @references Tang, X., Wang, H. and Yoshida, R. (2020)
 #' \emph{Tropical Support Vector Machine and its Applications to Phylogenomics}

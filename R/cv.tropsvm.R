@@ -30,6 +30,10 @@
 #'
 #' @author Houjie Wang and Kaizhang Wang
 #'
+#' @references Tang, X., Wang, H. and Yoshida, R. (2020)
+#' \emph{Tropical Support Vector Machine and its Applications to Phylogenomics}
+#' \url{https://arxiv.org/pdf/2003.00677.pdf}
+#'
 #' @seealso \code{summary}, \code{predict}, \code{coef} and the \code{tropsvm} function.
 #'
 #' @examples
@@ -84,7 +88,7 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
   x <- x[reorder_ind, ]
 
 
-  train_index <- caret::createFolds(y, k = nfold, returnTrain = TRUE)
+  train_index <- createFolds(y, k = nfold, returnTrain = TRUE)
   all_assignment <- matrix(0, nrow = nfold*nassignment, ncol = 4)
   for (i in 1: length(train_index)){
     P = x[train_index[[i]] <= np, ]
@@ -94,6 +98,7 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
   all_assignment = unique(all_assignment)
   all_assignment_list = lapply(seq_len(nrow(all_assignment)), function(i) all_assignment[i, ])
   all_accuracy_list <- list()
+  cl <- makeCluster(ncores)
   for (i in 1: length(train_index)){
     # i = 1
     data <- x[train_index[[i]], ]
@@ -122,17 +127,16 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
     f.dir <- rep("<=", n)
 
     if (parallel){
-      cl <- makeCluster(ncores)
-      clusterExport(cl, list("data", "label", "val_data", "val_label", "tropsvm", "lp", "eachrow", "rowMaxs", "colMins"), envir = environment())
+      # clusterExport(cl, list("data", "label", "val_data", "val_label", "tropsvm", "lp", "eachrow", "rowMaxs", "colMins"), envir = environment())
       all_accuracy <- parLapply(cl, all_assignment_list, function(assignment){
         tropsvm(x = data, y = label, accuracy = T, assignment = assignment, ind = 1: 70, newx = val_data, newy = val_label)})
-      stopCluster(cl)
     } else{
       all_accuracy <- lapply(all_assignment_list, function(assignment){tropsvm(data, label, accuracy = T, assignment = assignment, ind = 1: 70, newx = val_data, newy = val_label)})
     }
     accuracy_mat <- do.call("rbind", all_accuracy)
     all_accuracy_list[[i]] <- accuracy_mat
   }
+  stopCluster(cl)
   all_accuracy_mat <- Reduce("+", all_accuracy_list)
   best_hyperparms <- matrix(which(all_accuracy_mat == max(all_accuracy_mat), arr.ind = T)[1, ], ncol = 2, byrow = TRUE)
   best_assignment <- all_assignment[best_hyperparms[1, 1], ]
