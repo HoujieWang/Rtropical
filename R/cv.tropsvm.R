@@ -112,26 +112,12 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
     val_n2 <- sum(val_label == classes[2])
     val_n <- val_n1 + val_n2
 
-
-    f.obj <- c(1, rep(0, 4), c(rep(-1, n1), rep(-1, n1), rep(-1, n1), rep(-1, n1), rep(-1, n2),
-                               rep(-1, n2), rep(-1, n2), rep(-1, n2)))
-    f.conp <- rbind(cbind(rep(1, n1), rep(-1, n1), rep(1, n1), rep(0, n1), rep(0, n1)),
-                    cbind(rep(0, n1), rep(-1, n1), rep(1, n1), rep(0, n1), rep(0, n1)),
-                    cbind(rep(0, n1), rep(0, n1), rep(-1, n1), rep(1, n1), rep(0, n1)),
-                    cbind(rep(0, n1), rep(0, n1), rep(-1, n1), rep(0, n1), rep(1, n1)))
-    f.conq <- rbind(cbind(rep(1, n2), rep(0, n2), rep(0, n2), rep(-1, n2), rep(1, n2)),
-                    cbind(rep(0, n2), rep(0, n2), rep(0, n2), rep(-1, n2), rep(1, n2)),
-                    cbind(rep(0, n2), rep(1, n2), rep(0, n2), rep(0, n2), rep(-1, n2)),
-                    cbind(rep(0, n2), rep(0, n2), rep(1, n2), rep(0, n2), rep(-1, n2)))
-    f.con <- cbind(rbind(f.conp, f.conq), diag(-1, nrow = 4*n, ncol = 4*n))
-    f.dir <- rep("<=", n)
-
     if (parallel){
-      # clusterExport(cl, list("data", "label", "val_data", "val_label", "tropsvm", "lp", "eachrow", "rowMaxs", "colMins"), envir = environment())
       all_accuracy <- parLapply(cl, all_assignment_list, function(assignment){
-        tropsvm(x = data, y = label, accuracy = T, assignment = assignment, ind = 1: 70, newx = val_data, newy = val_label)})
+        tropsvm_helper(x = data, y = label, assignment = assignment, ind = 1: 70, newx = val_data, newy = val_label)})
     } else{
-      all_accuracy <- lapply(all_assignment_list, function(assignment){tropsvm(data, label, accuracy = T, assignment = assignment, ind = 1: 70, newx = val_data, newy = val_label)})
+      all_accuracy <- lapply(all_assignment_list, function(assignment){
+        tropsvm_helper(data, label, assignment = assignment, ind = 1: 70, newx = val_data, newy = val_label)})
     }
     accuracy_mat <- do.call("rbind", all_accuracy)
     all_accuracy_list[[i]] <- accuracy_mat

@@ -1,5 +1,5 @@
 #' Efficient Finder of Best Assignment
-#'
+#' @keywords internal
 #' @importFrom Rfast colsums
 #'
 #' @param P a data matrix of the first category.
@@ -9,8 +9,6 @@
 #' @return A matrix with each row a unique assignment, starting from the best assignment
 #' and ending with the worst.
 #'
-#' @keywords Internal
-#' @export
 assignment_finder = function(P, Q, t = 25){
   e <- ncol(P)
   n1 <- nrow(P)

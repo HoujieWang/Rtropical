@@ -4,16 +4,7 @@
 \alias{tropsvm}
 \title{Tropical Support Vector Machines}
 \usage{
-tropsvm(
-  x,
-  y,
-  auto.assignment = FALSE,
-  accuracy = FALSE,
-  assignment = NULL,
-  ind = 1,
-  newx = NULL,
-  newy = NULL
-)
+tropsvm(x, y, auto.assignment = FALSE, assignment = NULL, ind = 1)
 }
 \arguments{
 \item{x}{a data matrix, of dimension nobs x nvars; each row is an observation vector.}
@@ -23,11 +14,6 @@ tropsvm(
 \item{auto.assignment}{a logical value indicating if to provide an \code{assignment} manually.
 If \code{FALSE}, an input is required, otherwise the function automatically
 finds a good assignment.(default: FALSE)}
-
-\item{accuracy}{a logical value indicating if to return accuracy on test data and test label
-\code{newx} and \code{newy} only. If \code{TRUE}, the test data and test label
-\code{newx} and \code{newy} should be provided. It's strongly recommended to keep \code{FALSE}
-and test the prediction via \code{predict} as convention. (default: FALSE)}
 
 \item{assignment}{a numeric vector of length 4 indicating the sectors of tropical hyperplane that the
 data will be assigned to. The first and third elements in the \code{assignment} are the coordinates of
@@ -41,10 +27,6 @@ are the indices of sectors where the two point cloud will be assigned. Not neede
 to be used. There are 70 different classification methods. Details of a given method can be retrieved by \code{summary}.
  The different classification methods are proposed to resolve the issue when points fall on the intersections of sectors.
  Users can have personal choices if better knowledge is assumed. (default: 1)}
-
-\item{newx}{the same as "x" but only needed in \code{cv.tropsvm}, which is used as validation data. (default: \code{NULL})}
-
-\item{newy}{the same as "y" but only needed in \code{cv.tropsvm}, which is used as validation labels (default: \code{NULL})}
 }
 \value{
 An object with S3 class \code{"tropsvm"} containing the fitted model, including:

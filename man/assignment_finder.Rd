@@ -20,4 +20,4 @@ and ending with the worst.
 \description{
 Efficient Finder of Best Assignment
 }
-\keyword{Internal}
+\keyword{internal}
