@@ -73,6 +73,16 @@
 #' @export
 #' @export tropsvm
 tropsvm <- function(x, y, auto.assignment = FALSE, assignment = NULL, ind = 1){
+  if (nrow(x) != length(y)){
+    stop("numbers of data and label don't match")
+  }
+  if (length(unique(y)) != 2){
+    stop("only two classes allowded")
+  }
+  if (is.data.frame(x)){
+    warning("input data not 'matrix'; set to 'Matrix'")
+    x <- data.matrix(x)
+  }
   classes <- unique(y)
   reorder_ind <- c(which(y == classes[1]), which(y == classes[2]))
   label <- y[reorder_ind]

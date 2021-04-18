@@ -20,7 +20,7 @@
 #' @param nassignment a numeric value indicating the size of the parameter grid of assignments. (default: 10)
 #' @param ncores a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)
 #'
-#' @return object with S3 class \code{"cv.tropsvm"} containing the fitted model, including:
+#' @return object with S3 class \code{cv.tropsvm} containing the fitted model, including:
 #' \item{apex}{The negative apex of the fitted optimal tropical hyperplane.}
 #' \item{assignment}{The best \code{assignment} tuned by cross-validation.}
 #' \item{index}{The best classification method tuned by cross-validation.}
@@ -78,7 +78,7 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
     x <- data.matrix(x)
   }
   if (nassignment < 10){
-    warning("too few possible assignments to validate, please choose at least 10")
+    warning("use more assignments when performance is bad.")
   }
 
   classes <- unique(y)

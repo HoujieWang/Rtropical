@@ -18,10 +18,10 @@ finds a good assignment.(default: FALSE)}
 \item{assignment}{a numeric vector of length 4 indicating the sectors of tropical hyperplane that the
 data will be assigned to. The first and third elements in the \code{assignment} are the coordinates of
 an observed point in data matrix \code{x} believed from the first category where the maximum and second maximum
-of the vector addition between the fitted optimal tropical hyperplane and the point itelf are achieved.
+of the vector addition between the fitted optimal tropical hyperplane and the point itself are achieved.
 The meanings for the second and the fourth element in the \code{assignment} are the same
 but for the points in the second category. Namely, the first and second values in the \code{assignment}
-are the indices of sectors where the two point cloud will be assigned. Not needed when \code{auto.assignment = TRUE}. (default: NULL)}
+are the indices of sectors where the two point clouds are assigned. Not needed when \code{auto.assignment = TRUE}. (default: NULL)}
 
 \item{ind}{a numeric value or a numeric vector ranging from 1 to 70 indicating which classification method
 to be used. There are 70 different classification methods. Details of a given method can be retrieved by \code{summary}.
@@ -29,7 +29,7 @@ to be used. There are 70 different classification methods. Details of a given me
  Users can have personal choices if better knowledge is assumed. (default: 1)}
 }
 \value{
-An object with S3 class \code{"tropsvm"} containing the fitted model, including:
+An object with S3 class \code{tropsvm} containing the fitted model, including:
 \item{apex}{The negative apex of the fitted optimal tropical hyperplane.}
 \item{assignment}{The user-input or auto-found \code{assignment}.}
 \item{index}{The user-input classification method.}

@@ -20,7 +20,7 @@ cv.tropsvm(x, y, parallel = FALSE, nfold = 10, nassignment = 10, ncores = 2)
 \item{ncores}{a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)}
 }
 \value{
-object with S3 class \code{"cv.tropsvm"} containing the fitted model, including:
+object with S3 class \code{cv.tropsvm} containing the fitted model, including:
 \item{apex}{The negative apex of the fitted optimal tropical hyperplane.}
 \item{assignment}{The best \code{assignment} tuned by cross-validation.}
 \item{index}{The best classification method tuned by cross-validation.}
