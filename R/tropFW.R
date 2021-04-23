@@ -46,19 +46,12 @@ tropFW <- function(x){
   conD <- matrix(0, nrow = 2*nn*combn_size, ncol = nn)
   conD[cbind(1: (2*nn*combn_size), 1: nn)] <- -1
   con <- cbind(conD, rbind(conY, -conY))
-  conD_2 <- matrix(0, nrow = nn*e, ncol = nn)
-  conD_2[cbind(1: (nn*e), 1: nn)] <- -1
-  conY_2 <- matrix(0, nrow = nn*e, ncol = e)
-  conY_2[cbind(1: (nn*e), rep(1: e, each = nn))] <- 1
-  con_2 <- cbind(conD_2, conY_2)
-  con_new <- rbind(con, con_2)
-  rhs_new <- c(matrix(all_v), -matrix(all_v), rep(0, (nn*e)))
-  dir_new <- rep("<=", (2*nn*combn_size + (nn*e)))
+  rhs <- c(matrix(all_v), -matrix(all_v))
 
-  lprec <- make.lp(nrow(con_new), nn+e)
-  for (i in 1: ncol(con_new)){set.column(lprec, i, -con_new[, i])}
-  set.constr.type(lprec, rep(">=", (2*nn*combn_size + (nn*e))))
-  set.rhs(lprec, -rhs_new)
+  lprec <- make.lp(nrow(con), nn+e)
+  for (i in 1: ncol(con)){set.column(lprec, i, -con[, i])}
+  set.constr.type(lprec, rep(">=", (2*nn*combn_size)))
+  set.rhs(lprec, -rhs)
   set.objfn(lprec, c(rep(1, nn), rep(0, e)))
   solve.lpExtPtr(lprec)
   sols = get.variables(lprec)

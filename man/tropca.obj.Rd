@@ -2,9 +2,12 @@
 % Please edit documentation in R/tropca.obj.R
 \name{tropca.obj}
 \alias{tropca.obj}
+\alias{tropca.obj2}
 \title{Compute Tropical PCA Objective}
 \usage{
 tropca.obj(pc, x_list, cl)
+
+tropca.obj2(pc, x_list, cl)
 }
 \arguments{
 \item{pc}{a matrix of principle components}

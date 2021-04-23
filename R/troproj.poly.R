@@ -28,8 +28,8 @@ troproj.poly <- function(x, tconv){
     lambda <- min(x - tconv)
     pi_D <- c(t(lambda + t(tconv)))
   }else{
-    lambda <- apply(x - tconv, 2, min)#D_s by row
-    pi_D <- apply(t(lambda + t(tconv)),1,max)
+    lambda <- colMins(x - tconv, value = TRUE)
+    pi_D <- rowMaxs(eachrow(tconv, lambda, "+"), value = TRUE)
   }
   return(pi_D)
 }

@@ -1,6 +1,6 @@
-#' Tropical Principle Component Analysis by Tropical Polytope
+#' Tropical Principle Component Analysis by Polytope Converted from Linear Space
 #'
-#' Approximates the principle component as a tropical polytope for a given data matrix
+#' Approximates the principle component as a tropical polytope converted from tropical linear space for a given data matrix
 #' via MCMC and return the results as an object of class \code{tropca}.
 #'
 #' @importFrom parallel parLapply
@@ -36,14 +36,13 @@
 #' n <- 50; e <- 50; s <- 5
 #' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
 #'            rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
-#' tropca_fit <- tropca.poly(x)
+#' tropca_fit <- tropca.linsp2poly(x)
 #' plot(tropca_fit)
 #' }
 #'
 #' @export
-#' @export tropca.poly
-
-tropca.poly <- function(x, pcs = 2, nsample = 1000, ncores = 2){
+#' @export tropca.linsp2poly
+tropca.linsp2poly <- function(x, pcs = 2, nsample = 1000, ncores = 2){
   pcs <- pcs + 1
   n <- nrow(x)
   cl <- makeCluster(ncores)
@@ -51,7 +50,7 @@ tropca.poly <- function(x, pcs = 2, nsample = 1000, ncores = 2){
   tropca_objs <- vector(mode = "numeric", nsample)
   samples <- matrix(NA, nrow = nsample, ncol = pcs)
   samples[1, ] <- sample(1: n, pcs)
-  tropca_objs[1] <- tropca.obj(t(x[samples[1, ], ]), x_list, cl)
+  tropca_objs[1] <- tropca.obj2(x[samples[1, ], ], x_list, cl)
 
   t <- 1
   while (t < nsample){
@@ -62,7 +61,7 @@ tropca.poly <- function(x, pcs = 2, nsample = 1000, ncores = 2){
     change_ind <- sample(pcs, 1)
     out_change <- sample(c(1: n)[-current_choice], 1)
     new_choice <- c(current_choice[-change_ind], out_change)
-    new_obj = tropca.obj(t(x[new_choice, ]), x_list, cl)
+    new_obj = tropca.obj2(x[new_choice, ], x_list, cl)
 
     # Compute the probability we accept the new PCA base
     p = min(1, current_obj/new_obj)
