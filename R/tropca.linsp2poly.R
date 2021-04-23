@@ -42,46 +42,82 @@
 #'
 #' @export
 #' @export tropca.linsp2poly
-tropca.linsp2poly <- function(x, pcs = 2, nsample = 1000, ncores = 2){
+tropca.linsp2poly = function(x, pcs = 2, iteration = list(), ncores = 2){
+  con <- list(
+    exhaust = FALSE,
+    niter = 100
+  )
+  con[names(iteration)] <- iteration
+
+  x_list <- lapply(seq_len(nrow(x)), function(i) x[i, ])
+  exhaust <- con$exhaust
+  niter <- con$niter
   pcs <- pcs + 1
-  n <- nrow(x)
-  cl <- makeCluster(ncores)
-  x_list <- lapply(seq_len(n), function(i) x[i, ])
-  tropca_objs <- vector(mode = "numeric", nsample)
-  samples <- matrix(NA, nrow = nsample, ncol = pcs)
-  samples[1, ] <- sample(1: n, pcs)
-  tropca_objs[1] <- tropca.obj2(x[samples[1, ], ], x_list, cl)
-
-  t <- 1
-  while (t < nsample){
-    # Find a new proposal by changing a randomly selected vertex of the current polytope
-    current_choice = samples[t, ]
-    current_obj = tropca_objs[t]
-
-    change_ind <- sample(pcs, 1)
-    out_change <- sample(c(1: n)[-current_choice], 1)
-    new_choice <- c(current_choice[-change_ind], out_change)
-    new_obj = tropca.obj2(x[new_choice, ], x_list, cl)
-
-    # Compute the probability we accept the new PCA base
-    p = min(1, current_obj/new_obj)
-
-    if(sample(c(0, 1), 1, prob = c(1 - p, p)) == 1){
-      samples[(t + 1), ] <- new_choice
-      tropca_objs[(t + 1)] <- new_obj
-      t = t + 1
-    }
+  all_choices <- comboGeneral(nrow(x), pcs)
+  if (exhaust){
+    all_choices <- lapply(1: nrow(all_choices), function(i) all_choices[i, ])
+  } else{
+    all_choices <- lapply(sample(1: nrow(all_choices), niter, replace = F), function(i) all_choices[i, ])
   }
-  min_index <- which(tropca_objs == min(tropca_objs))[1]
-  best_obj <- tropca_objs[min_index]
-  pc = x[samples[min_index, ], ]
-  proj_points <- do.call("rbind", parLapply(cl, x_list, troproj.poly , tconv = t(pc)))
+  cl <- makeCluster(ncores)
+  all_objs <- unlist(parLapply(cl, all_choices, function(ind){
+    V <- x[ind, ]
+    proj = do.call("rbind", lapply(x_list, troproj.poly, t(linsp_to_poly(V))))
+    temp <- x - proj
+    sum(rowMaxs(temp, T) - rowMins(temp, T))
+  }))
   stopCluster(cl)
+  best_choice <- all_choices[[which.min(all_objs)]]
+  pc <- x[best_choice, ]
   rownames(pc) <- paste("pc", 1: pcs, sep = "")
+  proj_points <- do.call("rbind", lapply(x_list, troproj.poly, t(linsp_to_poly(pc))))
   tropca.out <- list("pc" = pc,
-                     "obj" = tropca_objs[min_index],
+                     "obj" = min(all_objs),
                      "projection" = proj_points,
-                     "type" = "polytope")
+                     "type" = "linear space")
   class(tropca.out) <- "tropca"
   tropca.out
 }
+# tropca.linsp2poly <- function(x, pcs = 2, nsample = 1000, ncores = 2){
+#   pcs <- pcs + 1
+#   n <- nrow(x)
+#   cl <- makeCluster(ncores)
+#   x_list <- lapply(seq_len(n), function(i) x[i, ])
+#   tropca_objs <- vector(mode = "numeric", nsample)
+#   samples <- matrix(NA, nrow = nsample, ncol = pcs)
+#   samples[1, ] <- sample(1: n, pcs)
+#   tropca_objs[1] <- tropca.obj2(x[samples[1, ], ], x_list, cl)
+#
+#   t <- 1
+#   while (t < nsample){
+#     # Find a new proposal by changing a randomly selected vertex of the current polytope
+#     current_choice = samples[t, ]
+#     current_obj = tropca_objs[t]
+#
+#     change_ind <- sample(pcs, 1)
+#     out_change <- sample(c(1: n)[-current_choice], 1)
+#     new_choice <- c(current_choice[-change_ind], out_change)
+#     new_obj = tropca.obj2(x[new_choice, ], x_list, cl)
+#
+#     # Compute the probability we accept the new PCA base
+#     p = min(1, current_obj/new_obj)
+#
+#     if(sample(c(0, 1), 1, prob = c(1 - p, p)) == 1){
+#       samples[(t + 1), ] <- new_choice
+#       tropca_objs[(t + 1)] <- new_obj
+#       t = t + 1
+#     }
+#   }
+#   min_index <- which(tropca_objs == min(tropca_objs))[1]
+#   best_obj <- tropca_objs[min_index]
+#   pc = x[samples[min_index, ], ]
+#   proj_points <- do.call("rbind", parLapply(cl, x_list, troproj.poly , tconv = t(pc)))
+#   stopCluster(cl)
+#   rownames(pc) <- paste("pc", 1: pcs, sep = "")
+#   tropca.out <- list("pc" = pc,
+#                      "obj" = tropca_objs[min_index],
+#                      "projection" = proj_points,
+#                      "type" = "polytope")
+#   class(tropca.out) <- "tropca"
+#   tropca.out
+# }
