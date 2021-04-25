@@ -4,7 +4,7 @@
 \alias{tropca.linsp2poly}
 \title{Tropical Principle Component Analysis by Polytope Converted from Linear Space}
 \usage{
-tropca.linsp2poly(x, pcs = 2, iteration = list(), ncores = 2)
+tropca.linsp2poly(x, pcs = 2, nsample = 1000, ncores = 2)
 }
 \arguments{
 \item{x}{a data matrix, of size n x e, with each row an observation vector.
@@ -12,9 +12,9 @@ e is the dimension of the tropical space#'}
 
 \item{pcs}{a numeric value indicating the order of principle component. (default: 2)}
 
-\item{ncores}{a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)}
-
 \item{nsample}{a numeric value indicating the number of samples of MCMC. (default: 1000)}
+
+\item{ncores}{a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)}
 }
 \value{
 A list of S3 class \code{"tropca"}, including:
@@ -24,7 +24,7 @@ A list of S3 class \code{"tropca"}, including:
 \item{type}{The geometry of principle component.}
 }
 \description{
-Approximates the principle component as a tropical polytope converted from tropical linear space for a given data matrix
+Approximate the principle component as a tropical polytope converted from tropical linear space for a given data matrix
 via MCMC and return the results as an object of class \code{tropca}.
 }
 \examples{

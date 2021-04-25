@@ -17,6 +17,7 @@ tropca.obj <- function(pc, x_list, cl){
   sum(rowMaxs(temp, value = T) - rowMins(temp, value = T))
 }
 #' @rdname tropca.obj
+#' @export tropca.obj2
 tropca.obj2 <- function(pc, x_list, cl){
   pc <- linsp_to_poly(pc)
   proj <- parLapply(cl, x_list, troproj.poly , tconv = t(pc))

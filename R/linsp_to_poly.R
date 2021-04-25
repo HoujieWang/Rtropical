@@ -6,6 +6,7 @@
 #' @param V a data matrix, of dimension s x e, with each row a basis of tropical linear space.
 #' e is the dimension of the tropical space and s is the dimension of the linear space.
 #' @return the return is a e choose s-1 x e matrix.
+#' @export linsp_to_poly
 linsp_to_poly = function(V){
   pcs = nrow(V); e = ncol(V)
   all_dets = array(-1e10, dim = rep(e, pcs))

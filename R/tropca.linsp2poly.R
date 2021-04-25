@@ -1,6 +1,6 @@
 #' Tropical Principle Component Analysis by Polytope Converted from Linear Space
 #'
-#' Approximates the principle component as a tropical polytope converted from tropical linear space for a given data matrix
+#' Approximate the principle component as a tropical polytope converted from tropical linear space for a given data matrix
 #' via MCMC and return the results as an object of class \code{tropca}.
 #'
 #' @importFrom parallel parLapply
@@ -111,14 +111,13 @@ tropca.linsp2poly <- function(x, pcs = 2, nsample = 1000, ncores = 2){
   min_index <- which(tropca_objs == min(tropca_objs))[1]
   best_obj <- tropca_objs[min_index]
   pc = x[samples[min_index, ], ]
-  pc = linsp_to_poly(pc)
   proj_points <- do.call("rbind", parLapply(cl, x_list, troproj.poly , tconv = t(pc)))
   stopCluster(cl)
   rownames(pc) <- paste("pc", 1: pcs, sep = "")
   tropca.out <- list("pc" = pc,
                      "obj" = tropca_objs[min_index],
                      "projection" = proj_points,
-                     "type" = "polytope")
+                     "type" = "linear space")
   class(tropca.out) <- "tropca"
   tropca.out
 }
