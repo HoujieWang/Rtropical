@@ -33,9 +33,13 @@
 #' @examples
 #' \dontrun{
 #' library(Rfast)
-#' n <- 50; e <- 50; s <- 5
-#' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-#'            rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+#' n <- 50
+#' e <- 50
+#' s <- 5
+#' x <- rbind(
+#'   rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+#'   rmvnorm(n, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+#' )
 #' tropca_fit <- tropca.poly(x)
 #' plot(tropca_fit)
 #' }
@@ -43,46 +47,48 @@
 #' @export
 #' @export tropca.poly
 
-tropca.poly <- function(x, pcs = 2, nsample = 1000, ncores = 2){
+tropca.poly <- function(x, pcs = 2, nsample = 1000, ncores = 2) {
   pcs <- pcs + 1
   n <- nrow(x)
   cl <- makeCluster(ncores)
   x_list <- lapply(seq_len(n), function(i) x[i, ])
   tropca_objs <- vector(mode = "numeric", nsample)
   samples <- matrix(NA, nrow = nsample, ncol = pcs)
-  samples[1, ] <- sample(1: n, pcs)
+  samples[1, ] <- sample(1:n, pcs)
   tropca_objs[1] <- tropca.obj(t(x[samples[1, ], ]), x_list, cl)
 
   t <- 1
-  while (t < nsample){
+  while (t < nsample) {
     # Find a new proposal by changing a randomly selected vertex of the current polytope
-    current_choice = samples[t, ]
-    current_obj = tropca_objs[t]
+    current_choice <- samples[t, ]
+    current_obj <- tropca_objs[t]
 
     change_ind <- sample(pcs, 1)
-    out_change <- sample(c(1: n)[-current_choice], 1)
+    out_change <- sample(c(1:n)[-current_choice], 1)
     new_choice <- c(current_choice[-change_ind], out_change)
-    new_obj = tropca.obj(t(x[new_choice, ]), x_list, cl)
+    new_obj <- tropca.obj(t(x[new_choice, ]), x_list, cl)
 
     # Compute the probability we accept the new PCA base
-    p = min(1, current_obj/new_obj)
+    p <- min(1, current_obj / new_obj)
 
-    if(sample(c(0, 1), 1, prob = c(1 - p, p)) == 1){
+    if (sample(c(0, 1), 1, prob = c(1 - p, p)) == 1) {
       samples[(t + 1), ] <- new_choice
       tropca_objs[(t + 1)] <- new_obj
-      t = t + 1
+      t <- t + 1
     }
   }
   min_index <- which(tropca_objs == min(tropca_objs))[1]
   best_obj <- tropca_objs[min_index]
-  pc = x[samples[min_index, ], ]
-  proj_points <- do.call("rbind", parLapply(cl, x_list, troproj.poly , tconv = t(pc)))
+  pc <- x[samples[min_index, ], ]
+  proj_points <- do.call("rbind", parLapply(cl, x_list, troproj.poly, tconv = t(pc)))
   stopCluster(cl)
-  rownames(pc) <- paste("pc", 1: pcs, sep = "")
-  tropca.out <- list("pc" = pc,
-                     "obj" = tropca_objs[min_index],
-                     "projection" = proj_points,
-                     "type" = "polytope")
+  rownames(pc) <- paste("pc", 1:pcs, sep = "")
+  tropca.out <- list(
+    "pc" = pc,
+    "obj" = tropca_objs[min_index],
+    "projection" = proj_points,
+    "type" = "polytope"
+  )
   class(tropca.out) <- "tropca"
   tropca.out
 }

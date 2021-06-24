@@ -39,14 +39,16 @@
 #' @examples
 #' \dontrun{
 #' library(Rfast)
-#' n <- 100; e <- 10; sig2 <- 1
-#' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(sig2, e)))
+#' n <- 100
+#' e <- 10
+#' sig2 <- 1
+#' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(sig2, e)))
 #' tropca_fit <- tropca.linsp(x)
 #' }
 #'
 #' @export
 #' @export tropca.linsp
-tropca.linsp = function(x, pcs = 2, iteration = list(), ncores = 2){
+tropca.linsp <- function(x, pcs = 2, iteration = list(), ncores = 2) {
   con <- list(
     exhaust = FALSE,
     niter = 100
@@ -57,13 +59,13 @@ tropca.linsp = function(x, pcs = 2, iteration = list(), ncores = 2){
   niter <- con$niter
   pcs <- pcs + 1
   all_choices <- comboGeneral(nrow(x), pcs)
-  if (exhaust){
-    all_choices <- lapply(1: nrow(all_choices), function(i) all_choices[i, ])
-  } else{
-    all_choices <- lapply(sample(1: nrow(all_choices), niter, replace = F), function(i) all_choices[i, ])
+  if (exhaust) {
+    all_choices <- lapply(1:nrow(all_choices), function(i) all_choices[i, ])
+  } else {
+    all_choices <- lapply(sample(1:nrow(all_choices), niter, replace = F), function(i) all_choices[i, ])
   }
   cl <- makeCluster(ncores)
-  all_objs <- unlist(parLapply(cl, all_choices, function(ind){
+  all_objs <- unlist(parLapply(cl, all_choices, function(ind) {
     V <- x[ind, ]
     proj <- troproj.linsp(x, V)
     temp <- x - proj
@@ -72,13 +74,14 @@ tropca.linsp = function(x, pcs = 2, iteration = list(), ncores = 2){
   stopCluster(cl)
   best_choice <- all_choices[[which.min(all_objs)]]
   pc <- x[best_choice, ]
-  rownames(pc) <- paste("pc", 1: pcs, sep = "")
+  rownames(pc) <- paste("pc", 1:pcs, sep = "")
   proj_points <- troproj.linsp(x, pc)
-  tropca.out <- list("pc" = pc,
-                     "obj" = min(all_objs),
-                     "projection" = proj_points,
-                     "type" = "linear space")
+  tropca.out <- list(
+    "pc" = pc,
+    "obj" = min(all_objs),
+    "projection" = proj_points,
+    "type" = "linear space"
+  )
   class(tropca.out) <- "tropca"
   tropca.out
 }
-

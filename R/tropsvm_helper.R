@@ -34,7 +34,7 @@
 #'
 #'
 #'
-tropsvm_helper <- function(x, y,  assignment = NULL, ind = 1, newx = NULL, newy = NULL){
+tropsvm_helper <- function(x, y, assignment = NULL, ind = 1, newx = NULL, newy = NULL) {
   classes <- unique(y)
   reorder_ind <- c(which(y == classes[1]), which(y == classes[2]))
   label <- y[reorder_ind]
@@ -43,91 +43,114 @@ tropsvm_helper <- function(x, y,  assignment = NULL, ind = 1, newx = NULL, newy 
   n2 <- sum(label == classes[2])
   n <- n1 + n2
 
-  names(assignment) = c("ip", "iq", "jp", "jq")
-  ip <- assignment[1]; jp <- assignment[3]; iq <- assignment[2]; jq <- assignment[4]
-  f.obj <- c(1, rep(0, 4), c(rep(-1, n1), rep(-1, n1), rep(-1, n1), rep(-1, n1), rep(-1, n2),
-                             rep(-1, n2), rep(-1, n2), rep(-1, n2)))
-  f.conp <- rbind(cbind(rep(1, n1), rep(-1, n1), rep(1, n1), rep(0, n1), rep(0, n1)),
-                  cbind(rep(0, n1), rep(-1, n1), rep(1, n1), rep(0, n1), rep(0, n1)),
-                  cbind(rep(0, n1), rep(0, n1), rep(-1, n1), rep(1, n1), rep(0, n1)),
-                  cbind(rep(0, n1), rep(0, n1), rep(-1, n1), rep(0, n1), rep(1, n1)))
-  f.conq <- rbind(cbind(rep(1, n2), rep(0, n2), rep(0, n2), rep(-1, n2), rep(1, n2)),
-                  cbind(rep(0, n2), rep(0, n2), rep(0, n2), rep(-1, n2), rep(1, n2)),
-                  cbind(rep(0, n2), rep(1, n2), rep(0, n2), rep(0, n2), rep(-1, n2)),
-                  cbind(rep(0, n2), rep(0, n2), rep(1, n2), rep(0, n2), rep(-1, n2)))
-  f.con <- cbind(rbind(f.conp, f.conq), diag(-1, nrow = 4*n, ncol = 4*n))
+  names(assignment) <- c("ip", "iq", "jp", "jq")
+  ip <- assignment[1]
+  jp <- assignment[3]
+  iq <- assignment[2]
+  jq <- assignment[4]
+  f.obj <- c(1, rep(0, 4), c(
+    rep(-1, n1), rep(-1, n1), rep(-1, n1), rep(-1, n1), rep(-1, n2),
+    rep(-1, n2), rep(-1, n2), rep(-1, n2)
+  ))
+  f.conp <- rbind(
+    cbind(rep(1, n1), rep(-1, n1), rep(1, n1), rep(0, n1), rep(0, n1)),
+    cbind(rep(0, n1), rep(-1, n1), rep(1, n1), rep(0, n1), rep(0, n1)),
+    cbind(rep(0, n1), rep(0, n1), rep(-1, n1), rep(1, n1), rep(0, n1)),
+    cbind(rep(0, n1), rep(0, n1), rep(-1, n1), rep(0, n1), rep(1, n1))
+  )
+  f.conq <- rbind(
+    cbind(rep(1, n2), rep(0, n2), rep(0, n2), rep(-1, n2), rep(1, n2)),
+    cbind(rep(0, n2), rep(0, n2), rep(0, n2), rep(-1, n2), rep(1, n2)),
+    cbind(rep(0, n2), rep(1, n2), rep(0, n2), rep(0, n2), rep(-1, n2)),
+    cbind(rep(0, n2), rep(0, n2), rep(1, n2), rep(0, n2), rep(-1, n2))
+  )
+  f.con <- cbind(rbind(f.conp, f.conq), diag(-1, nrow = 4 * n, ncol = 4 * n))
   f.dir <- rep("<=", n)
-  f.rhs = c(rep(data[1: n1, ip] - data[1: n1, jp], 2),
-            data[1: n1, jp] - data[1: n1, iq],
-            data[1: n1, jp] - data[1: n1, jq],
-            rep(data[-c(1: n1), iq] - data[-c(1: n1), jq], 2),
-            data[-c(1: n1), jq] - data[-c(1: n1), ip],
-            data[-c(1: n1), jq] - data[-c(1: n1), jp])
+  f.rhs <- c(
+    rep(data[1:n1, ip] - data[1:n1, jp], 2),
+    data[1:n1, jp] - data[1:n1, iq],
+    data[1:n1, jp] - data[1:n1, jq],
+    rep(data[-c(1:n1), iq] - data[-c(1:n1), jq], 2),
+    data[-c(1:n1), jq] - data[-c(1:n1), ip],
+    data[-c(1:n1), jq] - data[-c(1:n1), jp]
+  )
   reorder_ind <- c(which(newy == classes[1]), which(newy == classes[2]))
   val_label <- newy[reorder_ind]
   val_data <- newx[reorder_ind, ]
   val_n1 <- sum(val_label == classes[1])
   omega <- rep(0, ncol(data))
-  omega[c(ip, jp, iq, jq)] <- lp("max", f.obj, f.con, f.dir, f.rhs)$solution[2: 5]
-  omega[-c(ip, jp, iq, jq)] <- colMins(-data[, -c(ip, jp, iq, jq)] + c(data[1: n1, jp] + omega[jp], data[-c(1: n1), jq] + omega[jq]), T)
+  omega[c(ip, jp, iq, jq)] <- lp("max", f.obj, f.con, f.dir, f.rhs)$solution[2:5]
+  omega[-c(ip, jp, iq, jq)] <- colMins(-data[, -c(ip, jp, iq, jq)] + c(data[1:n1, jp] + omega[jp], data[-c(1:n1), jq] + omega[jq]), T)
   shifted_val_data <- eachrow(val_data, omega, "+")
   diff <- eachrow(t(shifted_val_data), rowMaxs(shifted_val_data, T), oper = "-")
-  raw_classification <- lapply(lapply(seq_len(ncol(diff)), function(i) diff[, i]), function(x){which(abs(x) < 1e-10)})
+  raw_classification <- lapply(lapply(seq_len(ncol(diff)), function(i) diff[, i]), function(x) {
+    which(abs(x) < 1e-10)
+  })
 
-  if (length(unique(assignment)) == 2){
-    accuracy <- (sum(raw_classification[1: val_n1] == ip)+sum(raw_classification[-c(1: val_n1)] == iq))/length(raw_classification)
-  } else{
+  if (length(unique(assignment)) == 2) {
+    accuracy <- (sum(raw_classification[1:val_n1] == ip) + sum(raw_classification[-c(1:val_n1)] == iq)) / length(raw_classification)
+  } else {
     all_method_ind <- comboGeneral(8, 4)
     # Algorithm 1
-    if (length(unique(assignment)) == 4){
-      P_base <- matrix(c(1, 0, 0, 0,
-                         0, 1, 0, 0,
-                         1, 1, 0, 0,
-                         1, 1, 1, 1), ncol = 4, byrow = T);
-      Q_base <- matrix(c(0, 0, 1, 0,
-                         0, 0, 0, 1,
-                         0, 0, 1, 1,
-                         0, 0, 0, 0), ncol = 4, byrow = T);
-      PQ_com <- matrix(c(1, 0, 1, 0,
-                         1, 0, 0, 1,
-                         0, 1, 1, 0,
-                         0, 1, 0, 1,
-                         1, 1, 1, 0,
-                         1, 1, 0, 1,
-                         1, 0, 1, 1,
-                         0, 1, 1, 1), ncol = 4, byrow = T)
+    if (length(unique(assignment)) == 4) {
+      P_base <- matrix(c(
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        1, 1, 0, 0,
+        1, 1, 1, 1
+      ), ncol = 4, byrow = T)
+      Q_base <- matrix(c(
+        0, 0, 1, 0,
+        0, 0, 0, 1,
+        0, 0, 1, 1,
+        0, 0, 0, 0
+      ), ncol = 4, byrow = T)
+      PQ_com <- matrix(c(
+        1, 0, 1, 0,
+        1, 0, 0, 1,
+        0, 1, 1, 0,
+        0, 1, 0, 1,
+        1, 1, 1, 0,
+        1, 1, 0, 1,
+        1, 0, 1, 1,
+        0, 1, 1, 1
+      ), ncol = 4, byrow = T)
     }
-    if (length(unique(assignment)) == 3){
-      P_base <- c(); Q_base <- c()
-      PQ_com <- matrix(c(1, 0, 0,
-                         0, 1, 0,
-                         0, 0, 1,
-                         1, 1, 0,
-                         1, 0, 1,
-                         0, 1, 1,
-                         1, 1, 1,
-                         0, 0, 0), ncol = 3, byrow = T)
-      if (ip == jq){
+    if (length(unique(assignment)) == 3) {
+      P_base <- c()
+      Q_base <- c()
+      PQ_com <- matrix(c(
+        1, 0, 0,
+        0, 1, 0,
+        0, 0, 1,
+        1, 1, 0,
+        1, 0, 1,
+        0, 1, 1,
+        1, 1, 1,
+        0, 0, 0
+      ), ncol = 3, byrow = T)
+      if (ip == jq) {
         PQ_com <- PQ_com[, c(1, 2, 3, 1)]
       }
-      if (iq == jp){
+      if (iq == jp) {
         PQ_com <- PQ_com[, c(1, 2, 2, 3)]
       }
-      if (jp == jq){
+      if (jp == jq) {
         PQ_com <- PQ_com[, c(1, 2, 3, 2)]
       }
     }
     colnames(PQ_com) <- c("ip", "jp", "iq", "jq")
 
-    accuracy <- sapply(ind, function(l){
-      P = rbind(P_base, PQ_com[all_method_ind[l, ], ]); Q = rbind(Q_base, PQ_com[-all_method_ind[l, ], ])
-      sum(c(sapply(raw_classification[1: val_n1], function(x){
-        v = c(ip, jp, iq, jq) %in% x;
+    accuracy <- sapply(ind, function(l) {
+      P <- rbind(P_base, PQ_com[all_method_ind[l, ], ])
+      Q <- rbind(Q_base, PQ_com[-all_method_ind[l, ], ])
+      sum(c(sapply(raw_classification[1:val_n1], function(x) {
+        v <- c(ip, jp, iq, jq) %in% x
         return(sum(colSums(t(P) == v) == ncol(P)))
-      }), sapply(raw_classification[-c(1: val_n1)], function(x){
-        v = c(ip, jp, iq, jq) %in% x;
+      }), sapply(raw_classification[-c(1:val_n1)], function(x) {
+        v <- c(ip, jp, iq, jq) %in% x
         return(sum(colSums(t(Q) == v) == ncol(Q)))
-      })))/length(raw_classification)
+      }))) / length(raw_classification)
     })
   }
   accuracy

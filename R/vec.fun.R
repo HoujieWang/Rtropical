@@ -4,7 +4,7 @@
 #' @param phy A object of class "phylo" in R
 #' @export
 #'
-vec.fun <- function(phy){
+vec.fun <- function(phy) {
   phy <- cophenetic.phylo(phy)
   phy[lower.tri(phy)]
 }

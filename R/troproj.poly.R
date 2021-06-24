@@ -14,20 +14,21 @@
 #'
 #' # Generate a tropical polytope consisting of three trees each with 5 leaves
 #' library(ape)
-#' pltp <- sapply(1: 3, function(i){vec.fun(rcoal(5))})
+#' pltp <- sapply(1:3, function(i) {
+#'   vec.fun(rcoal(5))
+#' })
 #' # Generate an observation and vectorize it
 #' tree <- rcoal(5)
 #' tree_vec <- vec.fun(tree)
 #' troproj.poly(tree_vec, pltp)
-#'
 #' @export
 #' @export troproj.poly
 #'
-troproj.poly <- function(x, tconv){
-  if(is.null(dim(tconv))){
+troproj.poly <- function(x, tconv) {
+  if (is.null(dim(tconv))) {
     lambda <- min(x - tconv)
     pi_D <- c(t(lambda + t(tconv)))
-  }else{
+  } else {
     lambda <- colMins(x - tconv, value = TRUE)
     pi_D <- rowMaxs(eachrow(tconv, lambda, "+"), value = TRUE)
   }

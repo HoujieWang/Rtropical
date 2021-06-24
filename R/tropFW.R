@@ -28,32 +28,33 @@
 #' @keywords Tropical Geometry, Fermat-Weber Point
 #'
 #' @examples
-#' x = matrix(rnorm(100), ncol = 10)
+#' x <- matrix(rnorm(100), ncol = 10)
 #' tropFW(x)
-#'
 #' @export
 #' @export tropFW
-tropFW <- function(x){
+tropFW <- function(x) {
   nn <- nrow(x)
   e <- ncol(x)
-  jk <- comboGeneral(1: e, 2)
+  jk <- comboGeneral(1:e, 2)
   combn_size <- nrow(jk)
   obj <- c(rep(1, nn), rep(0, e))
-  conY <- matrix(0, nrow = nn*combn_size, ncol = e)
+  conY <- matrix(0, nrow = nn * combn_size, ncol = e)
   all_v <- x[, jk[, 2]] - x[, jk[, 1]]
-  conY[cbind(1: (nn*combn_size), rep(jk[, 1], each = nrow(x)))] <- -1
-  conY[cbind(1: (nn*combn_size), rep(jk[, 2], each = nrow(x)))] <- 1
-  conD <- matrix(0, nrow = 2*nn*combn_size, ncol = nn)
-  conD[cbind(1: (2*nn*combn_size), 1: nn)] <- -1
+  conY[cbind(1:(nn * combn_size), rep(jk[, 1], each = nrow(x)))] <- -1
+  conY[cbind(1:(nn * combn_size), rep(jk[, 2], each = nrow(x)))] <- 1
+  conD <- matrix(0, nrow = 2 * nn * combn_size, ncol = nn)
+  conD[cbind(1:(2 * nn * combn_size), 1:nn)] <- -1
   con <- cbind(conD, rbind(conY, -conY))
   rhs <- c(matrix(all_v), -matrix(all_v))
 
-  lprec <- make.lp(nrow(con), nn+e)
-  for (i in 1: ncol(con)){set.column(lprec, i, -con[, i])}
-  set.constr.type(lprec, rep(">=", (2*nn*combn_size)))
+  lprec <- make.lp(nrow(con), nn + e)
+  for (i in 1:ncol(con)) {
+    set.column(lprec, i, -con[, i])
+  }
+  set.constr.type(lprec, rep(">=", (2 * nn * combn_size)))
   set.rhs(lprec, -rhs)
   set.objfn(lprec, c(rep(1, nn), rep(0, e)))
   solve.lpExtPtr(lprec)
-  sols = get.variables(lprec)
-  list("fw" = sols[-c(1: nn)], "distsum" = sum(sols[1: nn]))
+  sols <- get.variables(lprec)
+  list("fw" = sols[-c(1:nn)], "distsum" = sum(sols[1:nn]))
 }

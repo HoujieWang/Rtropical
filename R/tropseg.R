@@ -15,23 +15,26 @@
 #' \emph{Tropical Geometric Variation of Phylogenetic Tree Shapes}
 #' \url{https://arxiv.org/pdf/2010.06158.pdf}
 #'
-tropseg <- function(D1, D2, flag = FALSE){
+tropseg <- function(D1, D2, flag = FALSE) {
   k <- length(D1)
-  if(k != 2) warning("dimension has to be 2!")
-  for(i in 1:k)
+  if (k != 2) warning("dimension has to be 2!")
+  for (i in 1:k) {
     D1[i] <- round(D1[i], 4)
-  for(i in 1:k)
+  }
+  for (i in 1:k) {
     D2[i] <- round(D2[i], 4)
-  if(length(D2) != k)
+  }
+  if (length(D2) != k) {
     warning("dimension is wrong!")
+  }
   addd <- 0
-  if(flag){
+  if (flag) {
     tmp.D <- D2
     D2 <- D1
     D1 <- tmp.D
   }
   tmp.metric <- (D2 - D1)
-  sorted.tmp.metric <- sort.int(tmp.metric, index.return=TRUE)
+  sorted.tmp.metric <- sort.int(tmp.metric, index.return = TRUE)
   D <- rep(0, k)
 
   D[sorted.tmp.metric$ix[2]] <- D2[sorted.tmp.metric$ix[2]]
@@ -40,10 +43,10 @@ tropseg <- function(D1, D2, flag = FALSE){
   distance <- max(abs(D1 - D))
   distance <- distance + max(abs(D2 - D))
 
-  segment <- matrix(rep(0, 6), nrow=2, ncol=3)
-  segment[,1] <- D1
-  segment[,2] <- D
-  segment[,3] <- D2
+  segment <- matrix(rep(0, 6), nrow = 2, ncol = 3)
+  segment[, 1] <- D1
+  segment[, 2] <- D
+  segment[, 3] <- D2
 
   return(list(segment, distance))
 }

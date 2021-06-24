@@ -48,12 +48,19 @@
 #'
 #' # data generation
 #' library(Rfast)
-#' e <- 100; n = 10; N = 100; s = 10
-#' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-#'           rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+#' e <- 100
+#' n <- 10
+#' N <- 100
+#' s <- 10
+#' x <- rbind(
+#'   rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+#'   rmvnorm(n, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+#' )
 #' y <- as.factor(c(rep(1, n), rep(2, n)))
-#' newx <- rbind(rmvnorm(N, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-#'              rmvnorm(N, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+#' newx <- rbind(
+#'   rmvnorm(N, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+#'   rmvnorm(N, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+#' )
 #' newy <- as.factor(rep(c(1, 2), each = N))
 #'
 #' # train the tropical svm
@@ -68,18 +75,17 @@
 #' table(pred, newy)
 #'
 #' # compute testing accuracy
-#' sum(pred == newy)/length(newy)
-#'
+#' sum(pred == newy) / length(newy)
 #' @export
 #' @export tropsvm
-tropsvm <- function(x, y, auto.assignment = FALSE, assignment = NULL, ind = 1){
-  if (nrow(x) != length(y)){
+tropsvm <- function(x, y, auto.assignment = FALSE, assignment = NULL, ind = 1) {
+  if (nrow(x) != length(y)) {
     stop("numbers of data and label don't match")
   }
-  if (length(unique(y)) != 2){
+  if (length(unique(y)) != 2) {
     stop("only two classes allowded")
   }
-  if (is.data.frame(x)){
+  if (is.data.frame(x)) {
     warning("input data not 'matrix'; set to 'Matrix'")
     x <- data.matrix(x)
   }
@@ -91,37 +97,50 @@ tropsvm <- function(x, y, auto.assignment = FALSE, assignment = NULL, ind = 1){
   n2 <- sum(label == classes[2])
   n <- n1 + n2
 
-  if (auto.assignment){
-    assignment <- assignment_finder(data[1: n1, ], data[-c(1: n1), ])[1, ]
+  if (auto.assignment) {
+    assignment <- assignment_finder(data[1:n1, ], data[-c(1:n1), ])[1, ]
   }
-  names(assignment) = c("ip", "iq", "jp", "jq")
-  ip <- assignment[1]; jp <- assignment[3]; iq <- assignment[2]; jq <- assignment[4]
-  f.obj <- c(1, rep(0, 4), c(rep(-1, n1), rep(-1, n1), rep(-1, n1), rep(-1, n1), rep(-1, n2),
-                             rep(-1, n2), rep(-1, n2), rep(-1, n2)))
-  f.conp <- rbind(cbind(rep(1, n1), rep(-1, n1), rep(1, n1), rep(0, n1), rep(0, n1)),
-                  cbind(rep(0, n1), rep(-1, n1), rep(1, n1), rep(0, n1), rep(0, n1)),
-                  cbind(rep(0, n1), rep(0, n1), rep(-1, n1), rep(1, n1), rep(0, n1)),
-                  cbind(rep(0, n1), rep(0, n1), rep(-1, n1), rep(0, n1), rep(1, n1)))
-  f.conq <- rbind(cbind(rep(1, n2), rep(0, n2), rep(0, n2), rep(-1, n2), rep(1, n2)),
-                  cbind(rep(0, n2), rep(0, n2), rep(0, n2), rep(-1, n2), rep(1, n2)),
-                  cbind(rep(0, n2), rep(1, n2), rep(0, n2), rep(0, n2), rep(-1, n2)),
-                  cbind(rep(0, n2), rep(0, n2), rep(1, n2), rep(0, n2), rep(-1, n2)))
-  f.con <- cbind(rbind(f.conp, f.conq), diag(-1, nrow = 4*n, ncol = 4*n))
+  names(assignment) <- c("ip", "iq", "jp", "jq")
+  ip <- assignment[1]
+  jp <- assignment[3]
+  iq <- assignment[2]
+  jq <- assignment[4]
+  f.obj <- c(1, rep(0, 4), c(
+    rep(-1, n1), rep(-1, n1), rep(-1, n1), rep(-1, n1), rep(-1, n2),
+    rep(-1, n2), rep(-1, n2), rep(-1, n2)
+  ))
+  f.conp <- rbind(
+    cbind(rep(1, n1), rep(-1, n1), rep(1, n1), rep(0, n1), rep(0, n1)),
+    cbind(rep(0, n1), rep(-1, n1), rep(1, n1), rep(0, n1), rep(0, n1)),
+    cbind(rep(0, n1), rep(0, n1), rep(-1, n1), rep(1, n1), rep(0, n1)),
+    cbind(rep(0, n1), rep(0, n1), rep(-1, n1), rep(0, n1), rep(1, n1))
+  )
+  f.conq <- rbind(
+    cbind(rep(1, n2), rep(0, n2), rep(0, n2), rep(-1, n2), rep(1, n2)),
+    cbind(rep(0, n2), rep(0, n2), rep(0, n2), rep(-1, n2), rep(1, n2)),
+    cbind(rep(0, n2), rep(1, n2), rep(0, n2), rep(0, n2), rep(-1, n2)),
+    cbind(rep(0, n2), rep(0, n2), rep(1, n2), rep(0, n2), rep(-1, n2))
+  )
+  f.con <- cbind(rbind(f.conp, f.conq), diag(-1, nrow = 4 * n, ncol = 4 * n))
   f.dir <- rep("<=", n)
-  f.rhs = c(rep(data[1: n1, ip] - data[1: n1, jp], 2),
-            data[1: n1, jp] - data[1: n1, iq],
-            data[1: n1, jp] - data[1: n1, jq],
-            rep(data[-c(1: n1), iq] - data[-c(1: n1), jq], 2),
-            data[-c(1: n1), jq] - data[-c(1: n1), ip],
-            data[-c(1: n1), jq] - data[-c(1: n1), jp])
+  f.rhs <- c(
+    rep(data[1:n1, ip] - data[1:n1, jp], 2),
+    data[1:n1, jp] - data[1:n1, iq],
+    data[1:n1, jp] - data[1:n1, jq],
+    rep(data[-c(1:n1), iq] - data[-c(1:n1), jq], 2),
+    data[-c(1:n1), jq] - data[-c(1:n1), ip],
+    data[-c(1:n1), jq] - data[-c(1:n1), jp]
+  )
   omega <- rep(0, ncol(data))
   sol <- lp("max", f.obj, f.con, f.dir, f.rhs)
-  omega[c(ip, jp, iq, jq)] <- sol$solution[2: 5]
-  omega[-c(ip, jp, iq, jq)] <- colMins(-data[, -c(ip, jp, iq, jq)] + c(data[1: n1, jp] + omega[jp], data[-c(1: n1), jq] + omega[jq]), T)
-  tropsvm.out <- list("apex" = omega,
-                      "assignment" = assignment,
-                      "index" = ind,
-                      "levels" = as.factor(classes))
+  omega[c(ip, jp, iq, jq)] <- sol$solution[2:5]
+  omega[-c(ip, jp, iq, jq)] <- colMins(-data[, -c(ip, jp, iq, jq)] + c(data[1:n1, jp] + omega[jp], data[-c(1:n1), jq] + omega[jq]), T)
+  tropsvm.out <- list(
+    "apex" = omega,
+    "assignment" = assignment,
+    "index" = ind,
+    "levels" = as.factor(classes)
+  )
   class(tropsvm.out) <- "tropsvm"
   tropsvm.out
 }
