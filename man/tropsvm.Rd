@@ -45,12 +45,19 @@ in the tropical projective torus.
 
 # data generation
 library(Rfast)
-e <- 100; n = 10; N = 100; s = 10
-x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-          rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+e <- 100
+n <- 10
+N <- 100
+s <- 10
+x <- rbind(
+  rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+  rmvnorm(n, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+)
 y <- as.factor(c(rep(1, n), rep(2, n)))
-newx <- rbind(rmvnorm(N, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-             rmvnorm(N, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+newx <- rbind(
+  rmvnorm(N, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+  rmvnorm(N, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+)
 newy <- as.factor(rep(c(1, 2), each = N))
 
 # train the tropical svm
@@ -65,8 +72,7 @@ pred <- predict(tropsvm_fit, newx)
 table(pred, newy)
 
 # compute testing accuracy
-sum(pred == newy)/length(newy)
-
+sum(pred == newy) / length(newy)
 }
 \references{
 Tang, X., Wang, H. and Yoshida, R. (2020)

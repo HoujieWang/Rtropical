@@ -24,12 +24,19 @@ Return a summary with a more detailed explanation of the object \code{"cv.tropsv
 
 # data generation
 library(Rfast)
-e <- 100; n <- 10; N <- 10; s <- 5
-x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-          rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+e <- 100
+n <- 10
+N <- 10
+s <- 5
+x <- rbind(
+  rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+  rmvnorm(n, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+)
 y <- as.factor(c(rep(1, n), rep(2, n)))
-newx <- rbind(rmvnorm(N, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-             rmvnorm(N, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+newx <- rbind(
+  rmvnorm(N, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+  rmvnorm(N, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+)
 newy <- as.factor(rep(c(1, 2), each = N))
 
 # train the tropical svm with cross-validation

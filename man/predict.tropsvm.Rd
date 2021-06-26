@@ -23,25 +23,32 @@ Predicts values based upon a model trained by \code{tropsvm}.
 
 # data generation
 library(Rfast)
-e <- 100; n <- 10; N <- 10; s <- 5
-x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-          rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+e <- 100
+n <- 10
+N <- 10
+s <- 5
+x <- rbind(
+  rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+  rmvnorm(n, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+)
 y <- as.factor(c(rep(1, n), rep(2, n)))
-newx <- rbind(rmvnorm(N, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-             rmvnorm(N, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+newx <- rbind(
+  rmvnorm(N, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+  rmvnorm(N, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+)
 newy <- as.factor(rep(c(1, 2), each = N))
 
 # train the tropical svm
 tropsvm_fit <- tropsvm(x, y, auto.assignment = TRUE, ind = 1)
 
 # test with new data
-pred <- predict(tropsvm_fit , newx)
+pred <- predict(tropsvm_fit, newx)
 
 # check with accuracy
 table(pred, newy)
 
 # compute testing accuracy
-sum(pred == newy)/length(newy)
+sum(pred == newy) / length(newy)
 }
 \references{
 Tang, X., Wang, H. and Yoshida, R. (2020)

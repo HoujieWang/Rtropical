@@ -18,9 +18,8 @@ A list containing:
 Compute the tropical fermat-weber point for a given data set such that the sum of tropical distance to each point is minimized.
 }
 \examples{
-x = matrix(rnorm(100), ncol = 10)
+x <- matrix(rnorm(100), ncol = 10)
 tropFW(x)
-
 }
 \references{
 Lin, B.,Sturmfels, B., Tang, X. and Yoshida, R. (2015)

@@ -37,8 +37,10 @@ for a given data matrix and returns the results as an object of class \code{trop
 \examples{
 \dontrun{
 library(Rfast)
-n <- 100; e <- 10; sig2 <- 1
-x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(sig2, e)))
+n <- 100
+e <- 10
+sig2 <- 1
+x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(sig2, e)))
 tropca_fit <- tropca.linsp(x)
 }
 

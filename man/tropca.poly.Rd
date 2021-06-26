@@ -30,9 +30,13 @@ via MCMC and return the results as an object of class \code{tropca}.
 \examples{
 \dontrun{
 library(Rfast)
-n <- 50; e <- 50; s <- 5
-x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-           rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+n <- 50
+e <- 50
+s <- 5
+x <- rbind(
+  rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+  rmvnorm(n, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+)
 tropca_fit <- tropca.poly(x)
 plot(tropca_fit)
 }

@@ -20,10 +20,12 @@ Compute projection of data points on a given tropical linear space.
 }
 \examples{
 library(Rfast)
-n <- 100; e <- 10; sig2 <- 1; s <- 3
-x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(sig2, e)))
-V <- matrix(runif(s*e, -10, 10), nrow = s, ncol = e)
+n <- 100
+e <- 10
+sig2 <- 1
+s <- 3
+x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(sig2, e)))
+V <- matrix(runif(s * e, -10, 10), nrow = s, ncol = e)
 x_proj <- troproj.linsp(x, V)
 head(x_proj)
-
 }
