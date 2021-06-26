@@ -1,4 +1,4 @@
-#' Plot the Tropical Principle Components with Data Projections
+#' Plot the Tropical Principal Components with Data Projections
 #'
 #' Visialize the second order tropical prinrciple components in \code{tropca}
 #' as a tropical triangle with projections on a two-dimensional plot via tropical isometry.
@@ -23,7 +23,7 @@
 #' @export plot.tropca
 plot.tropca <- function(x, plab = NULL, ...) {
   if (x$type == "linear space") {
-    stop("Only principle components by tropical polytopes are plottable.")
+    stop("Only principal components by tropical polytopes are plottable.")
   }
   object <- x
   if (is.null(plab)) plab <- as.factor(rep(1, nrow(object$projection)))

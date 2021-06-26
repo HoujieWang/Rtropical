@@ -6,7 +6,7 @@
 #' @importFrom Rfast rowMaxs
 #' @importFrom Rfast rowMins
 #'
-#' @param pc a matrix of principle components
+#' @param pc a matrix of principal components
 #' @param x_list a list of vectors
 #' @param cl cluster for parallel computing
 #'

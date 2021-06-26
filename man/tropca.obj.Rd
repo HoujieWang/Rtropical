@@ -10,7 +10,7 @@ tropca.obj(pc, x_list, cl)
 tropca.obj2(pc, x_list, cl)
 }
 \arguments{
-\item{pc}{a matrix of principle components}
+\item{pc}{a matrix of principal components}
 
 \item{x_list}{a list of vectors}
 

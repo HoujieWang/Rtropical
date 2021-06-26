@@ -1,6 +1,6 @@
-#' Tropical Principle Component Analysis by Tropical Linear Space
+#' Tropical Principal Component Analysis by Tropical Linear Space
 #'
-#' Approximate the principle component as a tropical linear space
+#' Approximate the principal component as a tropical linear space
 #' for a given data matrix and returns the results as an object of class \code{tropca}.
 #'
 #' @importFrom parallel parLapply
@@ -11,7 +11,7 @@
 #'
 #' @param x a data matrix, of size n x e, with each row an observation vector.
 #' e is the dimension of the tropical space
-#' @param pcs a numeric value indicating the order of principle component. (default: 2)
+#' @param pcs a numeric value indicating the order of principal component. (default: 2)
 #' @param iteration a list with arguements controling the iteration of the algorithm.
 #' \describe{
 #' \item{exhaust}{a logical variable indicating if to iterate over all possible combinations of the linear space
@@ -23,10 +23,10 @@
 #' @param ncores a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)
 #'
 #' @return A list of S3 class \code{"tropca"}, including:
-#' \item{pc}{The principle component as a tropical linear space}
+#' \item{pc}{The principal component as a tropical linear space}
 #' \item{obj}{The tropical PCA objective, the sum of tropical distance from each point to the projection.}
 #' \item{projection}{The projections of all data points.}
-#' \item{type}{The geometry of principle component.}
+#' \item{type}{The geometry of principal component.}
 #'
 #' @author Houjie Wang
 #'

@@ -1,6 +1,6 @@
-#' Tropical Principle Component Analysis by Tropical Polytope
+#' Tropical Principal Component Analysis by Tropical Polytope
 #'
-#' Approximates the principle component as a tropical polytope for a given data matrix
+#' Approximates the principal component as a tropical polytope for a given data matrix
 #' via MCMC and return the results as an object of class \code{tropca}.
 #'
 #' @importFrom parallel parLapply
@@ -12,15 +12,15 @@
 #'
 #' @param x a data matrix, of size n x e, with each row an observation vector.
 #' e is the dimension of the tropical space#'
-#' @param pcs a numeric value indicating the order of principle component. (default: 2)
+#' @param pcs a numeric value indicating the order of principal component. (default: 2)
 #' @param nsample a numeric value indicating the number of samples of MCMC. (default: 1000)
 #' @param ncores a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)
 #'
 #' @return A list of S3 class \code{"tropca"}, including:
-#' \item{pc}{The principle component as a tropical linear space}
+#' \item{pc}{The principal component as a tropical linear space}
 #' \item{obj}{The tropical PCA objective, the sum of tropical distance from each point to the projection.}
 #' \item{projection}{The projections of all data points.}
-#' \item{type}{The geometry of principle component.}
+#' \item{type}{The geometry of principal component.}
 #'
 #' @author Houjie Wang
 #'

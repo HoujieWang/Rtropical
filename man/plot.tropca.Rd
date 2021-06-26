@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.tropca.R
 \name{plot.tropca}
 \alias{plot.tropca}
-\title{Plot the Tropical Principle Components with Data Projections}
+\title{Plot the Tropical Principal Components with Data Projections}
 \usage{
 \method{plot}{tropca}(x, plab = NULL, ...)
 }

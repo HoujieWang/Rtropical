@@ -2,7 +2,7 @@
 % Please edit documentation in R/tropca.poly.R
 \name{tropca.poly}
 \alias{tropca.poly}
-\title{Tropical Principle Component Analysis by Tropical Polytope}
+\title{Tropical Principal Component Analysis by Tropical Polytope}
 \usage{
 tropca.poly(x, pcs = 2, nsample = 1000, ncores = 2)
 }
@@ -10,7 +10,7 @@ tropca.poly(x, pcs = 2, nsample = 1000, ncores = 2)
 \item{x}{a data matrix, of size n x e, with each row an observation vector.
 e is the dimension of the tropical space#'}
 
-\item{pcs}{a numeric value indicating the order of principle component. (default: 2)}
+\item{pcs}{a numeric value indicating the order of principal component. (default: 2)}
 
 \item{nsample}{a numeric value indicating the number of samples of MCMC. (default: 1000)}
 
@@ -18,13 +18,13 @@ e is the dimension of the tropical space#'}
 }
 \value{
 A list of S3 class \code{"tropca"}, including:
-\item{pc}{The principle component as a tropical linear space}
+\item{pc}{The principal component as a tropical linear space}
 \item{obj}{The tropical PCA objective, the sum of tropical distance from each point to the projection.}
 \item{projection}{The projections of all data points.}
-\item{type}{The geometry of principle component.}
+\item{type}{The geometry of principal component.}
 }
 \description{
-Approximates the principle component as a tropical polytope for a given data matrix
+Approximates the principal component as a tropical polytope for a given data matrix
 via MCMC and return the results as an object of class \code{tropca}.
 }
 \examples{
