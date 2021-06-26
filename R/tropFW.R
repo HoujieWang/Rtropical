@@ -1,6 +1,8 @@
 #' Tropical Fermat-Weber Point
 #'
-#' Compute the tropical fermat-weber point for a given data set such that the sum of tropical distance to each point is minimized.
+#' Compute the tropical Fermat-Weber (FW) point for a given data matrix.
+#' The FW point minimizes the summed tropical distance to the trees described
+#' in the data matrix.
 #'
 #' @importFrom RcppAlgos comboGeneral
 #' @importFrom lpSolveAPI make.lp

@@ -15,7 +15,7 @@ Not needed for unlabeled data. (default: NULL)}
 \item{\dots}{Not used. Other arguments to plot}
 }
 \description{
-Visialize the second order tropical prinrciple components in \code{tropca}
+Visualize the second order tropical principle components in \code{tropca}
 as a tropical triangle with projections on a two-dimensional plot via tropical isometry.
 }
 \author{

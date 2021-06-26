@@ -12,7 +12,7 @@
 #' @param x a data matrix, of size n x e, with each row an observation vector.
 #' e is the dimension of the tropical space
 #' @param pcs a numeric value indicating the order of principal component. (default: 2)
-#' @param iteration a list with arguements controling the iteration of the algorithm.
+#' @param iteration a list with arguments controlling the iteration of the algorithm.
 #' \describe{
 #' \item{exhaust}{a logical variable indicating if to iterate over all possible combinations of the linear space
 #' based on the given data matrix \code{x}. If FALSE, please input a number of iteration for \code{niter}.

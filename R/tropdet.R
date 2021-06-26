@@ -1,6 +1,6 @@
 #' Tropical Determinant of a Matrix
 #'
-#' tropdet computes tropical determinant for a given matrix, which is equivalent to
+#' Compute the tropical determinant for a given matrix. This is equivalent to
 #' solving an assignment problem.
 #'
 #' @importFrom lpSolve lp.assign

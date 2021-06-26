@@ -1,4 +1,4 @@
-#' Convert an object in class "multiPhylo" into a data matrix
+#' Convert a multiPhylo object to a matrix
 #'
 #' @importFrom parallel parLapply
 #' @importFrom parallel mclapply
@@ -9,7 +9,7 @@
 #' @importFrom parallel stopCluster
 #' @importFrom ape root
 #' @importFrom ape chronos
-#' @param phy an object in class "multiPhylo"
+#' @param phy an object of class multiPhylo
 #' @param tipOrder a numeric vector of order of leaf names
 #' @param ncores a numeric value indicating the number of threads
 #' utilized for multi-cored CPUs. (default: 2)

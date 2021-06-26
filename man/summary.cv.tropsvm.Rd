@@ -9,10 +9,10 @@
 \arguments{
 \item{object}{a fitted \code{"cv.tropsvm"} object.}
 
-\item{\dots}{Not used. Other arguements to summary.}
+\item{\dots}{Not used. Other arguments to summary.}
 }
 \value{
-A summary of the crucial information of a tropical support vector machine is printed, incluiding
+A summary of the crucial information of a tropical support vector machine is printed, including
 the selected best assignment and classification methods and the validation accuracy of each data fold. The
 summary section of classification methods specifies the sectors and their intersections used to classify
 points of two different categories.

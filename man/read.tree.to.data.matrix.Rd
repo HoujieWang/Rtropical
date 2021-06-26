@@ -2,7 +2,7 @@
 % Please edit documentation in R/read.tree.to.data.matrix.R
 \name{read.tree.to.data.matrix}
 \alias{read.tree.to.data.matrix}
-\title{Read trees in two categories into a data matrix}
+\title{Read Newick-formatted trees in two categories into a data matrix}
 \usage{
 read.tree.to.data.matrix(data.file1, data.file2)
 }
@@ -12,5 +12,5 @@ read.tree.to.data.matrix(data.file1, data.file2)
 \item{data.file2}{a set of trees in the format of Newick strings from another category.}
 }
 \description{
-Read trees in two categories into a data matrix
+Read Newick-formatted trees in two categories into a data matrix
 }

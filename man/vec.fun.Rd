@@ -7,7 +7,7 @@
 vec.fun(phy)
 }
 \arguments{
-\item{phy}{A object of class "phylo" in R}
+\item{phy}{A object of class phylo}
 }
 \description{
 Vectorize a tree

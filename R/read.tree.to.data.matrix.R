@@ -1,4 +1,4 @@
-#' Read trees in two categories into a data matrix
+#' Read Newick-formatted trees in two categories into a data matrix
 #'
 #' @importFrom ape read.tree
 #' @param data.file1 A set of trees in the format of Newick strings from one category.

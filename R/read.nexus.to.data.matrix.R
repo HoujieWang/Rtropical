@@ -1,4 +1,4 @@
-#' Read trees in two categories into a data matrix
+#' Read NEXUS-formatted trees in two categories into a data matrix
 #'
 #' @importFrom ape read.nexus
 #' @param data.file1 A data set with trees from one category.

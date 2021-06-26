@@ -1,7 +1,7 @@
 #' Vectorize a tree
 #'
 #' @importFrom ape cophenetic.phylo
-#' @param phy A object of class "phylo" in R
+#' @param phy A object of class phylo
 #' @export
 #'
 vec.fun <- function(phy) {
