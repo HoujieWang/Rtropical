@@ -7,16 +7,16 @@
 #'
 #' @return A vector of a point corresponding to \code{P} in column span of \code{D}.
 #
-polytope_iso<-function(D, P){
-  e = length(P)
-  s = dim(D)[[1]]
-  Q = mat.or.vec(1, s)
-  for (i in seq(s)){
-    maxvalue = D[i,1] - P[[1]]
-    for (j in seq(e)){
-      maxvalue = max(maxvalue, D[i,j] - P[[j]])
+polytope_iso <- function(D, P) {
+  e <- length(P)
+  s <- dim(D)[[1]]
+  Q <- mat.or.vec(1, s)
+  for (i in seq(s)) {
+    maxvalue <- D[i, 1] - P[[1]]
+    for (j in seq(e)) {
+      maxvalue <- max(maxvalue, D[i, j] - P[[j]])
     }
-    Q[[i]]=maxvalue
+    Q[[i]] <- maxvalue
   }
   return(Q)
 }

@@ -1,11 +1,11 @@
-#' Read trees in two categories into a data matrix
+#' Read NEXUS-formatted trees in two categories into a data matrix
 #'
 #' @importFrom ape read.nexus
 #' @param data.file1 A data set with trees from one category.
 #' @param data.file2 A data set with trees from the other category.
 #' @export
 #'
-read.nexus.to.data.matrix <- function(data.file1, data.file2){
+read.nexus.to.data.matrix <- function(data.file1, data.file2) {
   G1 <- read.nexus(data.file1)
   G2 <- read.nexus(data.file2)
 

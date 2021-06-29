@@ -5,9 +5,9 @@
 #' @importFrom RcppAlgos comboGeneral
 #'
 #' @param object a fitted \code{"cv.tropsvm"} object.
-#' @param \dots Not used. Other arguements to summary.
+#' @param \dots Not used. Other arguments to summary.
 #'
-#' @return A summary of the crucial information of a tropical support vector machine is printed, incluiding
+#' @return A summary of the crucial information of a tropical support vector machine is printed, including
 #' the selected best assignment and classification methods and the validation accuracy of each data fold. The
 #' summary section of classification methods specifies the sectors and their intersections used to classify
 #' points of two different categories.
@@ -24,12 +24,19 @@
 #'
 #' # data generation
 #' library(Rfast)
-#' e <- 100; n <- 10; N <- 10; s <- 5
-#' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-#'           rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+#' e <- 100
+#' n <- 10
+#' N <- 10
+#' s <- 5
+#' x <- rbind(
+#'   rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+#'   rmvnorm(n, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+#' )
 #' y <- as.factor(c(rep(1, n), rep(2, n)))
-#' newx <- rbind(rmvnorm(N, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-#'              rmvnorm(N, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+#' newx <- rbind(
+#'   rmvnorm(N, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+#'   rmvnorm(N, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+#' )
 #' newy <- as.factor(rep(c(1, 2), each = N))
 #'
 #' # train the tropical svm with cross-validation
@@ -40,23 +47,29 @@
 #'
 #' @export
 #' @export summary.cv.tropsvm
-summary.cv.tropsvm <- function(object, ...){
-  P_base <- matrix(c(1, 0, 0, 0,
-                     0, 1, 0, 0,
-                     1, 1, 0, 0,
-                     1, 1, 1, 1), ncol = 4, byrow = T);
-  Q_base <- matrix(c(0, 0, 1, 0,
-                     0, 0, 0, 1,
-                     0, 0, 1, 1,
-                     0, 0, 0, 0), ncol = 4, byrow = T);
-  PQ_com <- matrix(c(1, 0, 1, 0,
-                     1, 0, 0, 1,
-                     0, 1, 1, 0,
-                     0, 1, 0, 1,
-                     1, 1, 1, 0,
-                     1, 1, 0, 1,
-                     1, 0, 1, 1,
-                     0, 1, 1, 1), ncol = 4, byrow = T)
+summary.cv.tropsvm <- function(object, ...) {
+  P_base <- matrix(c(
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    1, 1, 0, 0,
+    1, 1, 1, 1
+  ), ncol = 4, byrow = T)
+  Q_base <- matrix(c(
+    0, 0, 1, 0,
+    0, 0, 0, 1,
+    0, 0, 1, 1,
+    0, 0, 0, 0
+  ), ncol = 4, byrow = T)
+  PQ_com <- matrix(c(
+    1, 0, 1, 0,
+    1, 0, 0, 1,
+    0, 1, 1, 0,
+    0, 1, 0, 1,
+    1, 1, 1, 0,
+    1, 1, 0, 1,
+    1, 0, 1, 1,
+    0, 1, 1, 1
+  ), ncol = 4, byrow = T)
   colnames(PQ_com) <- c("ip", "jp", "iq", "jq")
   all_method_ind <- RcppAlgos::comboGeneral(8, 4)
   best_method <- object$`index`
@@ -66,24 +79,24 @@ summary.cv.tropsvm <- function(object, ...){
   cat("Best assignment: ", paste(c("ip =", "jp =", "iq =", "jq ="), best_assignment, collapse = ", "), ".\n\n", sep = "")
   cat("Best classification method: \n\n")
   cat("Points on the locations below will be classified as : ", object$levels[1], "\n", sep = "")
-  for (i in 1: nrow(classification_method[[1]])){
+  for (i in 1:nrow(classification_method[[1]])) {
     row_i <- classification_method[[1]][i, ]
-    if(sum(row_i) == 1){
+    if (sum(row_i) == 1) {
       cat("sector:", best_assignment[which(row_i != 0)], "\n", sep = "")
-    } else{
+    } else {
       cat("The common boundary of sectors:", best_assignment[which(row_i != 0)], "\n")
     }
   }
   cat("\n")
   cat("Points on the locations below will be classified as : ", object$levels[2], "\n", sep = "")
-  for (i in 1: nrow(classification_method[[2]])){
+  for (i in 1:nrow(classification_method[[2]])) {
     row_i <- classification_method[[2]][i, ]
-    if(sum(row_i) == 1){
+    if (sum(row_i) == 1) {
       cat("sector:", best_assignment[which(row_i != 0)], "\n", sep = "")
-    } else{
+    } else {
       cat("The common boundary of sectors:", best_assignment[which(row_i != 0)], "\n")
     }
   }
   cat("\n")
-  cat("Best validation accuracy of each fold: ", paste(round(object$accuracy*100, digits = 4), "%", sep = ""), ".\n")
+  cat("Best validation accuracy of each fold: ", paste(round(object$accuracy * 100, digits = 4), "%", sep = ""), ".\n")
 }

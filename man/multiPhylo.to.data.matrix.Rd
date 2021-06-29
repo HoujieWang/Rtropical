@@ -2,12 +2,12 @@
 % Please edit documentation in R/multiPhylo.to.data.matrix.R
 \name{multiPhylo.to.data.matrix}
 \alias{multiPhylo.to.data.matrix}
-\title{Convert an object in class "multiPhylo" into a data matrix}
+\title{Convert a multiPhylo object to a matrix}
 \usage{
 multiPhylo.to.data.matrix(phy, tipOrder, ncores = 2)
 }
 \arguments{
-\item{phy}{an object in class "multiPhylo"}
+\item{phy}{an object of class multiPhylo}
 
 \item{tipOrder}{a numeric vector of order of leaf names}
 
@@ -18,5 +18,5 @@ utilized for multi-cored CPUs. (default: 2)}
 a data matrix with the first column of the categories
 }
 \description{
-Convert an object in class "multiPhylo" into a data matrix
+Convert a multiPhylo object to a matrix
 }

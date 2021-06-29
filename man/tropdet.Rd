@@ -13,10 +13,10 @@ tropdet(x)
 The determinant of the given matrix,
 }
 \description{
-tropdet computes tropical determinant for a given matrix, which is equivalent to
+Compute the tropical determinant for a given matrix. This is equivalent to
 solving an assignment problem.
 }
 \examples{
-R = matrix(sample(1: 9, 9), nrow = 3)
+R <- matrix(sample(1:9, 9), nrow = 3)
 tropdet(R)
 }

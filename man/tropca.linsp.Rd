@@ -2,7 +2,7 @@
 % Please edit documentation in R/tropca.linsp.R
 \name{tropca.linsp}
 \alias{tropca.linsp}
-\title{Tropical Principle Component Analysis by Tropical Linear Space}
+\title{Tropical Principal Component Analysis by Tropical Linear Space}
 \usage{
 tropca.linsp(x, pcs = 2, iteration = list(), ncores = 2)
 }
@@ -10,9 +10,9 @@ tropca.linsp(x, pcs = 2, iteration = list(), ncores = 2)
 \item{x}{a data matrix, of size n x e, with each row an observation vector.
 e is the dimension of the tropical space}
 
-\item{pcs}{a numeric value indicating the order of principle component. (default: 2)}
+\item{pcs}{a numeric value indicating the order of principal component. (default: 2)}
 
-\item{iteration}{a list with arguements controling the iteration of the algorithm.
+\item{iteration}{a list with arguments controlling the iteration of the algorithm.
 \describe{
 \item{exhaust}{a logical variable indicating if to iterate over all possible combinations of the linear space
 based on the given data matrix \code{x}. If FALSE, please input a number of iteration for \code{niter}.
@@ -25,20 +25,22 @@ This could be time consuming when \code{x} is large. (default: FALSE)}
 }
 \value{
 A list of S3 class \code{"tropca"}, including:
-\item{pc}{The principle component as a tropical linear space}
+\item{pc}{The principal component as a tropical linear space}
 \item{obj}{The tropical PCA objective, the sum of tropical distance from each point to the projection.}
 \item{projection}{The projections of all data points.}
-\item{type}{The geometry of principle component.}
+\item{type}{The geometry of principal component.}
 }
 \description{
-Approximate the principle component as a tropical linear space
+Approximate the principal component as a tropical linear space
 for a given data matrix and returns the results as an object of class \code{tropca}.
 }
 \examples{
 \dontrun{
 library(Rfast)
-n <- 100; e <- 10; sig2 <- 1
-x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(sig2, e)))
+n <- 100
+e <- 10
+sig2 <- 1
+x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(sig2, e)))
 tropca_fit <- tropca.linsp(x)
 }
 

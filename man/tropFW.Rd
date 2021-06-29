@@ -15,12 +15,13 @@ A list containing:
 \item{distsum}{The sum of distance from each observation to the fermat-weber point.}
 }
 \description{
-Compute the tropical fermat-weber point for a given data set such that the sum of tropical distance to each point is minimized.
+Compute the tropical Fermat-Weber (FW) point for a given data matrix.
+The FW point minimizes the summed tropical distance to the trees described
+in the data matrix.
 }
 \examples{
-x = matrix(rnorm(100), ncol = 10)
+x <- matrix(rnorm(100), ncol = 10)
 tropFW(x)
-
 }
 \references{
 Lin, B.,Sturmfels, B., Tang, X. and Yoshida, R. (2015)

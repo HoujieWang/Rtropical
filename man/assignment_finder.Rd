@@ -11,7 +11,7 @@ assignment_finder(P, Q, t = 25)
 
 \item{Q}{a data matrix of the second category.}
 
-\item{t}{a numeric value controling the number of selected best assignments.}
+\item{t}{a numeric value controlling the number of selected best assignments.}
 }
 \value{
 A matrix with each row a unique assignment, starting from the best assignment

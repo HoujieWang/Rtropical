@@ -40,12 +40,19 @@
 #'
 #' # data generation
 #' library(Rfast)
-#' e <- 100; n <- 10; N <- 10; s <- 5
-#' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-#'           rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+#' e <- 100
+#' n <- 10
+#' N <- 10
+#' s <- 5
+#' x <- rbind(
+#'   rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+#'   rmvnorm(n, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+#' )
 #' y <- as.factor(c(rep(1, n), rep(2, n)))
-#' newx <- rbind(rmvnorm(N, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-#'              rmvnorm(N, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+#' newx <- rbind(
+#'   rmvnorm(N, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+#'   rmvnorm(N, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+#' )
 #' newy <- as.factor(rep(c(1, 2), each = N))
 #'
 #' # train the tropical svm
@@ -61,45 +68,45 @@
 #' table(pred, newy)
 #'
 #' # compute testing accuracy
-#' sum(pred == newy)/length(newy)
-#'
+#' sum(pred == newy) / length(newy)
 #' @export
 #' @export cv.tropsvm
 
-cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, ncores = 2){
-  if (nrow(x) != length(y)){
+cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, ncores = 2) {
+  if (nrow(x) != length(y)) {
     stop("numbers of data and label don't match")
   }
-  if (length(unique(y)) != 2){
+  if (length(unique(y)) != 2) {
     stop("only two classes allowded")
   }
-  if (is.data.frame(x)){
+  if (is.data.frame(x)) {
     warning("input data not 'matrix'; set to 'Matrix'")
     x <- data.matrix(x)
   }
-  if (nassignment < 10){
+  if (nassignment < 10) {
     warning("use more assignments when performance is bad.")
   }
 
   classes <- unique(y)
   reorder_ind <- c(which(y == classes[1]), which(y == classes[2]))
-  np = sum(y == classes[1]); nq = sum(y == classes[1])
+  np <- sum(y == classes[1])
+  nq <- sum(y == classes[1])
   y <- y[reorder_ind]
   x <- x[reorder_ind, ]
 
 
   train_index <- createFolds(y, k = nfold, returnTrain = TRUE)
-  all_assignment <- matrix(0, nrow = nfold*nassignment, ncol = 4)
-  for (i in 1: length(train_index)){
-    P = x[train_index[[i]] <= np, ]
-    Q = x[train_index[[i]] > np, ]
-    all_assignment[((i-1)*nassignment+1): (i*nassignment), ] = assignment_finder(P, Q)[1: nassignment, ]
+  all_assignment <- matrix(0, nrow = nfold * nassignment, ncol = 4)
+  for (i in 1:length(train_index)) {
+    P <- x[train_index[[i]] <= np, ]
+    Q <- x[train_index[[i]] > np, ]
+    all_assignment[((i - 1) * nassignment + 1):(i * nassignment), ] <- assignment_finder(P, Q)[1:nassignment, ]
   }
-  all_assignment = unique(all_assignment)
-  all_assignment_list = lapply(seq_len(nrow(all_assignment)), function(i) all_assignment[i, ])
+  all_assignment <- unique(all_assignment)
+  all_assignment_list <- lapply(seq_len(nrow(all_assignment)), function(i) all_assignment[i, ])
   all_accuracy_list <- list()
   cl <- makeCluster(ncores)
-  for (i in 1: length(train_index)){
+  for (i in 1:length(train_index)) {
     # i = 1
     data <- x[train_index[[i]], ]
     label <- y[train_index[[i]]]
@@ -112,12 +119,14 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
     val_n2 <- sum(val_label == classes[2])
     val_n <- val_n1 + val_n2
 
-    if (parallel){
-      all_accuracy <- parLapply(cl, all_assignment_list, function(assignment){
-        tropsvm_helper(x = data, y = label, assignment = assignment, ind = 1: 70, newx = val_data, newy = val_label)})
-    } else{
-      all_accuracy <- lapply(all_assignment_list, function(assignment){
-        tropsvm_helper(data, label, assignment = assignment, ind = 1: 70, newx = val_data, newy = val_label)})
+    if (parallel) {
+      all_accuracy <- parLapply(cl, all_assignment_list, function(assignment) {
+        tropsvm_helper(x = data, y = label, assignment = assignment, ind = 1:70, newx = val_data, newy = val_label)
+      })
+    } else {
+      all_accuracy <- lapply(all_assignment_list, function(assignment) {
+        tropsvm_helper(data, label, assignment = assignment, ind = 1:70, newx = val_data, newy = val_label)
+      })
     }
     accuracy_mat <- do.call("rbind", all_accuracy)
     all_accuracy_list[[i]] <- accuracy_mat
@@ -128,7 +137,9 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
   best_assignment <- all_assignment[best_hyperparms[1, 1], ]
   best_method_ind <- best_hyperparms[1, 2]
   best_accuracy <- sapply(all_accuracy_list, max)
-  best_fold <- which.max(sapply(all_accuracy_list, function(x){x[best_hyperparms]}))
+  best_fold <- which.max(sapply(all_accuracy_list, function(x) {
+    x[best_hyperparms]
+  }))
   data <- x[train_index[[best_fold]], ]
   label <- y[train_index[[best_fold]]]
   n1 <- sum(label == classes[1])
@@ -140,12 +151,14 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
   val_n2 <- sum(val_label == classes[2])
   val_n <- val_n1 + val_n2
   tropsvm.out <- tropsvm(data, label, assignment = best_assignment, ind = best_method_ind)
-  cv.tropsvm.out <- list("apex" = tropsvm.out$apex,
-                         "assignment" = best_assignment,
-                         "index" = best_method_ind,
-                         "levels" = as.factor(classes),
-                         "accuracy" = best_accuracy,
-                         "nfold" = nfold)
+  cv.tropsvm.out <- list(
+    "apex" = tropsvm.out$apex,
+    "assignment" = best_assignment,
+    "index" = best_method_ind,
+    "levels" = as.factor(classes),
+    "accuracy" = best_accuracy,
+    "nfold" = nfold
+  )
   class(cv.tropsvm.out) <- "cv.tropsvm"
   cv.tropsvm.out
 }

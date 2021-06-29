@@ -9,6 +9,6 @@
 #' @method coef tropsvm
 #' @export
 #' @export coef.tropsvm
-coef.tropsvm <- function(object, ...){
+coef.tropsvm <- function(object, ...) {
   cat("The apex of seprarating hyperplane is: \n", -object$apex, "\n")
 }

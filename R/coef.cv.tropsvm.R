@@ -9,6 +9,6 @@
 #' @method coef cv.tropsvm
 #' @export
 #' @export coef.cv.tropsvm
-coef.cv.tropsvm <- function(object, ...){
+coef.cv.tropsvm <- function(object, ...) {
   coef.tropsvm(object)
 }

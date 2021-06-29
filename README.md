@@ -1,5 +1,5 @@
 # Tropical Data Analysis Tools
-Algorithms of tropical support vector machine and principles component analysis defined in tropical projective spaces.
+Algorithms of tropical support vector machine and principals component analysis defined in tropical projective spaces.
 
 # Reference 
 Tang, X., Wang, H. & Yoshida, R. Tropical Support Vector Machine and its Applications to Phylogenomics https://arxiv.org/abs/2003.00677

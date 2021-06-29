@@ -1,11 +1,11 @@
-#' Read trees in two categories into a data matrix
+#' Read Newick-formatted trees in two categories into a data matrix
 #'
 #' @importFrom ape read.tree
 #' @param data.file1 A set of trees in the format of Newick strings from one category.
 #' @param data.file2 a set of trees in the format of Newick strings from another category.
 #' @export
 #'
-read.tree.to.data.matrix <- function(data.file1, data.file2){
+read.tree.to.data.matrix <- function(data.file1, data.file2) {
   G1 <- read.tree(data.file1)
   G2 <- read.tree(data.file2)
 

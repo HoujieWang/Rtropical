@@ -9,10 +9,10 @@
 \arguments{
 \item{object}{a fitted \code{"cv.tropsvm"} object.}
 
-\item{\dots}{Not used. Other arguements to summary.}
+\item{\dots}{Not used. Other arguments to summary.}
 }
 \value{
-A summary of the crucial information of a tropical support vector machine is printed, incluiding
+A summary of the crucial information of a tropical support vector machine is printed, including
 the selected best assignment and classification methods and the validation accuracy of each data fold. The
 summary section of classification methods specifies the sectors and their intersections used to classify
 points of two different categories.
@@ -24,12 +24,19 @@ Return a summary with a more detailed explanation of the object \code{"cv.tropsv
 
 # data generation
 library(Rfast)
-e <- 100; n <- 10; N <- 10; s <- 5
-x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-          rmvnorm(n, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+e <- 100
+n <- 10
+N <- 10
+s <- 5
+x <- rbind(
+  rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+  rmvnorm(n, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+)
 y <- as.factor(c(rep(1, n), rep(2, n)))
-newx <- rbind(rmvnorm(N, mu = c(5, -5, rep(0, e-2)), sigma = diag(s, e)),
-             rmvnorm(N, mu = c(-5, 5, rep(0, e-2)), sigma = diag(s, e)))
+newx <- rbind(
+  rmvnorm(N, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
+  rmvnorm(N, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
+)
 newy <- as.factor(rep(c(1, 2), each = N))
 
 # train the tropical svm with cross-validation
