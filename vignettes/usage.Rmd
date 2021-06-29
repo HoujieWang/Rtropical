@@ -1,5 +1,5 @@
 ---
-title: "usage"
+title: "The `Rtropical` package"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{usage}
@@ -16,4 +16,18 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(Rtropical)
+library(ape)
 ```
+
+
+## Case Study
+
+```{r}
+data(apicomplexa)
+
+.compressTipLabel(apicomplexa)
+
+treevecs <- do.call("rbind", lapply(.compressTipLabel(apicomplexa), vec.fun))
+treevecs
+```
+
