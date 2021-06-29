@@ -5,6 +5,9 @@
 #' @export
 #'
 vec.fun <- function(phy) {
-  phy <- cophenetic.phylo(phy)
-  phy[lower.tri(phy)]
+  cophe <- cophenetic.phylo(phy)
+  labs <- outer(rownames(cophe), colnames(cophe), paste, sep="--")
+  phyvec <- cophe[lower.tri(cophe)]
+  names(phyvec) <- labs[lower.tri(cophe)]
+  phyvec
 }
