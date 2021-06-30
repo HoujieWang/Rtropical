@@ -19,3 +19,7 @@ Imports:
     Rfast,
     RcppAlgos,
     caret
+Suggests: 
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr

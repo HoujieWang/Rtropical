@@ -1,0 +1,33 @@
+---
+title: "The `Rtropical` package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(Rtropical)
+library(ape)
+```
+
+
+## Case Study
+
+```{r}
+data(apicomplexa)
+
+.compressTipLabel(apicomplexa)
+
+treevecs <- do.call("rbind", lapply(.compressTipLabel(apicomplexa), vec.fun))
+treevecs
+```
+
