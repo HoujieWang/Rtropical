@@ -1,6 +1,6 @@
 #' Plot the Tropical Principal Components with Data Projections
 #'
-#' Visualize the second order tropical principle components in \code{tropca}
+#' Visualize the second order tropical principle components in \code{troppca}
 #' as a tropical triangle with projections on a two-dimensional plot via tropical isometry.
 #'
 #' @importFrom graphics plot
@@ -9,7 +9,7 @@
 #' @importFrom graphics par
 #' @importFrom graphics legend
 #'
-#' @param x a fitted \code{tropca} object.
+#' @param x a fitted \code{troppca} object.
 #' @param plab a vector of labels of all points in the given data matrix.
 #' Not needed for unlabeled data. (default: NULL)
 #' @param \dots Not used. Other arguments to plot
@@ -18,10 +18,10 @@
 #'
 #' @keywords Tropical Geometry, Supervised Learning, Non-Euclidean Data
 #'
-#' @method plot tropca
+#' @method plot troppca
 #' @export
-#' @export plot.tropca
-plot.tropca <- function(x, plab = NULL, ...) {
+#' @export plot.troppca
+plot.troppca <- function(x, plab = NULL, ...) {
   if (x$type == "linear space") {
     stop("Only principal components by tropical polytopes are plottable.")
   }

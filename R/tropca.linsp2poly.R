@@ -1,7 +1,7 @@
 #' Tropical Principal Component Analysis by Polytope Converted from Linear Space
 #'
 #' Approximate the principal component as a tropical polytope converted from tropical linear space for a given data matrix
-#' via MCMC and return the results as an object of class \code{tropca}.
+#' via MCMC and return the results as an object of class \code{troppca}.
 #'
 #' @importFrom parallel parLapply
 #' @importFrom parallel makeCluster
@@ -16,7 +16,7 @@
 #' @param nsample a numeric value indicating the number of samples of MCMC. (default: 1000)
 #' @param ncores a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)
 #'
-#' @return A list of S3 class \code{"tropca"}, including:
+#' @return A list of S3 class \code{"troppca"}, including:
 #' \item{pc}{The principal component as a tropical linear space}
 #' \item{obj}{The tropical PCA objective, the sum of tropical distance from each point to the projection.}
 #' \item{projection}{The projections of all data points.}
@@ -40,13 +40,13 @@
 #'   rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(s, e)),
 #'   rmvnorm(n, mu = c(-5, 5, rep(0, e - 2)), sigma = diag(s, e))
 #' )
-#' tropca_fit <- tropca.linsp2poly(x)
-#' plot(tropca_fit)
+#' troppca_fit <- troppca.linsp2poly(x)
+#' plot(troppca_fit)
 #' }
 #'
 #' @export
-#' @export tropca.linsp2poly
-# tropca.linsp2poly = function(x, pcs = 2, iteration = list(), ncores = 2){
+#' @export troppca.linsp2poly
+# troppcalinsp2poly = function(x, pcs = 2, iteration = list(), ncores = 2){
 #   con <- list(
 #     exhaust = FALSE,
 #     niter = 100
@@ -75,55 +75,55 @@
 #   pc <- x[best_choice, ]
 #   rownames(pc) <- paste("pc", 1: pcs, sep = "")
 #   proj_points <- do.call("rbind", lapply(x_list, troproj.poly, t(linsp_to_poly(pc))))
-#   tropca.out <- list("pc" = pc,
+#   troppca.out <- list("pc" = pc,
 #                      "obj" = min(all_objs),
 #                      "projection" = proj_points,
 #                      "type" = "linear space")
-#   class(tropca.out) <- "tropca"
-#   tropca.out
+#   class(troppca.out) <- "troppca"
+#   troppca.out
 # }
-tropca.linsp2poly <- function(x, pcs = 2, nsample = 1000, ncores = 2) {
+troppca.linsp2poly <- function(x, pcs = 2, nsample = 1000, ncores = 2) {
   pcs <- pcs + 1
   n <- nrow(x)
   cl <- makeCluster(ncores)
   x_list <- lapply(seq_len(n), function(i) x[i, ])
-  tropca_objs <- vector(mode = "numeric", nsample)
+  troppca_objs <- vector(mode = "numeric", nsample)
   samples <- matrix(NA, nrow = nsample, ncol = pcs)
   samples[1, ] <- sample(1:n, pcs)
-  tropca_objs[1] <- tropca.obj2(x[samples[1, ], ], x_list, cl)
+  troppca_objs[1] <- troppca.obj2(x[samples[1, ], ], x_list, cl)
 
   t <- 1
   while (t < nsample) {
     # Find a new proposal by changing a randomly selected vertex of the current polytope
     current_choice <- samples[t, ]
-    current_obj <- tropca_objs[t]
+    current_obj <- troppca_objs[t]
 
     change_ind <- sample(pcs, 1)
     out_change <- sample(c(1:n)[-current_choice], 1)
     new_choice <- c(current_choice[-change_ind], out_change)
-    new_obj <- tropca.obj2(x[new_choice, ], x_list, cl)
+    new_obj <- troppca.obj2(x[new_choice, ], x_list, cl)
 
     # Compute the probability we accept the new PCA base
     p <- min(1, current_obj / new_obj)
 
     if (sample(c(0, 1), 1, prob = c(1 - p, p)) == 1) {
       samples[(t + 1), ] <- new_choice
-      tropca_objs[(t + 1)] <- new_obj
+      troppca_objs[(t + 1)] <- new_obj
       t <- t + 1
     }
   }
-  min_index <- which(tropca_objs == min(tropca_objs))[1]
-  best_obj <- tropca_objs[min_index]
+  min_index <- which(troppca_objs == min(troppca_objs))[1]
+  best_obj <- troppca_objs[min_index]
   pc <- x[samples[min_index, ], ]
   proj_points <- do.call("rbind", parLapply(cl, x_list, troproj.poly, tconv = t(pc)))
   stopCluster(cl)
   rownames(pc) <- paste("pc", 1:pcs, sep = "")
-  tropca.out <- list(
+  troppca.out <- list(
     "pc" = pc,
-    "obj" = tropca_objs[min_index],
+    "obj" = troppca_objs[min_index],
     "projection" = proj_points,
     "type" = "linear space"
   )
-  class(tropca.out) <- "tropca"
-  tropca.out
+  class(troppca.out) <- "troppca"
+  troppca.out
 }

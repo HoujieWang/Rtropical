@@ -1,4 +1,4 @@
-#' @name tropca.obj
+#' @name troppca.obj
 #'
 #' @title Compute Tropical PCA Objective
 #' @keywords internal
@@ -10,15 +10,15 @@
 #' @param x_list a list of vectors
 #' @param cl cluster for parallel computing
 #'
-#' @rdname tropca.obj
-tropca.obj <- function(pc, x_list, cl) {
+#' @rdname troppca.obj
+troppca.obj <- function(pc, x_list, cl) {
   proj <- parLapply(cl, x_list, troproj.poly, tconv = pc)
   temp <- do.call("rbind", x_list) - do.call("rbind", proj)
   sum(rowMaxs(temp, value = T) - rowMins(temp, value = T))
 }
-#' @rdname tropca.obj
-#' @export tropca.obj2
-tropca.obj2 <- function(pc, x_list, cl) {
+#' @rdname troppca.obj
+#' @export troppca.obj2
+troppca.obj2 <- function(pc, x_list, cl) {
   pc <- linsp_to_poly(pc)
   proj <- parLapply(cl, x_list, troproj.poly, tconv = t(pc))
   temp <- do.call("rbind", x_list) - do.call("rbind", proj)

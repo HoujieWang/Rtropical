@@ -1,7 +1,7 @@
 #' Tropical Principal Component Analysis by Tropical Linear Space
 #'
 #' Approximate the principal component as a tropical linear space
-#' for a given data matrix and returns the results as an object of class \code{tropca}.
+#' for a given data matrix and returns the results as an object of class \code{troppca}.
 #'
 #' @importFrom parallel parLapply
 #' @importFrom parallel makeCluster
@@ -22,7 +22,7 @@
 #' }
 #' @param ncores a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)
 #'
-#' @return A list of S3 class \code{"tropca"}, including:
+#' @return A list of S3 class \code{"troppca"}, including:
 #' \item{pc}{The principal component as a tropical linear space}
 #' \item{obj}{The tropical PCA objective, the sum of tropical distance from each point to the projection.}
 #' \item{projection}{The projections of all data points.}
@@ -43,12 +43,12 @@
 #' e <- 10
 #' sig2 <- 1
 #' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(sig2, e)))
-#' tropca_fit <- tropca.linsp(x)
+#' troppca_fit <- troppca.linsp(x)
 #' }
 #'
 #' @export
-#' @export tropca.linsp
-tropca.linsp <- function(x, pcs = 2, iteration = list(), ncores = 2) {
+#' @export troppca.linsp
+troppca.linsp <- function(x, pcs = 2, iteration = list(), ncores = 2) {
   con <- list(
     exhaust = FALSE,
     niter = 100
@@ -76,12 +76,12 @@ tropca.linsp <- function(x, pcs = 2, iteration = list(), ncores = 2) {
   pc <- x[best_choice, ]
   rownames(pc) <- paste("pc", 1:pcs, sep = "")
   proj_points <- troproj.linsp(x, pc)
-  tropca.out <- list(
+  troppca.out <- list(
     "pc" = pc,
     "obj" = min(all_objs),
     "projection" = proj_points,
     "type" = "linear space"
   )
-  class(tropca.out) <- "tropca"
-  tropca.out
+  class(troppca.out) <- "troppca"
+  troppca.out
 }
