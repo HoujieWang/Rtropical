@@ -15,11 +15,11 @@
 #' # Generate a tropical polytope consisting of three trees each with 5 leaves
 #' library(ape)
 #' pltp <- sapply(1:3, function(i) {
-#'   vec.fun(rcoal(5))
+#'   as.vector(rcoal(5))
 #' })
 #' # Generate an observation and vectorize it
 #' tree <- rcoal(5)
-#' tree_vec <- vec.fun(tree)
+#' tree_vec <- as.vector(tree)
 #' troproj.poly(tree_vec, pltp)
 #' @export
 #' @export troproj.poly

@@ -31,9 +31,8 @@ We will carry out tropical SVM with the simulated tree data in the package. This
 ```{r}
 set.seed(101)
 data(sim_trees)
-treevecs = do.call("rbind", lapply(sim_trees, vec.fun))
+treevecs = do.call("rbind", lapply(sim_trees, as.vector))
 labels = as.factor(rep(c(1, 2), each = nrow(treevecs)/2))
-
 # generate training data set
 trn_ind = sample(1: nrow(treevecs), nrow(treevecs)*0.8)
 x = treevecs[trn_ind, ]
@@ -80,7 +79,7 @@ sum(svm_pred == newy)/length(newy)
 Now we analyze some actual phylogenetic tree data with tropical principal component analysis.
 ```{r}
 data(apicomplexa)
-treevecs <- do.call("rbind", lapply(.compressTipLabel(apicomplexa), vec.fun))
+treevecs <- as.matrix(apicomplexa, parallel = TRUE)
 pca_fit = troppca.poly(treevecs)
 ``` 
 

@@ -14,8 +14,8 @@ read.nexus.to.data.matrix <- function(data.file1, data.file2) {
   N1 <- length(G1)
   N2 <- length(G2)
 
-  distVec_all1 <- multiPhylo.to.data.matrix(G1, to)
-  distVec_all2 <- multiPhylo.to.data.matrix(G2, to)
+  distVec_all1 <- as.matrix(G1, to)
+  distVec_all2 <- as.matrix(G2, to)
   rownames(distVec_all1) <- NULL
   rownames(distVec_all2) <- NULL
 
