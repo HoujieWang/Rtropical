@@ -20,6 +20,8 @@ Imports:
     Rfast,
     RcppAlgos,
     caret
+Dependencies:
+    R (>= 3.5.0)
 Suggests: 
     rmarkdown,
     knitr,
