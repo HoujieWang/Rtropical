@@ -1,3 +1,7 @@
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/grady/Rtropical/workflows/R-CMD-check/badge.svg)](https://github.com/grady/Rtropical/actions)
+<!-- badges: end -->
+
 # Tropical Data Analysis Tools
 Algorithms of tropical support vector machine and principals component analysis defined in tropical projective spaces.
 

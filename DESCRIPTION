@@ -20,7 +20,11 @@ Imports:
     Rfast,
     RcppAlgos,
     caret
+Dependencies:
+    R (>= 3.5.0)
 Suggests: 
     rmarkdown,
-    knitr
+    knitr,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3
