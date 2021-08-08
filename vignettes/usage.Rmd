@@ -54,11 +54,11 @@ trop_pred <- predict(trop_fit, newx)
 sum(as.vector(trop_pred) == newy)/length(newy)
 print(paste("The running time is: ", round(end - start, digits = 3), "s", sep = ""))
 ``` 
-The accuracy seems to be worse because this function does not tune for a good classification method. In the cases when `tropsvm` fails, we recommend to use `cv.tropsvm`. This function automatically carries out cross-validation to improve performance but it can take longer.
+The accuracy seems to be worse because this function does not tune for a good classification method. In the cases when `tropsvm` fails, we recommend to use `cv.tropsvm`. This function automatically carries out cross-validation to improve performance. For the ease of computation, we set `nassignment=100`. However, users can set 500 to reach an accuracy up to 90% with running time approximately 4.5 mins.
 ```{r cv-trop-svm}
 # tropical svm with cross-validation
 start = Sys.time()
-cv_trop_fit <- cv.tropsvm(x, y, nassignment = 500, parallel = TRUE)
+cv_trop_fit <- cv.tropsvm(x, y, nassignment = 100, parallel = TRUE)
 end = Sys.time()
 cv_trop_pred <- predict(cv_trop_fit, newx)
 # compute classification accuracy for testing data

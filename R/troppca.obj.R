@@ -12,7 +12,7 @@
 #'
 #' @rdname troppca.obj
 troppca.obj <- function(pc, x_list, cl) {
-  proj <- parLapply(cl, x_list, troproj.poly, tconv = pc)
+  proj <- parLapply(cl, x_list, tropproj.poly, tconv = pc)
   temp <- do.call("rbind", x_list) - do.call("rbind", proj)
   sum(rowMaxs(temp, value = T) - rowMins(temp, value = T))
 }
@@ -20,7 +20,7 @@ troppca.obj <- function(pc, x_list, cl) {
 #' @export troppca.obj2
 troppca.obj2 <- function(pc, x_list, cl) {
   pc <- linsp_to_poly(pc)
-  proj <- parLapply(cl, x_list, troproj.poly, tconv = t(pc))
+  proj <- parLapply(cl, x_list, tropproj.poly, tconv = t(pc))
   temp <- do.call("rbind", x_list) - do.call("rbind", proj)
   sum(rowMaxs(temp, value = T) - rowMins(temp, value = T))
 }

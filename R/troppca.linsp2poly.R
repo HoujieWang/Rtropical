@@ -66,7 +66,7 @@
 #   cl <- makeCluster(ncores)
 #   all_objs <- unlist(parLapply(cl, all_choices, function(ind){
 #     V <- x[ind, ]
-#     proj = do.call("rbind", lapply(x_list, troproj.poly, t(linsp_to_poly(V))))
+#     proj = do.call("rbind", lapply(x_list, tropproj.poly, t(linsp_to_poly(V))))
 #     temp <- x - proj
 #     sum(rowMaxs(temp, T) - rowMins(temp, T))
 #   }))
@@ -74,7 +74,7 @@
 #   best_choice <- all_choices[[which.min(all_objs)]]
 #   pc <- x[best_choice, ]
 #   rownames(pc) <- paste("pc", 1: pcs, sep = "")
-#   proj_points <- do.call("rbind", lapply(x_list, troproj.poly, t(linsp_to_poly(pc))))
+#   proj_points <- do.call("rbind", lapply(x_list, tropproj.poly, t(linsp_to_poly(pc))))
 #   troppca.out <- list("pc" = pc,
 #                      "obj" = min(all_objs),
 #                      "projection" = proj_points,
@@ -115,7 +115,7 @@ troppca.linsp2poly <- function(x, pcs = 2, nsample = 1000, ncores = 2) {
   min_index <- which(troppca_objs == min(troppca_objs))[1]
   best_obj <- troppca_objs[min_index]
   pc <- x[samples[min_index, ], ]
-  proj_points <- do.call("rbind", parLapply(cl, x_list, troproj.poly, tconv = t(pc)))
+  proj_points <- do.call("rbind", parLapply(cl, x_list, tropproj.poly, tconv = t(pc)))
   stopCluster(cl)
   rownames(pc) <- paste("pc", 1:pcs, sep = "")
   troppca.out <- list(

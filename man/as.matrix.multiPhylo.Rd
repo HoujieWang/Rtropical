@@ -22,6 +22,6 @@ utilized for multi-cored CPUs. (default: 2)}
 }
 \description{
 Unifies tip labels of all phylogenetic trees in \code{multiPhylo}
-object the same as the first tree and returns their
-cophenetic distance in a matrix.
+object the same as the first tree and returns the
+cophenetic distance of their corresponding chronogram.
 }

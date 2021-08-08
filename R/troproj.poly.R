@@ -20,11 +20,11 @@
 #' # Generate an observation and vectorize it
 #' tree <- rcoal(5)
 #' tree_vec <- as.vector(tree)
-#' troproj.poly(tree_vec, pltp)
+#' tropproj.poly(tree_vec, pltp)
 #' @export
-#' @export troproj.poly
+#' @export tropproj.poly
 #'
-troproj.poly <- function(x, tconv) {
+tropproj.poly <- function(x, tconv) {
   if (is.null(dim(tconv))) {
     lambda <- min(x - tconv)
     pi_D <- c(t(lambda + t(tconv)))

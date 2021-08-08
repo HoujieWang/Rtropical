@@ -17,11 +17,11 @@
 #' s <- 3
 #' x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(sig2, e)))
 #' V <- matrix(runif(s * e, -10, 10), nrow = s, ncol = e)
-#' x_proj <- troproj.linsp(x, V)
+#' x_proj <- tropproj.linsp(x, V)
 #' head(x_proj)
 #' @export
-#' @export troproj.linsp
-troproj.linsp <- function(x, V) {
+#' @export tropproj.linsp
+tropproj.linsp <- function(x, V) {
   if (is.vector(x)) x <- t(as.matrix(x))
   n <- nrow(x)
   pcs <- nrow(V)
