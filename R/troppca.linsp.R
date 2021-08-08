@@ -76,6 +76,8 @@ troppca.linsp <- function(x, pcs = 2, iteration = list(), ncores = 2) {
   pc <- x[best_choice, ]
   rownames(pc) <- paste("pc", 1:pcs, sep = "")
   proj_points <- tropproj.linsp(x, pc)
+  rownames(proj_points) <- rownames(x)
+  colnames(proj_points) <- colnames(x)
   troppca.out <- list(
     "pc" = pc,
     "obj" = min(all_objs),

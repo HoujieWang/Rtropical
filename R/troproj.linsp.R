@@ -50,5 +50,7 @@ tropproj.linsp <- function(x, V) {
     temp2 <- do.call(cbind, temp2)
     data_proj[, i] <- rowMaxs(temp2, T)
   }
+  rownames(data_proj) <- rownames(x)
+  colnames(data_proj) <- colnames(x)
   data_proj
 }

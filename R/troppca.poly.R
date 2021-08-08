@@ -83,6 +83,8 @@ troppca.poly <- function(x, pcs = 2, nsample = 1000, ncores = 2) {
   proj_points <- do.call("rbind", parLapply(cl, x_list, tropproj.poly, tconv = t(pc)))
   stopCluster(cl)
   rownames(pc) <- paste("pc", 1:pcs, sep = "")
+  rownames(proj_points) <- rownames(x)
+  colnames(proj_points) <- colnames(x)
   troppca.out <- list(
     "pc" = pc,
     "obj" = troppca_objs[min_index],
