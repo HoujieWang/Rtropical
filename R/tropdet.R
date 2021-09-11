@@ -13,7 +13,8 @@
 #' @export tropdet
 tropdet <- function(x) {
   if (nrow(x) <= 5) {
-    switch(ncol(x) - 1,
+    switch(ncol(x),
+      x,
       trop_det2d(x),
       trop_det3d(x),
       trop_det4d(x),

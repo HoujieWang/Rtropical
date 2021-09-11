@@ -66,7 +66,7 @@ troppca.linsp <- function(x, pcs = 2, iteration = list(), ncores = 2) {
   }
   cl <- makeCluster(ncores)
   all_objs <- unlist(parLapply(cl, all_choices, function(ind) {
-    V <- x[ind, ]
+    V <- matrix(x[ind, ], nrow = length(ind))
     proj <- tropproj.linsp(x, V)
     temp <- x - proj
     sum(rowMaxs(temp, T) - rowMins(temp, T))
