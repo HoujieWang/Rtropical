@@ -65,7 +65,8 @@ troppca.linsp <- function(x, pcs = 2, iteration = list(), ncores = 2) {
     all_choices <- lapply(sample(1:nrow(all_choices), niter, replace = F), function(i) all_choices[i, ])
   }
   cl <- makeCluster(ncores)
-  all_objs <- unlist(parLapply(cl, all_choices, function(ind) {
+  all_objs <- unlist(mclapply(all_choices, function(ind) {
+    # ind = 1
     V <- matrix(x[ind, ], nrow = length(ind))
     proj <- tropproj.linsp(x, V)
     temp <- x - proj
@@ -73,7 +74,7 @@ troppca.linsp <- function(x, pcs = 2, iteration = list(), ncores = 2) {
   }))
   stopCluster(cl)
   best_choice <- all_choices[[which.min(all_objs)]]
-  pc <- x[best_choice, ]
+  pc <- matrix(x[best_choice, ], nrow = pcs)
   rownames(pc) <- paste("pc", 1:pcs, sep = "")
   proj_points <- tropproj.linsp(x, pc)
   rownames(proj_points) <- rownames(x)
