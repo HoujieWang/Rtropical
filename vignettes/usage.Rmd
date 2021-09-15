@@ -84,7 +84,7 @@ pca_fit = troppca.poly(treevecs)
 
 For second order principal component and the projection of data points, we can visualize on a 2D plane by isometric transformation.
 ```{r plot-trop-pca}
-plot(pca_fit)
+plot(pca_fit, fw = T)
 ``` 
 
 # Tropical Fermat-weber Point  

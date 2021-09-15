@@ -4,13 +4,16 @@
 \alias{plot.troppca}
 \title{Plot the Tropical Principal Components with Data Projections}
 \usage{
-\method{plot}{troppca}(x, plab = NULL, ...)
+\method{plot}{troppca}(x, plab = NULL, fw = FALSE, ...)
 }
 \arguments{
 \item{x}{a fitted \code{troppca} object.}
 
 \item{plab}{a vector of labels of all points in the given data matrix.
 Not needed for unlabeled data. (default: NULL)}
+
+\item{fw}{a logical variable to determine if to add
+Fermat-Weber point of the data projection. (default: FALSE)}
 
 \item{\dots}{Not used. Other arguments to plot}
 }

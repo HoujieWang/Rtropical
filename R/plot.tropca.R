@@ -12,6 +12,8 @@
 #' @param x a fitted \code{troppca} object.
 #' @param plab a vector of labels of all points in the given data matrix.
 #' Not needed for unlabeled data. (default: NULL)
+#' @param fw a logical variable to determine if to add
+#' Fermat-Weber point of the data projection. (default: FALSE)
 #' @param \dots Not used. Other arguments to plot
 #'
 #' @author Robert Page and Houjie Wang
@@ -21,17 +23,23 @@
 #' @method plot troppca
 #' @export
 #' @export plot.troppca
-plot.troppca <- function(x, plab = NULL, ...) {
+plot.troppca <- function(x, plab = NULL, fw = FALSE, ...) {
   if (x$type == "linear space") {
-    stop("Only principal components by tropical polytopes are plottable.")
+    stop("Only principal component by tropical polytope is plottable.")
   }
   object <- x
-  if (is.null(plab)) plab <- as.factor(rep(1, nrow(object$projection)))
   D <- eachrow(object$pc, object$pc[1, ], "-")[-1, ]
-  proj_points_plot <- do.call("rbind", lapply(lapply(1:nrow(object$projection), function(i) {
-    object$projection[i, ]
-  }), polytope_iso, D = object$pc))
-  proj_2D_plot_m <- proj_points_plot - proj_points_plot[, 1]
+  if (fw){
+    if (is.null(plab)) plab <- as.factor(c(rep(1, nrow(object$projection))))
+    fw_point <- tropFW(object$projection)
+    proj_points_plot <- t(apply(rbind(object$projection, fw_point$fw), 1, polytope_iso, D = object$pc))
+    proj_2D_plot_m <- proj_points_plot - proj_points_plot[, 1]
+    plab <- c(plab, "FW")
+  } else{
+    if (is.null(plab)) plab <- as.factor(rep(1, nrow(object$projection)))
+    proj_points_plot <- t(apply(object$projection, 1, polytope_iso, D = object$pc))
+    proj_2D_plot_m <- proj_points_plot - proj_points_plot[, 1]
+  }
   par(xpd = TRUE, mar = c(5.1, 4.1, 4.1, 5.1))
   k <- ncol(D)
   plot(D[1, ], D[2, ], xlab = "x1", ylab = "x2")
