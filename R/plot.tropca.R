@@ -24,10 +24,14 @@
 #' @export
 #' @export plot.troppca
 plot.troppca <- function(x, plab = NULL, fw = FALSE, ...) {
+  if (x$type == "linear space") {
+    stop("Only principal component by tropical polytope is plottable.")
+  }
+  object <- x
   D <- eachrow(object$pc, object$pc[1, ], "-")[-1, ]
   if (fw){
     if (is.null(plab)) plab <- as.factor(c(rep(1, nrow(object$projection))))
-    proj_points_plot <- t(apply(rbind(object$projection, fw_point$fw), 1, polytope_iso, D = object$pc))
+    proj_points_plot <- t(apply(object$projection, 1, polytope_iso, D = object$pc))
     fw_point <- tropFW(proj_points_plot)
     proj_points_plot <- rbind(proj_points_plot, fw_point$fw)
     proj_2D_plot_m <- proj_points_plot - proj_points_plot[, 1]
@@ -55,9 +59,14 @@ plot.troppca <- function(x, plab = NULL, fw = FALSE, ...) {
   for (i in 1:length(unique(plab))) {
     points(x = proj_2D_plot_m[plab == unique(plab)[i], 2], y = proj_2D_plot_m[plab == unique(plab)[i], 3], pch = 16, cex = .75, col = (i + 1))
   }
-  points(x = proj_2D_plot_m[nrow(proj_2D_plot_m), 2], y = proj_2D_plot_m[nrow(proj_2D_plot_m), 3], pch = 18, cex = 2, col = "black")
-  if (fw){plab <- c(plab, "FW")}
   coord <- par("usr")
-  legend(x = coord[2] * 1.05, y = coord[4], legend = unique(plab), pch = c(rep(16, length(unique(plab))-1), 18),
-         col = c(2:(length(unique(plab))), "black"))
+  if (fw){
+    plab <- c(plab, "FW")
+    points(x = proj_2D_plot_m[nrow(proj_2D_plot_m), 2], y = proj_2D_plot_m[nrow(proj_2D_plot_m), 3], pch = 18, cex = 2, col = "black")
+    legend(x = coord[2] * 1.05, y = coord[4], legend = unique(plab), pch = c(rep(16, length(unique(plab))-1), 18),
+           col = c(2:(length(unique(plab))), "black"))
+  }else{
+    legend(x = coord[2] * 1.05, y = coord[4], legend = unique(plab), pch = rep(16, length(unique(plab))),
+           col = c(2:(length(unique(plab)))))
+  }
 }
