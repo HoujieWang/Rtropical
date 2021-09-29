@@ -24,16 +24,12 @@
 #' @export
 #' @export plot.troppca
 plot.troppca <- function(x, plab = NULL, fw = FALSE, ...) {
-
-  if (x$type == "linear space") {
-    stop("Only principal component by tropical polytope is plottable.")
-  }
-  object <- x
   D <- eachrow(object$pc, object$pc[1, ], "-")[-1, ]
   if (fw){
     if (is.null(plab)) plab <- as.factor(c(rep(1, nrow(object$projection))))
-    fw_point <- tropFW(object$projection)
     proj_points_plot <- t(apply(rbind(object$projection, fw_point$fw), 1, polytope_iso, D = object$pc))
+    fw_point <- tropFW(proj_points_plot)
+    proj_points_plot <- rbind(proj_points_plot, fw_point$fw)
     proj_2D_plot_m <- proj_points_plot - proj_points_plot[, 1]
   } else{
     if (is.null(plab)) plab <- as.factor(rep(1, nrow(object$projection)))
