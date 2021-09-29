@@ -9,7 +9,7 @@ A list of length 12 with each element a sublist containing an
 ape \code{multiPhylo} object with 300 rooted trees on 5 tips and the tree categories.
 }
 \usage{
-data(all_trees.rda)
+data(all_trees)
 }
 \description{
 Simulated Tree Data with Different Proximity Parameter Value
