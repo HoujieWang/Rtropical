@@ -115,7 +115,8 @@ troppca.linsp2poly <- function(x, pcs = 2, nsample = 1000, ncores = 2) {
   min_index <- which(troppca_objs == min(troppca_objs))[1]
   best_obj <- troppca_objs[min_index]
   pc <- x[samples[min_index, ], ]
-  proj_points <- do.call("rbind", parLapply(cl, x_list, tropproj.poly, tconv = t(pc)))
+  pc2 <- linsp_to_poly(pc)
+  proj_points <- do.call("rbind", parLapply(cl, x_list, tropproj.poly, tconv = t(pc2)))
   stopCluster(cl)
   rownames(pc) <- paste("pc", 1:pcs, sep = "")
   troppca.out <- list(

@@ -1,14 +1,19 @@
 Package: Rtropical
-Title: Tools for Analysis in Tropical Projective Spaces 
+Title: Data Analysis Tools in Tropical Projective Spaces 
 Version: 0.0.0.9000
-Authors@R: c(person("Houjie", "Wang", role = c("aut", "cre"), email = "whj666@uw.edu"),
-    	     person("Kaizhang", "Wang", role = c("ctb"), email = "wangkz@buaa.edu.cn"),
+Authors@R: c(person("Houjie", "Wang", role = c("aut", "cre"), email = "wanghoujie6688@gmail.com"),
+    	     person("Kaizhang", "Wang", role = c("aut"), email = "wangkz@buaa.edu.cn"),
     	     person("Grady", "Weyenberg", email = "gradysw@hawaii.edu", role = c("aut")),
+	     person("Xiaoxian", "Tang", email = "xiaoxian@buaa.edu.cn", role = c("aut")),
     	     person("Ruriko", "Yoshida", email = "ryoshida@nps.edu", role = c("aut"))
     	     )
+Maintainer: Houjie Wang <wanghoujie6688@gmail.com>
 Description: Produce tropical support vector machine and principal component analysis defined in tropical projective spaces.
 License: GPL-3
 Encoding: UTF-8
+URL: https://arxiv.org/abs/2003.00677, 
+	https://doi.org/10.1093/bioinformatics/btaa564, 
+	https://doi.org/10.1007/s11538-018-0493-4
 LazyData: true
 RoxygenNote: 7.1.1
 Imports: 
