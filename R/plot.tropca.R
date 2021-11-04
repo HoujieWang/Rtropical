@@ -16,9 +16,7 @@
 #' Fermat-Weber point of the data projection. (default: FALSE)
 #' @param \dots Not used. Other arguments to plot
 #'
-#' @author Robert Page and Houjie Wang
-#'
-#' @keywords Tropical Geometry, Supervised Learning, Non-Euclidean Data
+#' @author Ruriko Yoshida and Houjie Wang
 #'
 #' @method plot troppca
 #' @export

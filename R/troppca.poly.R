@@ -27,9 +27,7 @@
 #' @references Page, R., Yoshida, R. and Zhang L. (2020)
 #' \emph{Tropical Principal Component Analysis on the Space of Phylogenetic Trees,
 #'  Bioinformatics, Volume 36, Issue 17, 4590–4598.}
-#' \url{https://doi.org/10.1093/bioinformatics/btaa564}.
 #'
-#' @keywords Tropical Geometry, Supervised Learning, Non-Euclidean Data
 #' @examples
 #' \dontrun{
 #' library(Rfast)

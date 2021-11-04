@@ -11,9 +11,6 @@ Maintainer: Houjie Wang <wanghoujie6688@gmail.com>
 Description: Produce tropical support vector machine and principal component analysis defined in tropical projective spaces.
 License: GPL-3
 Encoding: UTF-8
-URL: https://arxiv.org/abs/2003.00677, 
-	https://doi.org/10.1093/bioinformatics/btaa564, 
-	https://doi.org/10.1007/s11538-018-0493-4
 LazyData: true
 RoxygenNote: 7.1.1
 Imports: 
@@ -25,8 +22,7 @@ Imports:
     Rfast,
     RcppAlgos,
     caret
-Dependencies:
-    R (>= 3.5.0)
+Depends: R (>= 3.5.0)
 Suggests: 
     rmarkdown,
     knitr,

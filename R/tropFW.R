@@ -21,13 +21,10 @@
 #' \item{distsum}{The sum of distance from each observation to the fermat-weber point.}
 #'
 #' @author Houjie Wang
-#'
-#' Maintainer: Houjie Wang \email{wanghoujie6688@@gmail.com}
-#'
+#'#'
 #' @references Lin, B.,Sturmfels, B., Tang, X. and Yoshida, R. (2015)
 #' \emph{Convexity in Tree Spaces, SIAM Journal on Discrete Mathematics, Vol. 31(3) 2015–2038}
 #'
-#' @keywords Tropical Geometry, Fermat-Weber Point
 #'
 #' @examples
 #' x <- matrix(rnorm(100), ncol = 10)

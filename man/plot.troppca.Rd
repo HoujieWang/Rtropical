@@ -22,11 +22,5 @@ Visualize the second order tropical principle components in \code{troppca}
 as a tropical triangle with projections on a two-dimensional plot via tropical isometry.
 }
 \author{
-Robert Page and Houjie Wang
+Ruriko Yoshida and Houjie Wang
 }
-\keyword{Data}
-\keyword{Geometry,}
-\keyword{Learning,}
-\keyword{Non-Euclidean}
-\keyword{Supervised}
-\keyword{Tropical}

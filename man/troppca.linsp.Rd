@@ -49,14 +49,7 @@ troppca_fit <- troppca.linsp(x)
 Yoshida, R.,Zhang, L. and Zhang, X. (2019)
 \emph{Tropical Principal Component Analysis and Its Application to Phylogenetics,
  Bulletin of Mathematical Biology, 81, 568–597.}
-\url{https://arxiv.org/pdf/2010.06158.pdf}.
 }
 \author{
 Houjie Wang
 }
-\keyword{Data}
-\keyword{Geometry,}
-\keyword{Learning,}
-\keyword{Non-Euclidean}
-\keyword{Supervised}
-\keyword{Tropical}

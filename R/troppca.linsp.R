@@ -33,9 +33,7 @@
 #' @references Yoshida, R.,Zhang, L. and Zhang, X. (2019)
 #' \emph{Tropical Principal Component Analysis and Its Application to Phylogenetics,
 #'  Bulletin of Mathematical Biology, 81, 568–597.}
-#' \url{https://arxiv.org/pdf/2010.06158.pdf}.
 #'
-#' @keywords Tropical Geometry, Supervised Learning, Non-Euclidean Data
 #' @examples
 #' \dontrun{
 #' library(Rfast)

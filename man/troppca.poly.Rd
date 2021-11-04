@@ -46,14 +46,7 @@ plot(troppca_fit)
 Page, R., Yoshida, R. and Zhang L. (2020)
 \emph{Tropical Principal Component Analysis on the Space of Phylogenetic Trees,
  Bioinformatics, Volume 36, Issue 17, 4590–4598.}
-\url{https://doi.org/10.1093/bioinformatics/btaa564}.
 }
 \author{
 Houjie Wang
 }
-\keyword{Data}
-\keyword{Geometry,}
-\keyword{Learning,}
-\keyword{Non-Euclidean}
-\keyword{Supervised}
-\keyword{Tropical}

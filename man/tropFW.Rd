@@ -29,10 +29,5 @@ Lin, B.,Sturmfels, B., Tang, X. and Yoshida, R. (2015)
 }
 \author{
 Houjie Wang
-
-Maintainer: Houjie Wang \email{wanghoujie6688@gmail.com}
+#'
 }
-\keyword{Fermat-Weber}
-\keyword{Geometry,}
-\keyword{Point}
-\keyword{Tropical}
