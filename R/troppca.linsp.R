@@ -58,11 +58,13 @@ troppca.linsp <- function(x, pcs = 2, iteration = list(), ncores = 2) {
   exhaust <- con$exhaust
   niter <- con$niter
   pcs <- pcs + 1
-  all_choices <- comboGeneral(nrow(x), pcs)
   if (exhaust) {
+    warning("Iterating all possible PC choices enabled, this could take long for high order PCs.")
+    all_choices <- comboGeneral(nrow(x), pcs)
     all_choices <- lapply(1:nrow(all_choices), function(i) all_choices[i, ])
   } else {
-    all_choices <- lapply(sample(1:nrow(all_choices), niter, replace = F), function(i) all_choices[i, ])
+
+    all_choices <- lapply(1: niter, function(i){sample(1: nrow(x), pcs, replace = F)})
   }
   cl <- makeCluster(ncores)
   all_objs <- unlist(parLapply(cl, all_choices, function(ind) {
