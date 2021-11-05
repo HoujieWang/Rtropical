@@ -1,6 +1,6 @@
 Package: Rtropical
 Title: Data Analysis Tools over Space of Phylogenetic Trees Using Tropical Geometry
-Version: 0.0.0.9000
+Version: 1.1.1
 Authors@R: c(person("Houjie", "Wang", role = c("aut", "cre"), email = "wanghoujie6688@gmail.com"),
     	     person("Kaizhang", "Wang", role = c("aut"), email = "wangkz@buaa.edu.cn"),
     	     person("Grady", "Weyenberg", email = "gradysw@hawaii.edu", role = c("aut")),
