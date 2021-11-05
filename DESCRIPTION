@@ -1,5 +1,5 @@
 Package: Rtropical
-Title: Data Analysis Tools in Tropical Projective Spaces 
+Title: Data Analysis Tools over Space of Phylogenetic Trees Using Tropical Geometry
 Version: 0.0.0.9000
 Authors@R: c(person("Houjie", "Wang", role = c("aut", "cre"), email = "wanghoujie6688@gmail.com"),
     	     person("Kaizhang", "Wang", role = c("aut"), email = "wangkz@buaa.edu.cn"),
@@ -8,7 +8,7 @@ Authors@R: c(person("Houjie", "Wang", role = c("aut", "cre"), email = "wanghouji
     	     person("Ruriko", "Yoshida", email = "ryoshida@nps.edu", role = c("aut"))
     	     )
 Maintainer: Houjie Wang <wanghoujie6688@gmail.com>
-Description: Produce tropical support vector machine and principal component analysis defined in tropical spaces.
+Description: Process phylogenetic trees with tropical support vector machine and principal component analysis defined with tropical geometry.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
