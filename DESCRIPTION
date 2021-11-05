@@ -8,7 +8,7 @@ Authors@R: c(person("Houjie", "Wang", role = c("aut", "cre"), email = "wanghouji
     	     person("Ruriko", "Yoshida", email = "ryoshida@nps.edu", role = c("aut"))
     	     )
 Maintainer: Houjie Wang <wanghoujie6688@gmail.com>
-Description: Produce tropical support vector machine and principal component analysis defined in tropical projective spaces.
+Description: Produce tropical support vector machine and principal component analysis defined in tropical spaces.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
