@@ -30,6 +30,3 @@ tree <- rcoal(5)
 tree_vec <- as.vector(tree)
 tropproj.poly(tree_vec, pltp)
 }
-\author{
-Houjie Wang
-}

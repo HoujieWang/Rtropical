@@ -16,6 +16,10 @@ troppca.obj2(pc, x_list, cl)
 
 \item{cl}{cluster for parallel computing}
 }
+\value{
+The numeric value of the objective function of tropical principle component analysis.
+This is the sum of all tropical distance from each point to its projection on the tropical polytope.
+}
 \description{
 Compute Tropical PCA Objective
 }

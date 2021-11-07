@@ -3,6 +3,8 @@
 #' @importFrom ape read.tree
 #' @param data.file1 A set of trees in the format of Newick strings from one category.
 #' @param data.file2 a set of trees in the format of Newick strings from another category.
+#'
+#' @return \code{read.tree.to.data.matrix} has the same return as \code{read.nexus.to.data.matrix}.
 #' @export
 #'
 read.tree.to.data.matrix <- function(data.file1, data.file2) {

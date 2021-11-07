@@ -20,10 +20,7 @@
 #' \item{fw}{The fermat-weber point.}
 #' \item{distsum}{The sum of distance from each observation to the fermat-weber point.}
 #'
-#' @author Houjie Wang
-#'#'
-#' @references Lin, B.,Sturmfels, B., Tang, X. and Yoshida, R. (2015)
-#' \emph{Convexity in Tree Spaces, SIAM Journal on Discrete Mathematics, Vol. 31(3) 2015–2038}
+#'
 #'
 #'
 #' @examples

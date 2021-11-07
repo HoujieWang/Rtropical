@@ -7,6 +7,9 @@
 #' @param x A object of class phylo
 #' @param mode The same as \code{base::as.vector}. But only numeric
 #' output in vector form is accepted for other functions in \code{Rtropical}
+#'
+#' @return A vector with its elements the distance between two leaves of the tree.
+#'
 #' @examples
 #' library(ape)
 #' tree <- rcoal(5)

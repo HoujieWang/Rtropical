@@ -8,7 +8,6 @@
 #'
 #' @return A projected vector on the given tropical polytope.
 #'
-#' @author Houjie Wang
 #'
 #' @examples
 #'

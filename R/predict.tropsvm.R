@@ -10,12 +10,6 @@
 #'
 #' @return A vector of predicted values of a vector of labels.
 #'
-#' @author Houjie Wang
-#' Maintainer: Houjie Wang \email{whj666@@uw.edu}
-#'
-#' @references Tang, X., Wang, H. and Yoshida, R. (2020)
-#' \emph{Tropical Support Vector Machine and its Applications to Phylogenomics}
-#' \url{https://arxiv.org/pdf/2003.00677.pdf}
 #'
 #' @seealso \code{summary}, \code{coef} and the \code{tropsvm} function.
 #'

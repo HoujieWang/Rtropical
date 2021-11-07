@@ -17,10 +17,10 @@ Fermat-Weber point of the data projection. (default: FALSE)}
 
 \item{\dots}{Not used. Other arguments to plot}
 }
+\value{
+\code{plot.troppca} does not return anything other than the plot.
+}
 \description{
 Visualize the second order tropical principle components in \code{troppca}
 as a tropical triangle with projections on a two-dimensional plot via tropical isometry.
-}
-\author{
-Ruriko Yoshida and Houjie Wang
 }

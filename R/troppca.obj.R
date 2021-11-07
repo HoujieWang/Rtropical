@@ -10,6 +10,8 @@
 #' @param x_list a list of vectors
 #' @param cl cluster for parallel computing
 #'
+#' @return The numeric value of the objective function of tropical principle component analysis.
+#' This is the sum of all tropical distance from each point to its projection on the tropical polytope.
 #' @rdname troppca.obj
 troppca.obj <- function(pc, x_list, cl) {
   proj <- parLapply(cl, x_list, tropproj.poly, tconv = pc)
@@ -17,7 +19,6 @@ troppca.obj <- function(pc, x_list, cl) {
   sum(rowMaxs(temp, value = T) - rowMins(temp, value = T))
 }
 #' @rdname troppca.obj
-#' @export troppca.obj2
 troppca.obj2 <- function(pc, x_list, cl) {
   pc <- linsp_to_poly(pc)
   proj <- parLapply(cl, x_list, tropproj.poly, tconv = t(pc))

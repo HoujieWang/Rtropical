@@ -26,11 +26,6 @@
 #'
 #' @return Classification accuracy
 #'
-#' @author Houjie Wang
-#'
-#' @references Tang, X., Wang, H. and Yoshida, R. (2020)
-#' \emph{Tropical Support Vector Machine and its Applications to Phylogenomics}
-#' \url{https://arxiv.org/pdf/2003.00677.pdf}
 #'
 #'
 #'

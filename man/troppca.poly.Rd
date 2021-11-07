@@ -28,7 +28,7 @@ Approximates the principal component as a tropical polytope for a given data mat
 via MCMC and return the results as an object of class \code{troppca}.
 }
 \examples{
-\dontrun{
+\donttest{
 library(Rfast)
 n <- 50
 e <- 50
@@ -41,12 +41,4 @@ troppca_fit <- troppca.poly(x)
 plot(troppca_fit)
 }
 
-}
-\references{
-Page, R., Yoshida, R. and Zhang L. (2020)
-\emph{Tropical Principal Component Analysis on the Space of Phylogenetic Trees,
- Bioinformatics, Volume 36, Issue 17, 4590–4598.}
-}
-\author{
-Houjie Wang
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/read.nexus.to.data.matrix.R
 \name{read.nexus.to.data.matrix}
 \alias{read.nexus.to.data.matrix}
-\title{Read NEXUS-formatted trees in two categories into a data matrix}
+\title{Read NEXUS-formatted trees from two categories into a data matrix}
 \usage{
 read.nexus.to.data.matrix(data.file1, data.file2)
 }
@@ -11,6 +11,9 @@ read.nexus.to.data.matrix(data.file1, data.file2)
 
 \item{data.file2}{A data set with trees from the other category.}
 }
+\value{
+A data matrix with the first x rows corresponding the x trees in the first file and the last y rows are the trees from the second file.
+}
 \description{
-Read NEXUS-formatted trees in two categories into a data matrix
+Read NEXUS-formatted trees from two categories into a data matrix
 }

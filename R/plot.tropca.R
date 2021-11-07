@@ -16,8 +16,7 @@
 #' Fermat-Weber point of the data projection. (default: FALSE)
 #' @param \dots Not used. Other arguments to plot
 #'
-#' @author Ruriko Yoshida and Houjie Wang
-#'
+#' @return \code{plot.troppca} does not return anything other than the plot.
 #' @method plot troppca
 #' @export
 #' @export plot.troppca
@@ -38,6 +37,9 @@ plot.troppca <- function(x, plab = NULL, fw = FALSE, ...) {
     proj_points_plot <- t(apply(object$projection, 1, polytope_iso, D = object$pc))
     proj_2D_plot_m <- proj_points_plot - proj_points_plot[, 1]
   }
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
+
   par(xpd = TRUE, mar = c(5.1, 4.1, 4.1, 5.1))
   k <- ncol(D)
   plot(D[1, ], D[2, ], xlab = "x1", ylab = "x2")
@@ -65,6 +67,6 @@ plot.troppca <- function(x, plab = NULL, fw = FALSE, ...) {
            col = c(2:(length(unique(plab))), "black"))
   }else{
     legend(x = coord[2] * 1.05, y = coord[4], legend = unique(plab), pch = rep(16, length(unique(plab))),
-           col = c(2:(length(unique(plab)))))
+           col = c(2:(length(unique(plab)) + 1)))
   }
 }

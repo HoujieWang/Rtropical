@@ -19,6 +19,12 @@
 #' utilized for multi-cored CPUs. (default: 2)
 #' @param \dots Not used. Other arguments to as.vector
 #'
+#' @return A data matrix with each row a vector representation of a chronogram. Each element of the vector is the distance between two leaves.
+#'
+#' @examples
+#' data(apicomplexa)
+#' data <- as.matrix(apicomplexa)
+#'
 #' @method as.matrix multiPhylo
 #' @export
 #' @export as.matrix.multiPhylo

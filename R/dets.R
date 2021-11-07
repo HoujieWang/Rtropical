@@ -4,6 +4,7 @@
 #' @title Tropical Determinants for Small Matrices
 #'
 #' @param X a square matrix
+#' @return Tropical determinant of a given matrix
 #' @keywords internal
 trop_det2d <- function(X) {
   max(X[1, 1] + X[2, 2], X[2, 1] + X[1, 2])

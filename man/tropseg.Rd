@@ -21,13 +21,4 @@ A list containing the following:
 \description{
 Compute Tropical Line Segment
 }
-\references{
-Lin, B., Monod, A. and Yoshida, R. (2020)
-\emph{Tropical Geometric Variation of Phylogenetic Tree Shapes}
-\url{https://arxiv.org/pdf/2010.06158.pdf}
-}
-\author{
-Houjie Wang
-Maintainer: Houjie Wang \email{wanghoujie6688@gmail.com}
-}
 \keyword{internal}

@@ -35,7 +35,7 @@ Approximate the principal component as a tropical linear space
 for a given data matrix and returns the results as an object of class \code{troppca}.
 }
 \examples{
-\dontrun{
+\donttest{
 library(Rfast)
 n <- 100
 e <- 10
@@ -44,12 +44,4 @@ x <- rbind(rmvnorm(n, mu = c(5, -5, rep(0, e - 2)), sigma = diag(sig2, e)))
 troppca_fit <- troppca.linsp(x)
 }
 
-}
-\references{
-Yoshida, R.,Zhang, L. and Zhang, X. (2019)
-\emph{Tropical Principal Component Analysis and Its Application to Phylogenetics,
- Bulletin of Mathematical Biology, 81, 568–597.}
-}
-\author{
-Houjie Wang
 }

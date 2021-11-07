@@ -34,11 +34,6 @@
 #' \item{index}{The user-input classification method.}
 #' \item{levels}{The name of each category, consistent with categories in \code{y}.}
 #'
-#' @author Houjie Wang and Kaizhang Wang
-#'
-#' @references Tang, X., Wang, H. and Yoshida, R. (2020)
-#' \emph{Tropical Support Vector Machine and its Applications to Phylogenomics}
-#'
 #' @seealso \code{predict}, \code{coef} and the \code{cv.tropsvm} function.
 #'
 #'

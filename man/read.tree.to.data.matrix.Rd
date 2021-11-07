@@ -11,6 +11,9 @@ read.tree.to.data.matrix(data.file1, data.file2)
 
 \item{data.file2}{a set of trees in the format of Newick strings from another category.}
 }
+\value{
+\code{read.tree.to.data.matrix} has the same return as \code{read.nexus.to.data.matrix}.
+}
 \description{
 Read Newick-formatted trees in two categories into a data matrix
 }

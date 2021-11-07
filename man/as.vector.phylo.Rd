@@ -12,6 +12,9 @@
 \item{mode}{The same as \code{base::as.vector}. But only numeric
 output in vector form is accepted for other functions in \code{Rtropical}}
 }
+\value{
+A vector with its elements the distance between two leaves of the tree.
+}
 \description{
 Computes the cophenetic distance and outputs them in a vector
 of a phylogenetic tree in \code{phylo} object

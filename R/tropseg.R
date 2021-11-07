@@ -8,12 +8,6 @@
 #' \item{1}{End points as columns of each line component.}
 #' \item{2}{Overall length of the tropical line segment}
 #'
-#' @author Houjie Wang
-#' Maintainer: Houjie Wang \email{wanghoujie6688@@gmail.com}
-#'
-#' @references Lin, B., Monod, A. and Yoshida, R. (2020)
-#' \emph{Tropical Geometric Variation of Phylogenetic Tree Shapes}
-#' \url{https://arxiv.org/pdf/2010.06158.pdf}
 #'
 tropseg <- function(D1, D2, flag = FALSE) {
   k <- length(D1)

@@ -28,14 +28,9 @@
 #' \item{projection}{The projections of all data points.}
 #' \item{type}{The geometry of principal component.}
 #'
-#' @author Houjie Wang
-#'
-#' @references Yoshida, R.,Zhang, L. and Zhang, X. (2019)
-#' \emph{Tropical Principal Component Analysis and Its Application to Phylogenetics,
-#'  Bulletin of Mathematical Biology, 81, 568–597.}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(Rfast)
 #' n <- 100
 #' e <- 10

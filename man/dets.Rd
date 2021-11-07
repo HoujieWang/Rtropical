@@ -19,6 +19,9 @@ trop_det5d(X)
 \arguments{
 \item{X}{a square matrix}
 }
+\value{
+Tropical determinant of a given matrix
+}
 \description{
 Tropical Determinants for Small Matrices
 }

@@ -23,11 +23,3 @@ in the data matrix.
 x <- matrix(rnorm(100), ncol = 10)
 tropFW(x)
 }
-\references{
-Lin, B.,Sturmfels, B., Tang, X. and Yoshida, R. (2015)
-\emph{Convexity in Tree Spaces, SIAM Journal on Discrete Mathematics, Vol. 31(3) 2015–2038}
-}
-\author{
-Houjie Wang
-#'
-}
