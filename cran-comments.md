@@ -27,7 +27,7 @@ Missing Rd-tags:
      troppca.obj.Rd: \value
 ``` 
 
-The \\value tags have been added to the to the abovementioned Rd files. 
+The \\value tags have been added to the to the aforementioned Rd files. 
 
 ## 3 
 
