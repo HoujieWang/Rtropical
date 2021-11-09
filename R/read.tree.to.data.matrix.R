@@ -1,8 +1,8 @@
 #' Read Newick-formatted trees in two categories into a data matrix
 #'
 #' @importFrom ape read.tree
-#' @param data.file1 A set of trees in the format of Newick strings from one category.
-#' @param data.file2 a set of trees in the format of Newick strings from another category.
+#' @param data.file1 A file containing trees in Newick form in a category.
+#' @param data.file2 A file containing trees in Newick form in an assumed different category.
 #'
 #' @return \code{read.tree.to.data.matrix} has the same return as \code{read.nexus.to.data.matrix}.
 #' @export
