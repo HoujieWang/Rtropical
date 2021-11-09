@@ -87,7 +87,7 @@ Found the following (possibly) invalid DOIs:
     Status: Forbidden
     Message: 403
 ```
-It has been checked that this doi is valid and there is no note regarding this in local OS X check results.
+It has been checked that this doi is valid.
 
 # Downstream dependencies 
 There are currently no downstream dependencies for this package.
