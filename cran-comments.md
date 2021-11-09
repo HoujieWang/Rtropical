@@ -89,5 +89,5 @@ Found the following (possibly) invalid DOIs:
 ```
 It has been checked that this doi is valid.
 
-## Downstream dependencies 
+# Downstream dependencies 
 There are currently no downstream dependencies for this package.
