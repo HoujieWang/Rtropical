@@ -1,6 +1,6 @@
 Package: Rtropical
 Title: Data Analysis Tools over Space of Phylogenetic Trees Using Tropical Geometry
-Version: 1.1.1
+Version: 1.2.1
 Authors@R: c(person("Houjie", "Wang", role = c("aut", "cre"), email = "wanghoujie6688@gmail.com"),
     	     person("Kaizhang", "Wang", role = c("aut"), email = "kaizhang.wang@outlook.com"),
     	     person("Grady", "Weyenberg", email = "gradysw@hawaii.edu", role = c("aut")),
@@ -15,7 +15,6 @@ LazyData: true
 RoxygenNote: 7.1.1
 Imports: 
     ape,
-    e1071,
     lpSolve,
     lpSolveAPI,
     parallel,
@@ -26,6 +25,7 @@ Depends: R (>= 3.5.0)
 Suggests: 
     rmarkdown,
     knitr,
+    e1071,
     testthat (>= 3.0.0)
 URL: https://github.com/HoujieWang/Rtropical
 VignetteBuilder: knitr
