@@ -31,6 +31,7 @@ The \\value tags have been added to the to the aforementioned Rd files.
 
 ## 3 
 
+```
 \dontrun{} should only be used if the example really cannot be executed (e.g. because of missing additional software, missing API keys, ...) by the user. That's why wrapping examples in \dontrun{} adds the comment ('# Not run:') as a warning for the user.
 Does not seem necessary.
 
