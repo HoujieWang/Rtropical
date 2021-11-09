@@ -35,7 +35,8 @@ Conduct k-fold cross validation for tropsvm and return an object \code{"cv.trops
 
 # data generation
 library(Rfast)
-e <- 100
+set.seed(101)
+e <- 20
 n <- 10
 N <- 10
 s <- 5

@@ -23,7 +23,7 @@ Predicts values based upon a model trained by \code{cv.tropsvm}.
 
 # data generation
 library(Rfast)
-e <- 100
+e <- 20
 n <- 10
 N <- 10
 s <- 5

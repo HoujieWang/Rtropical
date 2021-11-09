@@ -35,7 +35,8 @@
 #'
 #' # data generation
 #' library(Rfast)
-#' e <- 100
+#' set.seed(101)
+#' e <- 20
 #' n <- 10
 #' N <- 10
 #' s <- 5
@@ -71,6 +72,9 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
   if (nrow(x) != length(y)) {
     stop("numbers of data and label don't match")
   }
+  if (nrow(x) <= nfold){
+    stop("data set too small, please choose fewer folds to cross-validate")
+  }
   if (length(unique(y)) != 2) {
     stop("only two classes allowded")
   }
@@ -100,7 +104,7 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
   all_assignment <- unique(all_assignment)
   all_assignment_list <- lapply(seq_len(nrow(all_assignment)), function(i) all_assignment[i, ])
   all_accuracy_list <- list()
-  cl <- makeCluster(ncores)
+  if (parallel) {cl <- makeCluster(ncores)}
   for (i in 1:length(train_index)) {
     # i = 1
     data <- x[train_index[[i]], ]
@@ -126,7 +130,7 @@ cv.tropsvm <- function(x, y, parallel = FALSE, nfold = 10, nassignment = 10, nco
     accuracy_mat <- do.call("rbind", all_accuracy)
     all_accuracy_list[[i]] <- accuracy_mat
   }
-  stopCluster(cl)
+  if (parallel) {stopCluster(cl)}
   all_accuracy_mat <- Reduce("+", all_accuracy_list)
   best_hyperparms <- matrix(which(all_accuracy_mat == max(all_accuracy_mat), arr.ind = T)[1, ], ncol = 2, byrow = TRUE)
   best_assignment <- all_assignment[best_hyperparms[1, 1], ]

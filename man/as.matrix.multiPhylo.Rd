@@ -30,6 +30,6 @@ cophenetic distance of their corresponding chronogram.
 }
 \examples{
 data(apicomplexa)
-data <- as.matrix(apicomplexa)
+data <- as.matrix(apicomplexa[1: 10]) # matrixize first ten trees
 
 }

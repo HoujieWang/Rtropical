@@ -23,7 +23,7 @@
 #'
 #' @examples
 #' data(apicomplexa)
-#' data <- as.matrix(apicomplexa)
+#' data <- as.matrix(apicomplexa[1: 10]) # matrixize first ten trees
 #'
 #' @method as.matrix multiPhylo
 #' @export

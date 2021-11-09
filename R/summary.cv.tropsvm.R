@@ -19,7 +19,7 @@
 #'
 #' # data generation
 #' library(Rfast)
-#' e <- 100
+#' e <- 20
 #' n <- 10
 #' N <- 10
 #' s <- 5
