@@ -61,7 +61,7 @@ If you're not familiar with the function, please check ?on.exit. This function m
 # R CMD check results
 There were no ERRORs or WARNINGs. 
 
-There were 3 NOTEs:
+There were 1 NOTE:
 
 ```
 * checking CRAN incoming feasibility ... NOTE
