@@ -64,8 +64,8 @@ predict.tropsvm <- function(object, newx, ...) {
     classification[classification == iq] <- classes[2]
     as.factor(classification)
   } else {
-    all_method_ind <- comboGeneral(8, 4)
     if (length(unique(best_assignment)) == 4) {
+      all_method_ind <- comboGeneral(8, 4)
       P_base <- matrix(c(
         1, 0, 0, 0,
         0, 1, 0, 0,
@@ -90,12 +90,11 @@ predict.tropsvm <- function(object, newx, ...) {
       ), ncol = 4, byrow = T)
     }
     if (length(unique(best_assignment)) == 3) {
-      P_base <- c()
-      Q_base <- c()
+      all_method_ind <- comboGeneral(6, 3)
+      P_base <- c(1, 0, 0)
+      Q_base <- c(0, 0, 1)
       PQ_com <- matrix(c(
-        1, 0, 0,
         0, 1, 0,
-        0, 0, 1,
         1, 1, 0,
         1, 0, 1,
         0, 1, 1,
@@ -104,12 +103,18 @@ predict.tropsvm <- function(object, newx, ...) {
       ), ncol = 3, byrow = T)
       if (ip == jq) {
         PQ_com <- PQ_com[, c(1, 2, 3, 1)]
+        P_base <- c(1, 0, 0, 1)
+        Q_base <- c(0, 0, 1, 0)
       }
       if (iq == jp) {
         PQ_com <- PQ_com[, c(1, 2, 2, 3)]
+        P_base <- c(1, 0, 0, 0)
+        Q_base <- c(0, 1, 1, 0)
       }
       if (jp == jq) {
         PQ_com <- PQ_com[, c(1, 2, 3, 2)]
+        P_base <- c(1, 0, 0, 0)
+        Q_base <- c(0, 0, 1, 0)
       }
     }
     colnames(PQ_com) <- c("ip", "jp", "iq", "jq")
@@ -125,8 +130,10 @@ predict.tropsvm <- function(object, newx, ...) {
     classification <- sapply(classification, function(x) {
       which(colSums(abs(t(classification_method) - best_assignment %in% x)) == 0)
     })
-    classification[classification <= nrow(classification_method) / 2] <- classes[1]
-    classification[classification > nrow(classification_method) / 2] <- classes[2]
+    classification_temp = classification
+    classification[classification_temp <= nrow(classification_method) / 2] <- levels(classes)[1]
+    classification[classification_temp > nrow(classification_method) / 2] <- levels(classes)[2]
+    names(classification) = NULL
     as.factor(classification)
   }
 }

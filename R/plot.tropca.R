@@ -8,33 +8,65 @@
 #' @importFrom graphics segments
 #' @importFrom graphics par
 #' @importFrom graphics legend
-#'
+#' @importFrom phangorn upgma
+#' @importFrom phangorn RF.dist
 #' @param x a fitted \code{troppca} object.
-#' @param plab a vector of labels of all points in the given data matrix.
+#' @param point_class a vector of labels of all points in the given data matrix.
 #' Not needed for unlabeled data. (default: NULL)
 #' @param fw a logical variable to determine if to add
 #' Fermat-Weber point of the data projection. (default: FALSE)
+#' @param plot.tree a logical value indicating if to plot tree topology (default: FALSE)
+#' @param leaf.names the name of the leaves of the first tree in the data set (default: NULL)
+#' @param ntopology a numeric value indicating  the number of most frequent tree topology to plot (default: 6)
 #' @param \dots Not used. Other arguments to plot
 #'
 #' @return \code{plot.troppca} does not return anything other than the plot.
 #' @method plot troppca
 #' @export
 #' @export plot.troppca
-plot.troppca <- function(x, plab = NULL, fw = FALSE, ...) {
+plot.troppca <- function(x, point_class = NULL, fw = FALSE, plot.tree = FALSE, leaf.names = NULL, ntopology = 6, ...) {
+  # x = pca_fit
   if (x$type == "linear space") {
     stop("Only principal component by tropical polytope is plottable.")
   }
-  object <- x
-  D <- eachrow(object$pc, object$pc[1, ], "-")[-1, ]
+  D <- eachrow(x$pc, x$pc[1, ], "-")[-1, ]
+
+  if (plot.tree){
+    x$projection = t(apply(x$projection, 1, function(xx){2 - max(xx) + xx}))
+    numvectors <- nrow(x$projection)
+    proj_trees_matrix<-lapply(1: numvectors, function(i){
+      p = x$projection[i, ]
+      make.matrix(p, length(leaf.names), leaf.names)
+    })
+    proj_trees <- lapply(proj_trees_matrix, upgma)
+
+    type <- seq(numvectors)
+    for(i in seq(numvectors)){
+      if(i == type[i]) {
+        for(j in seq(i, numvectors)) {
+          if(RF.dist(proj_trees[[i]], proj_trees[[j]]) == 0) {
+            type[j] <- i
+          }
+        }
+      }
+    }
+
+    ntopology = min(ntopology, length(unique(type)))
+    plot_type = as.numeric(names(table(type)[order(table(type), decreasing = TRUE)[1: ntopology]]))
+    x$projection = x$projection[type %in% plot_type, ]
+    type = type[type %in% plot_type]
+    point_class = type
+  }
+
   if (fw){
-    if (is.null(plab)) plab <- as.factor(c(rep(1, nrow(object$projection))))
-    proj_points_plot <- t(apply(object$projection, 1, polytope_iso, D = object$pc))
+    if (is.null(point_class)) point_class <- as.factor(c(rep(1, nrow(x$projection))))
+    proj_points_plot <- t(apply(x$projection, 1, polytope_iso, D = x$pc))
     fw_point <- tropFW(proj_points_plot)
     proj_points_plot <- rbind(proj_points_plot, fw_point$fw)
     proj_2D_plot_m <- proj_points_plot - proj_points_plot[, 1]
   } else{
-    if (is.null(plab)) plab <- as.factor(rep(1, nrow(object$projection)))
-    proj_points_plot <- t(apply(object$projection, 1, polytope_iso, D = object$pc))
+    if (is.null(point_class)) point_class <- as.factor(rep(1, nrow(x$projection)))
+    proj_points_plot <- t(apply(x$projection, 1, polytope_iso, D = x$pc))
     proj_2D_plot_m <- proj_points_plot - proj_points_plot[, 1]
   }
   oldpar <- par(no.readonly = TRUE)
@@ -56,17 +88,29 @@ plot.troppca <- function(x, plab = NULL, fw = FALSE, ...) {
       segments(tseg[[1]][1, 2], tseg[[1]][2, 2], tseg[[1]][1, 3], tseg[[1]][2, 3], col = "black")
     }
   }
-  for (i in 1:length(unique(plab))) {
-    points(x = proj_2D_plot_m[plab == unique(plab)[i], 2], y = proj_2D_plot_m[plab == unique(plab)[i], 3], pch = 16, cex = .75, col = (i + 1))
+  labs <- unique(point_class)
+  if (plot.tree) labs = plot_type
+  for (i in 1:length(labs)) {
+    points(x = proj_2D_plot_m[point_class == labs[i], 2], y = proj_2D_plot_m[point_class == labs[i], 3], pch = 16, cex = .75, col = (i + 1))
   }
   coord <- par("usr")
   if (fw){
-    plab <- c(plab, "FW")
+    labs <- c(labs, "FW")
+    if (plot.tree) labs <- c(plot_type, "FW")
     points(x = proj_2D_plot_m[nrow(proj_2D_plot_m), 2], y = proj_2D_plot_m[nrow(proj_2D_plot_m), 3], pch = 18, cex = 2, col = "black")
-    legend(x = coord[2] * 1.05, y = coord[4], legend = unique(plab), pch = c(rep(16, length(unique(plab))-1), 18),
-           col = c(2:(length(unique(plab))), "black"))
+    legend(x = coord[2] * 1.05, y = coord[4], legend = labs, pch = c(rep(16, length(labs)-1), 18),
+           col = c(2:(length(labs)), "black"))
   }else{
-    legend(x = coord[2] * 1.05, y = coord[4], legend = unique(plab), pch = rep(16, length(unique(plab))),
-           col = c(2:(length(unique(plab)) + 1)))
+    legend(x = coord[2] * 1.05, y = coord[4], legend = labs, pch = rep(16, length(labs)),
+           col = c(2:(length(labs) + 1)))
+  }
+  if (plot.tree){
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
+    par(ask = TRUE)
+    par(mfrow = c(ceiling(ntopology/2), 2))
+    for (i in plot_type) {
+      plot(proj_trees[[i]], "c", TRUE, main=paste0("(",i, ")"))
+    }
   }
 }

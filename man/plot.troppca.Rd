@@ -4,16 +4,30 @@
 \alias{plot.troppca}
 \title{Plot the Tropical Principal Components with Data Projections}
 \usage{
-\method{plot}{troppca}(x, plab = NULL, fw = FALSE, ...)
+\method{plot}{troppca}(
+  x,
+  point_class = NULL,
+  fw = FALSE,
+  plot.tree = FALSE,
+  leaf.names = NULL,
+  ntopology = 6,
+  ...
+)
 }
 \arguments{
 \item{x}{a fitted \code{troppca} object.}
 
-\item{plab}{a vector of labels of all points in the given data matrix.
+\item{point_class}{a vector of labels of all points in the given data matrix.
 Not needed for unlabeled data. (default: NULL)}
 
 \item{fw}{a logical variable to determine if to add
 Fermat-Weber point of the data projection. (default: FALSE)}
+
+\item{plot.tree}{a logical value indicating if to plot tree topology (default: FALSE)}
+
+\item{leaf.names}{the name of the leaves of the first tree in the data set (default: NULL)}
+
+\item{ntopology}{a numeric value indicating  the number of most frequent tree topology to plot (default: 6)}
 
 \item{\dots}{Not used. Other arguments to plot}
 }

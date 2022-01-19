@@ -43,6 +43,7 @@
 #' @export
 #' @export summary.cv.tropsvm
 summary.cv.tropsvm <- function(object, ...) {
+  # object = cv.svmmodel
   P_base <- matrix(c(
     1, 0, 0, 0,
     0, 1, 0, 0,
@@ -69,29 +70,88 @@ summary.cv.tropsvm <- function(object, ...) {
   all_method_ind <- RcppAlgos::comboGeneral(8, 4)
   best_method <- object$`index`
   best_assignment <- object$`assignment`
-  classification_method <- list("P method" = rbind(P_base, PQ_com[all_method_ind[best_method, ], ]), "Q method" = rbind(Q_base, PQ_com[-all_method_ind[best_method, ], ]))
+  if (length(unique(best_assignment)) == 2) {
+    classification_method <- list("P method" = matrix(c(1, 0, 0, 0), ncol = 4, byrow = T),
+                                  "Q method" = matrix(c(0, 0, 1, 0), ncol = 4, byrow = T))
+  } else{
+    all_method_ind <- comboGeneral(8, 4)
+    if (length(unique(best_assignment)) == 4) {
+      P_base <- matrix(c(
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        1, 1, 0, 0,
+        1, 1, 1, 1
+      ), ncol = 4, byrow = T)
+      Q_base <- matrix(c(
+        0, 0, 1, 0,
+        0, 0, 0, 1,
+        0, 0, 1, 1,
+        0, 0, 0, 0
+      ), ncol = 4, byrow = T)
+      PQ_com <- matrix(c(
+        1, 0, 1, 0,
+        1, 0, 0, 1,
+        0, 1, 1, 0,
+        0, 1, 0, 1,
+        1, 1, 1, 0,
+        1, 1, 0, 1,
+        1, 0, 1, 1,
+        0, 1, 1, 1
+      ), ncol = 4, byrow = T)
+    }
+    if (length(unique(best_assignment)) == 3) {
+      P_base <- c()
+      Q_base <- c()
+      PQ_com <- matrix(c(
+        1, 0, 0,
+        0, 1, 0,
+        0, 0, 1,
+        1, 1, 0,
+        1, 0, 1,
+        0, 1, 1,
+        1, 1, 1,
+        0, 0, 0
+      ), ncol = 3, byrow = T)
+      if (ip == jq) {
+        PQ_com <- PQ_com[, c(1, 2, 3, 1)]
+      }
+      if (iq == jp) {
+        PQ_com <- PQ_com[, c(1, 2, 2, 3)]
+      }
+      if (jp == jq) {
+        PQ_com <- PQ_com[, c(1, 2, 3, 2)]
+      }
+    }
+    colnames(PQ_com) <- c("ip", "jp", "iq", "jq")
+    classification_method <- list("P method" = rbind(P_base, PQ_com[all_method_ind[best_method, ], ]),
+                                  "Q method" = rbind(Q_base, PQ_com[-all_method_ind[best_method, ], ]))
+  }
   cat("Tropical SVM under ", object$nfold, "-fold cross validation: \n\n\n", sep = "")
-  cat("Best assignment: ", paste(c("ip =", "jp =", "iq =", "jq ="), best_assignment, collapse = ", "), ".\n\n", sep = "")
-  cat("Best classification method: \n\n")
-  cat("Points on the locations below will be classified as : ", object$levels[1], "\n", sep = "")
+  cat("Best assignment: ", paste(c("ip =", "jp =", "iq =", "jq ="), best_assignment, collapse = ", "), "\n\n", sep = "")
+  cat("Best classification method: ", object$index, "\n\n", sep = "")
+  cat("Points on the locations below will be classified as: ", levels(object$levels)[1], "\n", sep = "")
   for (i in 1:nrow(classification_method[[1]])) {
     row_i <- classification_method[[1]][i, ]
-    if (sum(row_i) == 1) {
-      cat("sector:", best_assignment[which(row_i != 0)], "\n", sep = "")
-    } else {
-      cat("The common boundary of sectors:", best_assignment[which(row_i != 0)], "\n")
+    if (sum(row_i) != 0) {
+      if (sum(row_i) == 1) {
+        cat("sector: ", best_assignment[which(row_i != 0)], "\n", sep = "")
+      } else {
+        cat("The common boundary of sectors:", best_assignment[which(row_i != 0)], "\n")
+      }
     }
   }
   cat("\n")
-  cat("Points on the locations below will be classified as : ", object$levels[2], "\n", sep = "")
+  cat("Points on the locations below will be classified as: ", levels(object$levels)[2], "\n", sep = "")
   for (i in 1:nrow(classification_method[[2]])) {
     row_i <- classification_method[[2]][i, ]
-    if (sum(row_i) == 1) {
-      cat("sector:", best_assignment[which(row_i != 0)], "\n", sep = "")
-    } else {
-      cat("The common boundary of sectors:", best_assignment[which(row_i != 0)], "\n")
+    if (sum(row_i) != 0) {
+      if (sum(row_i) == 1) {
+        cat("sector: ", best_assignment[which(row_i != 0)], "\n", sep = "")
+      } else {
+        cat("The common boundary of sectors:", best_assignment[which(row_i != 0)], "\n")
+      }
     }
   }
   cat("\n")
-  cat("Best validation accuracy of each fold: ", paste(round(object$accuracy * 100, digits = 4), "%", sep = ""), ".\n")
+  cat("Best validation accuracy of each fold:", paste(round(object$accuracy * 100, digits = 4), "%", sep = ""), "\n", sep = " ")
 }
