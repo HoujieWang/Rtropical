@@ -4,15 +4,22 @@
 \alias{troppca.linsp2poly}
 \title{Tropical Principal Component Analysis by Polytope Converted from Linear Space}
 \usage{
-troppca.linsp2poly(x, pcs = 2, nsample = 1000, ncores = 2)
+troppca.linsp2poly(x, pcs = 2, iteration = list(), ncores = 2)
 }
 \arguments{
 \item{x}{a data matrix, of size n x e, with each row an observation vector.
-e is the dimension of the tropical space#'}
+e is the dimension of the tropical space}
 
 \item{pcs}{a numeric value indicating the order of principal component. (default: 2)}
 
-\item{nsample}{a numeric value indicating the number of samples of MCMC. (default: 1000)}
+\item{iteration}{a list with arguments controlling the iteration of the algorithm.
+\describe{
+\item{exhaust}{a logical variable indicating if to iterate over all possible combinations of the linear space
+based on the given data matrix \code{x}. If FALSE, please input a number of iteration for \code{niter}.
+If TRUE, please enter 0 for \code{niter} and this function will iterate over all possible combinations of linear space.
+This could be time consuming when \code{x} is large. (default: FALSE)}
+\item{niter}{a numeric variable indicating the number of iterations. (default: 100)}
+}}
 
 \item{ncores}{a numeric value indicating the number of threads utilized for multi-cored CPUs. (default: 2)}
 }
