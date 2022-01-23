@@ -52,16 +52,18 @@ troppca.linsp2poly = function(x, pcs = 2, iteration = list(), ncores = 2){
   )
   con[names(iteration)] <- iteration
 
-  x_list <- lapply(seq_len(nrow(x)), function(i) x[i, ])
   exhaust <- con$exhaust
   niter <- con$niter
   pcs <- pcs + 1
-  all_choices <- lapply(1: niter, function(i){sample(1: nrow(x), pcs, replace = F)})
-  if (exhaust){
-    all_choices <- lapply(1: nrow(all_choices), function(i) all_choices[i, ])
-  } else{
-    all_choices <- lapply(sample(1: nrow(all_choices), niter, replace = F), function(i) all_choices[i, ])
+  if (exhaust) {
+    warning("Iterating all possible PC choices enabled, this could take long for high order PCs.")
+    all_choices <- comboGeneral(nrow(x), pcs)
+    all_choices <- lapply(1:nrow(all_choices), function(i) all_choices[i, ])
+  } else {
+
+    all_choices <- lapply(1: niter, function(i){sample(1: nrow(x), pcs, replace = F)})
   }
+  x_list <- lapply(seq_len(nrow(x)), function(i) x[i, ])
   cl <- makeCluster(ncores)
   all_objs <- unlist(parLapply(cl, all_choices, function(ind){
     V <- x[ind, ]
@@ -70,6 +72,7 @@ troppca.linsp2poly = function(x, pcs = 2, iteration = list(), ncores = 2){
     sum(rowMaxs(temp, T) - rowMins(temp, T))
   }))
   stopCluster(cl)
+
   best_choice <- all_choices[[which.min(all_objs)]]
   pc <- x[best_choice, ]
   rownames(pc) <- paste("pc", 1: pcs, sep = "")
