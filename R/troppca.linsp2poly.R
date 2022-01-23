@@ -56,7 +56,7 @@ troppca.linsp2poly = function(x, pcs = 2, iteration = list(), ncores = 2){
   exhaust <- con$exhaust
   niter <- con$niter
   pcs <- pcs + 1
-  all_choices <- comboGeneral(nrow(x), pcs)
+  all_choices <- lapply(1: niter, function(i){sample(1: nrow(x), pcs, replace = F)})
   if (exhaust){
     all_choices <- lapply(1: nrow(all_choices), function(i) all_choices[i, ])
   } else{
