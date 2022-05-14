@@ -8,6 +8,8 @@
 #' @importFrom graphics segments
 #' @importFrom graphics par
 #' @importFrom graphics legend
+#' @importFrom graphics mtext
+#' @importFrom latex2exp TeX
 #' @importFrom phangorn upgma
 #' @importFrom phangorn RF.dist
 #' @param x a fitted \code{troppca} object.
@@ -35,6 +37,7 @@ plot.troppca <- function(x, point_class = NULL, fw = FALSE, plot.tree = FALSE, l
     x$projection = t(apply(x$projection, 1, function(xx){2 - max(xx) + xx}))
     numvectors <- nrow(x$projection)
     proj_trees_matrix<-lapply(1: numvectors, function(i){
+      # i = 1
       p = x$projection[i, ]
       make.matrix(p, length(leaf.names), leaf.names)
     })
@@ -52,10 +55,13 @@ plot.troppca <- function(x, point_class = NULL, fw = FALSE, plot.tree = FALSE, l
     }
 
     ntopology = min(ntopology, length(unique(type)))
-    plot_type = as.numeric(names(table(type)[order(table(type), decreasing = TRUE)[1: ntopology]]))
-    x$projection = x$projection[type %in% plot_type, ]
-    type = type[type %in% plot_type]
-    point_class = type
+    # plot_type = as.numeric(names(table(type)[order(table(type), decreasing = TRUE)[1: ntopology]]))
+    plot_type = table(type)[order(table(type), decreasing = TRUE)[1: ntopology]]
+    type_names = as.numeric(names(plot_type))
+    x$projection = x$projection[type %in% type_names, ]
+    # type = type[type %in% type_names]
+    # point_class = type
+    point_class = plot_type[as.character(type[type %in% type_names])]
   }
 
   if (fw){
@@ -109,8 +115,14 @@ plot.troppca <- function(x, point_class = NULL, fw = FALSE, plot.tree = FALSE, l
     on.exit(par(oldpar))
     par(ask = TRUE)
     par(mfrow = c(ceiling(ntopology/2), 2))
-    for (i in plot_type) {
-      plot(proj_trees[[i]], "c", TRUE, main=paste0("(",i, ")"))
+    for (i in 1: ntopology) {
+      tree_idx = type_names[i]
+      plot(proj_trees[[i]], "c", FALSE,
+           # main=paste0("(",i, ")"),
+           cex = 1.3)
+
+      mtext(TeX("\\bullet", bold = TRUE), col = i+1)
+      mtext(paste0("         ", plot_type[i]))
     }
   }
 }

@@ -43,6 +43,7 @@
 #' @export
 #' @export summary.cv.tropsvm
 summary.cv.tropsvm <- function(object, ...) {
+  ip <- jp <- iq <- jq <- NULL
   # object = cv.svmmodel
   P_base <- matrix(c(
     1, 0, 0, 0,

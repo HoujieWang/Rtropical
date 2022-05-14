@@ -20,7 +20,10 @@ Imports:
     parallel,
     Rfast,
     RcppAlgos,
-    caret
+    caret,
+    graphics,
+    latex2exp,
+    phangorn
 Depends: R (>= 3.5.0)
 Suggests: 
     rmarkdown,
